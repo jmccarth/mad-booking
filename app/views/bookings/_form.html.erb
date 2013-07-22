@@ -15,10 +15,17 @@
     <%= f.label :user %><br />
     <%= f.text_field :user %>
   </div>
-  <div class="field">
-    <%= f.label :equip_bc %><br />
-    <%= f.text_field :equip_bc %>
-  </div>
+  <p>
+  	  Select equipment
+	  <div>
+	  	<% for equip in Equipment.find(:all) %>
+	  		<div>
+	  			<%= check_box_tag "booking[equipment_ids][]", equip.id, @booking.equipments.include?(equip) %>
+	  			<%= equip.name %>
+	  		</div>
+	  	<% end %>
+	  </div>
+  </p>
   <div class="field">
     <%= f.label :schedule %><br />
     <% if @booking.schedule != nil %>
@@ -31,9 +38,13 @@
 		<% start_d = Time.now.strftime("%m/%d/%Y") %>
 		<% end_d = start_d %>
     <% end %>
-    
-    <%= text_field_tag :schedule_start, start_d %>
-    <%= text_field_tag :schedule_end, end_d %>
+    <p>
+	    Start:
+	    <%= text_field_tag :schedule_start, start_d %>
+	    <br />
+	    End:
+	    <%= text_field_tag :schedule_end, end_d %>
+    </p>
   </div>
   <div class="actions">
     <%= f.submit %>

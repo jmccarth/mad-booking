@@ -61,6 +61,7 @@ class BookingsController < ApplicationController
   # PUT /bookings/1
   # PUT /bookings/1.json
   def update
+    params[:booking][:equipment_ids] ||= []
     @booking = Booking.find(params[:id])
 
     respond_to do |format|

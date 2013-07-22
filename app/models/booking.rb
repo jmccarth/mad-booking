@@ -1,13 +1,6 @@
 class Booking < ActiveRecord::Base
   include IceCube
-  
-=begin
-  def schedule=(new_schedule)
-    write_attribute(:schedule,new_schedule.to_yaml())
-  end
-  
-  def schedule
-    Schedule.from_yaml(read_attribute(:schedule))
-  end
-=end
+
+  has_and_belongs_to_many :equipments
+
 end

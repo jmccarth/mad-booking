@@ -3,7 +3,6 @@
 <table>
   <tr>
     <th>User</th>
-    <th>Equip bc</th>
     <th>Schedule</th>
     <th></th>
     <th></th>
@@ -13,7 +12,6 @@
 <% @bookings.each do |booking| %>
   <tr>
     <td><%= booking.user %></td>
-    <td><%= booking.equip_bc %></td>
     <td><%= booking.schedule %></td>
     <td><%= link_to 'Show', booking %></td>
     <td><%= link_to 'Edit', edit_booking_path(booking) %></td>
