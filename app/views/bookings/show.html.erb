@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>User:</b>
+  <%= @booking.user %>
+</p>
+
+<p>
+  <b>Equip bc:</b>
+  <%= @booking.equip_bc %>
+</p>
+
+<p>
+  <b>Schedule:</b>
+  <%= @booking.schedule %>
+</p>
+
+
+<%= link_to 'Edit', edit_booking_path(@booking) %> |
+<%= link_to 'Back', bookings_path %>

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  user: MyString
+  equip_bc: MyString
+  schedule: MyString
+
+two:
+  user: MyString
+  equip_bc: MyString
+  schedule: MyString
