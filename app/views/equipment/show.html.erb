@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Barcode:</b>
+  <%= @equipment.barcode %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @equipment.name %>
+</p>
+
+<p>
+  <b>Stored:</b>
+  <%= @equipment.stored %>
+</p>
+
+
+<%= link_to 'Edit', edit_equipment_path(@equipment) %> |
+<%= link_to 'Back', equipment_index_path %>

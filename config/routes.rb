@@ -1,4 +1,6 @@
 Equip::Application.routes.draw do
+  resources :equipment
+
   resources :bookings
 
   # The priority is based upon order of creation:

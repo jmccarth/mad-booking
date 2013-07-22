@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  barcode: MyString
+  name: MyString
+  stored: MyString
+
+two:
+  barcode: MyString
+  name: MyString
+  stored: MyString
