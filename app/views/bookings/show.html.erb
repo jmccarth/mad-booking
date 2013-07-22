@@ -12,7 +12,11 @@
 
 <p>
   <b>Schedule:</b>
-  <%= @booking.schedule %>
+  <% @sched = IceCube::Schedule.from_yaml(@booking.schedule) %>
+  Start:
+  <%= @sched.start_time %>
+  End:
+  <%= @sched.end_time %>
 </p>
 
 

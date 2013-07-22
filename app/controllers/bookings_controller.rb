@@ -1,5 +1,6 @@
 class BookingsController < ApplicationController
-  before_filter :format_schedule, :only => [:create,:update]
+  before_filter :format_schedule_write, :only => [:create,:update]
+
   
   # GET /bookings
   # GET /bookings.json
@@ -87,7 +88,7 @@ class BookingsController < ApplicationController
   
 private
   
-  def format_schedule
+  def format_schedule_write
     s = IceCube::Schedule.new(Time.now)
     
     start_s = params.delete(:schedule_start)
@@ -98,7 +99,6 @@ private
     s.end_time = end_d
     
     params[:booking].merge!({:schedule => s.to_yaml()})
-
   end
   
 end
