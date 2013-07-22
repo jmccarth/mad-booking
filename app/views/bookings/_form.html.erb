@@ -21,8 +21,19 @@
   </div>
   <div class="field">
     <%= f.label :schedule %><br />
-    <%= text_field_tag :schedule_start %>
-    <%= text_field_tag :schedule_end %>
+    <% if @booking.schedule != nil %>
+	    <% s = IceCube::Schedule.from_yaml(@booking.schedule) %>
+	    <% sd = Date.parse(s.start_time.to_s) %>
+	    <% ed = Date.parse(s.end_time.to_s) %>
+	    <% start_d = sd.strftime("%m/%d/%Y") %>
+	    <% end_d = ed.strftime("%m/%d/%Y") %>
+	<% else %>
+		<% start_d = Time.now.strftime("%m/%d/%Y") %>
+		<% end_d = start_d %>
+    <% end %>
+    
+    <%= text_field_tag :schedule_start, start_d %>
+    <%= text_field_tag :schedule_end, end_d %>
   </div>
   <div class="actions">
     <%= f.submit %>
