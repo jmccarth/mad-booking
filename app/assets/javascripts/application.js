@@ -18,5 +18,6 @@
 //= require home
 
 $(function() {
-  $("#booking_schedule").datepicker();
+  $("#schedule_start").datepicker();
+  $("#schedule_end").datepicker();
 });

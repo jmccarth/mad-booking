@@ -21,7 +21,8 @@
   </div>
   <div class="field">
     <%= f.label :schedule %><br />
-    <%= f.text_field :schedule %>
+    <%= text_field_tag :schedule_start %>
+    <%= text_field_tag :schedule_end %>
   </div>
   <div class="actions">
     <%= f.submit %>

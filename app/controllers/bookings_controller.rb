@@ -1,4 +1,6 @@
 class BookingsController < ApplicationController
+  before_filter :format_schedule, :only => [:create,:update]
+  
   # GET /bookings
   # GET /bookings.json
   def index
@@ -26,6 +28,7 @@ class BookingsController < ApplicationController
   def new
     @booking = Booking.new
 
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @booking }
@@ -42,6 +45,7 @@ class BookingsController < ApplicationController
   def create
     @booking = Booking.new(params[:booking])
 
+    
     respond_to do |format|
       if @booking.save
         format.html { redirect_to @booking, notice: 'Booking was successfully created.' }
@@ -80,4 +84,21 @@ class BookingsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+private
+  
+  def format_schedule
+    s = IceCube::Schedule.new(Time.now)
+    
+    start_s = params.delete(:schedule_start)
+    end_s = params.delete(:schedule_end)
+    start_d = Date.strptime(start_s,"%m/%d/%Y");
+    end_d = Date.strptime(end_s,"%m/%d/%Y");
+    s.start_time = start_d
+    s.end_time = end_d
+    
+    params[:booking].merge!({:schedule => s.to_yaml()})
+
+  end
+  
 end
