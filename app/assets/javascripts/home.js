@@ -1,9 +1,12 @@
 $(document).ready(function() {
 	
-		var date = new Date();
-		var d = date.getDate();
-		var m = date.getMonth();
-		var y = date.getFullYear();
+		var startDate = new Date()/1000-31556900;
+		var endDate = new Date()/1000+31556900;
+		
+		var events;
+		
+		
+
 		
 		$('#calendar').fullCalendar({
 			header: {
@@ -12,12 +15,12 @@ $(document).ready(function() {
 				right: 'month,agendaWeek,agendaDay'
 			},
 			editable: true,
-			events:function(start,end,callback){
-				//TODO: Go into DB and get events for this time range
-				bookings = [{title:"An event",start: new Date(y,m,d),end: new Date(y,m,d+1)},
-							{title:"Another event",start: new Date(y,m,d+2,8,30),end: new Date(y,m,d+2,11,45),allDay: false}];
-				callback(bookings);
-			}
+			eventSources: [{
+				url: "/bookings",
+				data:{
+					start_date: startDate,
+					end_date: endDate
+				}			
+			}]
 		});
-		
 	});

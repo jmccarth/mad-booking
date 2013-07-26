@@ -1,3 +1,4 @@
+include BookingsHelper
 class BookingsController < ApplicationController
   before_filter :format_schedule_write, :only => [:create,:update]
 
@@ -5,11 +6,17 @@ class BookingsController < ApplicationController
   # GET /bookings
   # GET /bookings.json
   def index
-    @bookings = Booking.all
+    sTime = Time.at(params[:start_date].to_i)
+    eTime = Time.at(params[:end_date].to_i)
+    @bookings = find_by_date_range(sTime,eTime)
+    b = []
+    @bookings.each do |booking|
+      b.push(convert_booking_to_fcevent(booking))
+    end
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @bookings }
+      format.json { render json: b }
     end
   end
 
