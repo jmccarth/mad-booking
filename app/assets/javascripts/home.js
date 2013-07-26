@@ -21,6 +21,9 @@ $(document).ready(function() {
 					start_date: startDate,
 					end_date: endDate
 				}			
-			}]
+			}],
+			eventClick: function(calEvent,jsEvent,view){
+				window.open("bookings/" + calEvent.id)
+			}
 		});
 	});

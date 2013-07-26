@@ -20,7 +20,8 @@ module BookingsHelper
     event = {
       title: booking.user,
       start: startDate,
-      end: endDate
+      end: endDate,
+      id: booking.id
     }
     
   end
