@@ -4,10 +4,7 @@ $(document).ready(function() {
 		var endDate = new Date()/1000+31556900;
 		
 		var events;
-		
-		
 
-		
 		$('#calendar').fullCalendar({
 			header: {
 				left: 'prev,next today',
@@ -26,4 +23,35 @@ $(document).ready(function() {
 				window.open("bookings/" + calEvent.id)
 			}
 		});
-	});
+});
+	
+function reloadCalendar(items){
+	 $('#calendar').fullCalendar('destroy');
+	var startDate = new Date()/1000-31556900;
+		var endDate = new Date()/1000+31556900;
+		
+		var events;
+		
+		
+
+		$('#calendar').fullCalendar({
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,agendaWeek,agendaDay'
+			},
+			editable: true,
+			eventSources: [{
+				url: "/bookings",
+				data:{
+					start_date: startDate,
+					end_date: endDate,
+					equip_ids: items
+				}			
+			}],
+			eventClick: function(calEvent,jsEvent,view){
+				window.open("bookings/" + calEvent.id)
+			}
+		});
+	}
+
