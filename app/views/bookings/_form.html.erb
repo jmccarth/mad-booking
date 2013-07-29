@@ -1,85 +1,111 @@
 <%= form_for(@booking) do |f| %>
-  <% if @booking.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@booking.errors.count, "error") %> prohibited this booking from being saved:</h2>
+<% if @booking.errors.any? %>
+<div id="error_explanation">
+	<h2><%= pluralize(@booking.errors.count, "error") %> prohibited this booking from being saved:</h2>
 
-      <ul>
-      <% @booking.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+	<ul>
+		<% @booking.errors.full_messages.each do |msg| %>
+		<li>
+			<%= msg %>
+		</li>
+		<% end %>
+	</ul>
+</div>
+<% end %>
+<div class="section-container auto" data-section>
+	<section>
+		<p class="title" data-section-title>
+			<a href="#">Booking Details</a>
+		</p>
+		<div class="content" data-section-content>
+			<div class="row">
+				<div class="large-4 columns">
+					<div class="panel">
+						<h4>Select equipment</h4>
+						<% for equip in Equipment.find(:all) %>
+						<div>
+							<%= check_box_tag "booking[equipment_ids][]", equip.id, @booking.equipments.include?(equip) %>
+							<%= equip.name %>
+						</div>
+						<% end %>
+					</div>
+				</div>
+				<div class="large-8 columns">
+					<div class="field">
+						<h3><%= f.label :user %></h3>
+						<%= f.text_field :user %>
+						<div class="field">
+							<h3><%= f.label :schedule %></h3>
+							<% if @booking.schedule != nil %>
+								<% s = IceCube::Schedule.from_yaml(@booking.schedule) %>
+								<% sd = DateTime.parse(s.start_time.to_s) %>
+								<% ed = DateTime.parse(s.end_time.to_s) %>
+								<% start_d = sd.strftime("%m/%d/%Y") %>
+								<% start_t = sd.strftime("%I:%M %p")%>
+								<% end_d = ed.strftime("%m/%d/%Y") %>
+								<% end_t = ed.strftime("%I:%M %p")%>
+								<% else %>
+								<% start_d = Time.now.strftime("%m/%d/%Y") %>
+								<% start_t = Time.now.strftime("%I:%M %p") %>
+								<% end_d = start_d %>
+								<% end_t = start_t %>
+							<% end %>
+							<p>
+								Start Date:
+								<%= text_field_tag :schedule_start, start_d %>
+								<br />
+								Start Time:
+								<%= text_field_tag :schedule_start_time, start_t %>
+								<br />
+								End Date:
+								<%= text_field_tag :schedule_end, end_d %>
+								<br />
+								End Time:
+								<%= text_field_tag :schedule_end_time, end_t %>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section>
+		<p class="title" data-section-title>
+			<a href="#signout">Sign Out</a>
+		</p>
+		<div class="content" data-section-content>
+			<% for equip in Equipment.find(:all) %>
+				<% if @booking.equipments.include?(equip) %>
+					<% if !@booking.sign_out_times.key?(equip.id) %>
+						<p>
+							<%= check_box_tag "booking[sign_out_ids][]", equip.id, false %>
+							<%= equip.name %>
+						</p>
+					<% end %>
+				<% end %>
+			<% end %>
+		</div>
+	</section>
+	<section>
+		<p class="title" data-section-title>
+			<a href="#signin">Sign In</a>
+		</p>
+		<div class="content" data-section-content>
+			<% for equip in Equipment.find(:all) %>
+				<% if @booking.equipments.include?(equip) %>
+					<% if !@booking.sign_in_times.key?(equip.id) and @booking.sign_out_times.key?(equip.id) %>
+						<p>
+							<%= check_box_tag "booking[sign_in_ids][]", equip.id, false %>
+							<%= equip.name %>
+						</p>
+					<% end %>
+				<% end %>
+			<% end %>
+		</div>
+	</section>
+</div>
 
-  <div class="field">
-    <%= f.label :user %><br />
-    <%= f.text_field :user %>
-  </div>
-  <p>
-  	  Select equipment
-	  <div>
-	  	<% for equip in Equipment.find(:all) %>
-	  		<div>
-	  			<%= check_box_tag "booking[equipment_ids][]", equip.id, @booking.equipments.include?(equip) %>
-	  			<%= equip.name %>
-	  		</div>
-	  	<% end %>
-	  </div>
-  </p>
-  <div class="field">
-    <%= f.label :schedule %><br />
-    <% if @booking.schedule != nil %>
-	    <% s = IceCube::Schedule.from_yaml(@booking.schedule) %>
-	    <% sd = DateTime.parse(s.start_time.to_s) %>
-	    <% ed = DateTime.parse(s.end_time.to_s) %>
-	    <% start_d = sd.strftime("%m/%d/%Y") %>
-	    <% start_t = sd.strftime("%I:%M %p")%>
-	    <% end_d = ed.strftime("%m/%d/%Y") %>
-	    <% end_t = ed.strftime("%I:%M %p")%>
-	<% else %>
-		<% start_d = Time.now.strftime("%m/%d/%Y") %>
-		<% start_t = Time.now.strftime("%I:%M %p") %>
-		<% end_d = start_d %>
-		<% end_t = start_t %>
-    <% end %>
-    <p>
-	    Start Date:
-	    <%= text_field_tag :schedule_start, start_d %>
-	    <br />
-	    Start Time:
-	    <%= text_field_tag :schedule_start_time, start_t %>
-	    <br />
-	    End Date:
-	    <%= text_field_tag :schedule_end, end_d %>
-	    <br />
-	    End Time:
-	    <%= text_field_tag :schedule_end_time, end_t %>
-    </p>
-  </div>
-  <h2>Sign in/out</h2>
-  <div>
-  	<% for equip in Equipment.find(:all) %>
-		<% if @booking.equipments.include?(equip) %>
-			<% if !@booking.sign_out_times.key?(equip.id) %>
-		  		<p>
-		  			<%= equip.name %>
-		  			Sign out
-		  			<%= check_box_tag "booking[sign_out_ids][]", equip.id, false %>
-		  		</p>
-		  	<% else %>
-		  		<% if !@booking.sign_in_times.key?(equip.id) %>
-		  		<p>
-		  			<%= equip.name %>
-		  			Sign in
-		  			<%= check_box_tag "booking[sign_in_ids][]", equip.id, false %>
-		  		</p>
-		  		<% end %>
-	  		<% end %>
-  		<% end %>
-
-  	<% end %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<div class="actions">
+	<%= f.submit %>
+</div>
 <% end %>
