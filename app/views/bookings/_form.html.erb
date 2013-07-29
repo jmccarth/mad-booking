@@ -78,7 +78,7 @@
 				<% if @booking.equipments.include?(equip) %>
 					<% if !@booking.sign_out_times.key?(equip.id) %>
 						<p>
-							<%= check_box_tag "booking[sign_out_ids][]", equip.id, false %>
+							<%= check_box_tag "booking[sign_out_ids][]", equip.id, false, { :id => "barcode_#{equip.barcode}" } %>
 							<%= equip.name %>
 						</p>
 					<% end %>
@@ -95,7 +95,7 @@
 				<% if @booking.equipments.include?(equip) %>
 					<% if !@booking.sign_in_times.key?(equip.id) and @booking.sign_out_times.key?(equip.id) %>
 						<p>
-							<%= check_box_tag "booking[sign_in_ids][]", equip.id, false %>
+							<%= check_box_tag "booking[sign_in_ids][]", equip.id, false, { :id => "barcode_#{equip.barcode}" } %>
 							<%= equip.name %>
 						</p>
 					<% end %>
