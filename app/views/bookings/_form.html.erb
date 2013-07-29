@@ -30,20 +30,30 @@
     <%= f.label :schedule %><br />
     <% if @booking.schedule != nil %>
 	    <% s = IceCube::Schedule.from_yaml(@booking.schedule) %>
-	    <% sd = Date.parse(s.start_time.to_s) %>
-	    <% ed = Date.parse(s.end_time.to_s) %>
+	    <% sd = DateTime.parse(s.start_time.to_s) %>
+	    <% ed = DateTime.parse(s.end_time.to_s) %>
 	    <% start_d = sd.strftime("%m/%d/%Y") %>
+	    <% start_t = sd.strftime("%I:%M %p")%>
 	    <% end_d = ed.strftime("%m/%d/%Y") %>
+	    <% end_t = ed.strftime("%I:%M %p")%>
 	<% else %>
 		<% start_d = Time.now.strftime("%m/%d/%Y") %>
+		<% start_t = Time.now.strftime("%I:%M %p") %>
 		<% end_d = start_d %>
+		<% end_t = start_t %>
     <% end %>
     <p>
-	    Start:
+	    Start Date:
 	    <%= text_field_tag :schedule_start, start_d %>
 	    <br />
-	    End:
+	    Start Time:
+	    <%= text_field_tag :schedule_start_time, start_t %>
+	    <br />
+	    End Date:
 	    <%= text_field_tag :schedule_end, end_d %>
+	    <br />
+	    End Time:
+	    <%= text_field_tag :schedule_end_time, end_t %>
     </p>
   </div>
   <div class="actions">

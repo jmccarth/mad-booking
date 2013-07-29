@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery.ui.all
+//= require jquery.timepicker.js
 //= require jquery_ujs
 //= require_tree .
 //= require fullcalendar
@@ -20,4 +21,7 @@
 $(function() {
   $("#schedule_start").datepicker();
   $("#schedule_end").datepicker();
+  $("#schedule_start_time").timepicker({ 'timeFormat': 'h:i A' });
+  $("#schedule_end_time").timepicker({ 'timeFormat': 'h:i A' });
+  
 });

@@ -99,10 +99,17 @@ private
   def format_schedule_write
     s = IceCube::Schedule.new(Time.now)
     
+    #Schedule start and end dates and times
+    #Dates ("07/29/2013")
     start_s = params.delete(:schedule_start)
     end_s = params.delete(:schedule_end)
-    start_d = Date.strptime(start_s,"%m/%d/%Y");
-    end_d = Date.strptime(end_s,"%m/%d/%Y");
+    #Times ("01:00 PM")
+    start_t = params.delete(:schedule_start_time)
+    end_t = params.delete(:schedule_end_time) 
+
+    #Stitch together the strings and parse them
+    start_d = DateTime.strptime(start_s + start_t, "%m/%d/%Y%I:%M %p");
+    end_d = DateTime.strptime(end_s + end_t, "%m/%d/%Y%I:%M %p");
     s.start_time = start_d
     s.end_time = end_d
     

@@ -16,12 +16,22 @@ module BookingsHelper
     booking_sched = IceCube::Schedule.from_yaml(booking.schedule)
     startDate = booking_sched.start_time
     endDate = booking_sched.end_time
+    
+    startD = Date.parse(startDate.to_s)
+    endD = Date.parse(endDate.to_s)
+  
+    if startD === endD
+      isAllDay = false
+    else
+      isAllDay = true
+    end
   
     event = {
       title: booking.user,
       start: startDate,
       end: endDate,
-      id: booking.id
+      id: booking.id,
+      allDay: isAllDay
     }
     
   end

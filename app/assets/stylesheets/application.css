@@ -10,6 +10,7 @@
  *
  *= require_self
  *= require jquery.ui.all
+ *= require jquery.timepicker.css
  *= require_tree .
  *= require fullcalendar
  *= require fullcalendar.print
