@@ -1,21 +1,22 @@
 <h1>MAD Equipment</h1>
 
-<div>
-	<ul>
-		<% for equip in Equipment.find(:all) %>
-			<li>
-				<%= link_to equip.name, "#", :onclick => "reloadCalendar([#{equip.id}])" %>
-			</li>
-		<% end %>
-			<li>
-				<%= link_to "All equipment", "#", :onclick => "reloadCalendar()" %>
-			</li>
-	</ul>
+<hr />
+
+<div class="row">
+	<div class="large-3 columns">
+		<div class="panel">
+			<ul class="side-nav">
+				<% for equip in Equipment.find(:all) %>
+					<li>
+						<%= link_to equip.name, "#", :onclick => "reloadCalendar([#{equip.id}])" %>
+					</li>
+				<% end %>
+					<li>
+						<%= link_to "All equipment", "#", :onclick => "reloadCalendar()" %>
+					</li>
+			</ul>
+		</div>
+	</div>
+	<div id="calendar" class="large-9 columns">
+	</div>
 </div>
-
-
-
-
-<%= content_tag "div", id:"calendar" do %>
-	
-<% end %>

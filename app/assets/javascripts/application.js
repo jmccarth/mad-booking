@@ -14,6 +14,7 @@
 //= require jquery.ui.all
 //= require jquery.timepicker.js
 //= require jquery_ujs
+//= require foundation
 //= require_tree .
 //= require fullcalendar
 //= require home
@@ -25,3 +26,4 @@ $(function() {
   $("#schedule_end_time").timepicker({ 'timeFormat': 'h:i A' });
   
 });
+$(document).foundation();
