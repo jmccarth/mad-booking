@@ -69,7 +69,41 @@ class BookingsController < ApplicationController
   # PUT /bookings/1.json
   def update
     params[:booking][:equipment_ids] ||= []
+    params[:booking][:sign_out_ids] ||= []
+    params[:booking][:sign_in_ids] ||= []
     @booking = Booking.find(params[:id])
+    
+    #Grab ids of items being signed out and do some hash magic
+    so_ids = params[:booking].delete :sign_out_ids
+    out = {}
+    so_ids.each do |so_id|
+      out[so_id.to_i] = DateTime.now
+    end
+
+    #Grab ids of items being signed in and do some hash magic
+    si_ids = params[:booking].delete :sign_in_ids
+    sign_in = {}
+    si_ids.each do |si_id|
+      sign_in[si_id.to_i] = DateTime.now
+    end
+    
+    b = Booking.find(params[:id])
+    
+    #Get any existing sign out times from event object
+    sot = b.sign_out_times
+    #Merge those sign out times with new values from out_times hash we created
+    sot.merge!(out)
+    #Merge those results into params hash
+    out_times = {:sign_out_times=>sot}
+    params[:booking].merge!(out_times)
+    
+    #Get any existing sign in times from event object
+    sit = b.sign_in_times
+    #Merge those sign in times with new values from in_times hash we created
+    sit.merge!(sign_in)
+    #Merge those results into params hash
+    in_times = {:sign_in_times=>sit}
+    params[:booking].merge!(in_times)
 
     respond_to do |format|
       if @booking.update_attributes(params[:booking])

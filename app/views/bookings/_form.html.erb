@@ -56,6 +56,29 @@
 	    <%= text_field_tag :schedule_end_time, end_t %>
     </p>
   </div>
+  <h2>Sign in/out</h2>
+  <div>
+  	<% for equip in Equipment.find(:all) %>
+		<% if @booking.equipments.include?(equip) %>
+			<% if !@booking.sign_out_times.key?(equip.id) %>
+		  		<p>
+		  			<%= equip.name %>
+		  			Sign out
+		  			<%= check_box_tag "booking[sign_out_ids][]", equip.id, false %>
+		  		</p>
+		  	<% else %>
+		  		<% if !@booking.sign_in_times.key?(equip.id) %>
+		  		<p>
+		  			<%= equip.name %>
+		  			Sign in
+		  			<%= check_box_tag "booking[sign_in_ids][]", equip.id, false %>
+		  		</p>
+		  		<% end %>
+	  		<% end %>
+  		<% end %>
+
+  	<% end %>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>
