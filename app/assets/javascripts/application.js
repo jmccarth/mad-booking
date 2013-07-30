@@ -15,15 +15,45 @@
 //= require jquery.timepicker.js
 //= require jquery_ujs
 //= require foundation
-//= require_tree .
 //= require fullcalendar
 //= require home
+//= require barcode_listener
 
 $(function() {
-  $("#schedule_start").datepicker();
-  $("#schedule_end").datepicker();
-  $("#schedule_start_time").timepicker({ 'timeFormat': 'h:i A' });
-  $("#schedule_end_time").timepicker({ 'timeFormat': 'h:i A' });
-  
+	$("#schedule_start").datepicker();
+	$("#schedule_end").datepicker();
+	$("#schedule_start_time").timepicker({
+		'timeFormat' : 'h:i A'
+	});
+	$("#schedule_end_time").timepicker({
+		'timeFormat' : 'h:i A'
+	});
+
 });
-$(document).foundation();
+
+$(document).ready(function() {
+	var chars = [];
+	var barcode = "";
+	$(window).keypress(function(e) {
+		barcode += String.fromCharCode(e.which);
+		if (e.which === 13) {
+			if ($("#sign_out_tab").attr('class') == "active") {
+				if ($("#bc_out_" + barcode).length > 0) {
+					$("#bc_out_" + barcode)[0].checked = !$("#bc_out_" + barcode)[0].checked;
+				} else {
+					alert("Item with barcode " + barcode + " not found for sign out.");
+				}
+			} else if ($("#sign_in_tab").attr('class') == "active") {
+				if ($("#bc_in_" + barcode).length > 0) {
+					$("#bc_in_" + barcode)[0].checked = !$("#bc_in_" + barcode)[0].checked;
+				} else {
+					alert("Item with barcode " + barcode + " not found for sign in.");
+				}
+			}
+
+			barcode = "";
+		}
+	});
+});
+
+$(document).foundation(); 

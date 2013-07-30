@@ -23,17 +23,6 @@ $(document).ready(function() {
 			window.open("bookings/" + calEvent.id)
 		}
 	});
-
-	var chars = [];
-	var barcode = "";
-	$(window).keypress(function(e) {
-		barcode += String.fromCharCode(e.which);
-		if(e.which === 13){
-			$("#barcode_" + barcode)[0].checked = !$("#barcode_" + barcode)[0].checked;
-			barcode = "";
-		}
-	});
-
 });
 
 function reloadCalendar(items) {

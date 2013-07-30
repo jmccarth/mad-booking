@@ -1,3 +1,4 @@
+
 <%= form_for(@booking) do |f| %>
 <% if @booking.errors.any? %>
 <div id="error_explanation">
@@ -69,7 +70,7 @@
 			</div>
 		</div>
 	</section>
-	<section>
+	<section id="sign_out_tab">
 		<p class="title" data-section-title>
 			<a href="#signout">Sign Out</a>
 		</p>
@@ -78,7 +79,7 @@
 				<% if @booking.equipments.include?(equip) %>
 					<% if !@booking.sign_out_times.key?(equip.id) %>
 						<p>
-							<%= check_box_tag "booking[sign_out_ids][]", equip.id, false, { :id => "barcode_#{equip.barcode}" } %>
+							<%= check_box_tag "booking[sign_out_ids][]", equip.id, false, { :id => "bc_out_#{equip.barcode}" } %>
 							<%= equip.name %>
 						</p>
 					<% end %>
@@ -86,7 +87,7 @@
 			<% end %>
 		</div>
 	</section>
-	<section>
+	<section id="sign_in_tab">
 		<p class="title" data-section-title>
 			<a href="#signin">Sign In</a>
 		</p>
@@ -95,7 +96,7 @@
 				<% if @booking.equipments.include?(equip) %>
 					<% if !@booking.sign_in_times.key?(equip.id) and @booking.sign_out_times.key?(equip.id) %>
 						<p>
-							<%= check_box_tag "booking[sign_in_ids][]", equip.id, false, { :id => "barcode_#{equip.barcode}" } %>
+							<%= check_box_tag "booking[sign_in_ids][]", equip.id, false, { :id => "bc_in_#{equip.barcode}" } %>
 							<%= equip.name %>
 						</p>
 					<% end %>
