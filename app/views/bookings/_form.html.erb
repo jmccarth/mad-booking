@@ -13,6 +13,9 @@
 	</ul>
 </div>
 <% end %>
+<% flash.each do |name, msg| %>
+	<%= content_tag :div, msg, class: "alert-box" %>
+<% end %>
 <div class="section-container auto" data-section>
 	<section>
 		<p class="title" data-section-title>

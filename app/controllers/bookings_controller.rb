@@ -1,7 +1,7 @@
 include BookingsHelper
 class BookingsController < ApplicationController
   before_filter :format_schedule_write, :only => [:create,:update]
-
+  
   
   # GET /bookings
   # GET /bookings.json
@@ -64,15 +64,20 @@ class BookingsController < ApplicationController
   # POST /bookings.json
   def create
     @booking = Booking.new(params[:booking])
-
-    
+    conflict_bookings = has_conflict(@booking,params[:booking][:equipment_ids])
     respond_to do |format|
-      if @booking.save
-        format.html { redirect_to @booking, notice: 'Booking was successfully created.' }
-        format.json { render json: @booking, status: :created, location: @booking }
+      if conflict_bookings.length == 0
+        if @booking.save
+          format.html { redirect_to @booking, notice: 'Booking was successfully created.' }
+          format.json { render json: @booking, status: :created, location: @booking }
+        else
+          format.html { render action: "new" }
+          format.json { render json: @booking.errors, status: :unprocessable_entity }
+        end
       else
-        format.html { render action: "new" }
-        format.json { render json: @booking.errors, status: :unprocessable_entity }
+        format.html { flash[:notice] = "Conflicts found with the following bookings:" + conflict_bookings.to_s 
+          render action: "new" }
+        #TODO: Json format  
       end
     end
   end
@@ -161,5 +166,7 @@ private
     
     params[:booking].merge!({:schedule => s.to_yaml()})
   end
+  
+
   
 end
