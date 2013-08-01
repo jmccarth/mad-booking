@@ -1,4 +1,6 @@
 Equip::Application.routes.draw do
+  resources :users
+
   resources :equipment
 
   resources :bookings
