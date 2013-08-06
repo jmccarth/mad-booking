@@ -37,7 +37,7 @@
 				<div class="large-8 columns">
 					<div class="field">
 						<h3><%= f.label :user %></h3>
-						<%= f.text_field :user %>
+						<%= f.text_field :user, :class => 'usersearch' %>
 						<div class="field">
 							<h3><%= f.label :schedule %></h3>
 							<% if @booking.schedule != nil %>

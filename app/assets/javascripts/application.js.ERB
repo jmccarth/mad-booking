@@ -18,6 +18,7 @@
 //= require fullcalendar
 //= require home
 //= require barcode_listener
+//= require twitter/typeahead
 
 $(function() {
 	$("#schedule_start").datepicker();
@@ -27,6 +28,19 @@ $(function() {
 	});
 	$("#schedule_end_time").timepicker({
 		'timeFormat' : 'h:i A'
+	});
+
+	var $search_input = $('.usersearch')
+	$search_input.typeahead([
+		{
+			name: 'name', 
+			local: <%= User.select('distinct username').collect { |user| user.username } %>,
+			header: '<h5>Username</h5>'
+		}
+	]);
+
+	$search_input.on('usersearch:selected', function() {
+		$(this).closest('form').submit();
 	});
 
 });
@@ -56,4 +70,4 @@ $(document).ready(function() {
 	});
 });
 
-$(document).foundation(); 
+$(document).foundation();
