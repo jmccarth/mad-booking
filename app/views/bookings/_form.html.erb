@@ -16,98 +16,110 @@
 <% flash.each do |name, msg| %>
 	<%= content_tag :div, msg, class: "alert-box" %>
 <% end %>
-<div class="section-container auto" data-section>
-	<section>
-		<p class="title" data-section-title>
-			<a href="#">Booking Details</a>
-		</p>
-		<div class="content" data-section-content>
-			<div class="row">
-				<div class="large-4 columns">
-					<div class="panel">
-						<h4>Select equipment</h4>
-						<% for equip in Equipment.find(:all) %>
-						<div>
+
+<div class="row">
+	<div class="large-5 columns">
+		
+		<div class="section-container accordion" data-section="accordion">
+			<% for cat in Category.find(:all) %>
+				<section>
+					<p class="title"><a href="#"><%= cat.name %></a></p>
+					<div class="content">
+						<% for equip in cat.equipments.order('name ASC') %>
 							<%= check_box_tag "booking[equipment_ids][]", equip.id, @booking.equipments.include?(equip) %>
 							<%= equip.name %>
-						</div>
+							<br />
 						<% end %>
 					</div>
+				</section>
+			<% end %>
+			<section>
+				<p class="title"><a href="#">Uncategorized</a></p>
+				<div class="content">
+					<% for e in Equipment.where(category_id: nil).order('name ASC') %>
+						<%= check_box_tag "booking[equipment_ids][]", e.id, @booking.equipments.include?(e) %>
+						<%= e.name %>
+						<br />
+					<% end %>
 				</div>
-				<div class="large-8 columns">
-					<div class="field">
-						<%= f.collection_select(:user_id, User.all, :id, :username)%>
-						
-						<div class="field">
-							<h3><%= f.label :schedule %></h3>
-							<% if @booking.schedule != nil %>
-								<% s = IceCube::Schedule.from_yaml(@booking.schedule) %>
-								<% sd = DateTime.parse(s.start_time.to_s) %>
-								<% ed = DateTime.parse(s.end_time.to_s) %>
-								<% start_d = sd.strftime("%m/%d/%Y") %>
-								<% start_t = sd.strftime("%I:%M %p")%>
-								<% end_d = ed.strftime("%m/%d/%Y") %>
-								<% end_t = ed.strftime("%I:%M %p")%>
-							<% else %>
-								<% start_d = Time.now.strftime("%m/%d/%Y") %>
-								<% start_t = Time.now.strftime("%I:%M %p") %>
-								<% end_d = start_d %>
-								<% end_t = start_t %>
-							<% end %>
-							<p>
-								Start Date:
-								<%= text_field_tag :schedule_start, start_d %>
-								<br />
-								Start Time:
-								<%= text_field_tag :schedule_start_time, start_t %>
-								<br />
-								End Date:
-								<%= text_field_tag :schedule_end, end_d %>
-								<br />
-								End Time:
-								<%= text_field_tag :schedule_end_time, end_t %>
-							</p>
-						</div>
-					</div>
-				</div>
+			</section>
+		</div>
+		<a href="#" class="button" data-reveal-id="sign_in_tab">Sign In</a>
+		<a href="#" class="button" data-reveal-id="sign_out_tab">Sign Out</a>
+	</div>
+	<div class="large-7 columns">
+		<div class="field">
+			<%= f.collection_select(:user_id, User.all, :id, :username)%>
+			
+			<div class="field">
+				<h3><%= f.label :schedule %></h3>
+				<% if @booking.schedule != nil %>
+					<% s = IceCube::Schedule.from_yaml(@booking.schedule) %>
+					<% sd = DateTime.parse(s.start_time.to_s) %>
+					<% ed = DateTime.parse(s.end_time.to_s) %>
+					<% start_d = sd.strftime("%m/%d/%Y") %>
+					<% start_t = sd.strftime("%I:%M %p")%>
+					<% end_d = ed.strftime("%m/%d/%Y") %>
+					<% end_t = ed.strftime("%I:%M %p")%>
+				<% else %>
+					<% start_d = Time.now.strftime("%m/%d/%Y") %>
+					<% start_t = Time.now.strftime("%I:%M %p") %>
+					<% end_d = start_d %>
+					<% end_t = start_t %>
+				<% end %>
+				<p>
+					Start Date:
+					<%= text_field_tag :schedule_start, start_d %>
+					<br />
+					Start Time:
+					<%= text_field_tag :schedule_start_time, start_t %>
+					<br />
+					End Date:
+					<%= text_field_tag :schedule_end, end_d %>
+					<br />
+					End Time:
+					<%= text_field_tag :schedule_end_time, end_t %>
+				</p>
 			</div>
 		</div>
-	</section>
-	<section id="sign_out_tab">
-		<p class="title" data-section-title>
-			<a href="#signout">Sign Out</a>
-		</p>
-		<div class="content" data-section-content>
-			<% for equip in Equipment.find(:all) %>
-				<% if @booking.equipments.include?(equip) %>
-					<% if !@booking.sign_out_times.key?(equip.id) %>
-						<p>
-							<%= check_box_tag "booking[sign_out_ids][]", equip.id, false, { :id => "bc_out_#{equip.barcode}" } %>
-							<%= equip.name %>
-						</p>
-					<% end %>
-				<% end %>
-			<% end %>
-		</div>
-	</section>
-	<section id="sign_in_tab">
-		<p class="title" data-section-title>
-			<a href="#signin">Sign In</a>
-		</p>
-		<div class="content" data-section-content>
-			<% for equip in Equipment.find(:all) %>
-				<% if @booking.equipments.include?(equip) %>
-					<% if !@booking.sign_in_times.key?(equip.id) and @booking.sign_out_times.key?(equip.id) %>
-						<p>
-							<%= check_box_tag "booking[sign_in_ids][]", equip.id, false, { :id => "bc_in_#{equip.barcode}" } %>
-							<%= equip.name %>
-						</p>
-					<% end %>
-				<% end %>
-			<% end %>
-		</div>
-	</section>
+	</div>
 </div>
+
+
+
+
+
+
+
+
+
+	<div id="sign_out_tab" class="reveal-modal">
+		<% for equip in Equipment.find(:all) %>
+			<% if @booking.equipments.include?(equip) %>
+				<% if !@booking.sign_out_times.key?(equip.id) %>
+					<p>
+						<%= check_box_tag "booking[sign_out_ids][]", equip.id, false, { :id => "bc_out_#{equip.barcode}" } %>
+						<%= equip.name %>
+					</p>
+				<% end %>
+			<% end %>
+		<% end %>
+		<a href="#" class="small button success" onclick="$('#sign_out_tab').foundation('reveal','close')">Done</a>
+	</div>
+	<div id="sign_in_tab" class="reveal-modal">
+		<% for equip in Equipment.find(:all) %>
+			<% if @booking.equipments.include?(equip) %>
+				<% if !@booking.sign_in_times.key?(equip.id) and @booking.sign_out_times.key?(equip.id) %>
+					<p>
+						<%= check_box_tag "booking[sign_in_ids][]", equip.id, false, { :id => "bc_in_#{equip.barcode}" } %>
+						<%= equip.name %>
+					</p>
+				<% end %>
+			<% end %>
+		<% end %>
+		<a href="#" class="small button success" onclick="$('#sign_in_tab').foundation('reveal','close')">Done</a>
+	</div>
+
 
 <div class="actions">
 	<%= f.submit %>
