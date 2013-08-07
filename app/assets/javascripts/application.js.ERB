@@ -51,18 +51,13 @@ $(document).ready(function() {
 	$(window).keypress(function(e) {
 		barcode += String.fromCharCode(e.which);
 		if (e.which === 13) {
-			if ($("#sign_out_tab").attr('class') == "active") {
-				if ($("#bc_out_" + barcode).length > 0) {
-					$("#bc_out_" + barcode)[0].checked = !$("#bc_out_" + barcode)[0].checked;
-				} else {
-					alert("Item with barcode " + barcode + " not found for sign out.");
-				}
-			} else if ($("#sign_in_tab").attr('class') == "active") {
-				if ($("#bc_in_" + barcode).length > 0) {
-					$("#bc_in_" + barcode)[0].checked = !$("#bc_in_" + barcode)[0].checked;
-				} else {
-					alert("Item with barcode " + barcode + " not found for sign in.");
-				}
+			if ($("#bc_out_" + barcode).length > 0) {
+				$("#bc_out_" + barcode)[0].checked = !$("#bc_out_" + barcode)[0].checked;
+			} 
+			else if ($("#bc_in_" + barcode).length > 0) {
+				$("#bc_in_" + barcode)[0].checked = !$("#bc_in_" + barcode)[0].checked;
+			} else {
+				alert("Item with barcode " + barcode + " not found for sign in/out.");
 			}
 
 			barcode = "";
