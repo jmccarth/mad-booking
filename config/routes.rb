@@ -1,4 +1,6 @@
 Equip::Application.routes.draw do
+  resources :categories
+
   resources :users
 
   resources :equipment
