@@ -10,7 +10,9 @@
       </ul>
     </div>
   <% end %>
-
+	<div class="field">
+		<%= f.collection_select(:category_id, Category.all, :id, :name)%>
+	</div>
   <div class="field">
     <%= f.label :barcode %><br />
     <%= f.text_field :barcode %>

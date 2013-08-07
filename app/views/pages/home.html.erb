@@ -4,18 +4,30 @@
 
 <div class="row">
 	<div class="large-4 columns">
-		<div class="panel">
-			<ul class="side-nav">
-				<% for equip in Equipment.find(:all) %>
-					<li>
-						<%= link_to equip.name, "#", :onclick => "reloadCalendar([#{equip.id}])" %>
-					</li>
+		<div class="section-container accordion" data-section="accordion">
+				<% for cat in Category.find(:all) %>
+					<section>
+						<p class="title" data-section-title><a href="#"><%= cat.name %></a></p>
+						<div class="content" data-section-content>
+							<% for equip in cat.equipments.order('name ASC') %>
+								<%= link_to equip.name, "#", :onclick => "reloadCalendar([#{equip.id}])" %>
+								<br />
+							<% end %>
+						</div>
+					</section>
 				<% end %>
-					<li>
-						<%= link_to "All equipment", "#", :onclick => "reloadCalendar()" %>
-					</li>
-			</ul>
+				<section>
+					<p class="title" data-section-title><a href="#">Uncategorized</a></p>
+					<div class="content" data-section-content>
+						<% for e in Equipment.where(category_id: nil).order('name ASC') %>
+							<%= link_to e.name, "#", :onclick => "reloadCalendar([#{e.id}])" %>
+							<br />
+						<% end %>
+					</div>
+				</section>
+				
 		</div>
+		<%= link_to "Show all equipment", "#", :onclick => "reloadCalendar()" %>
 	</div>
 	<div id="calendar" class="large-8 columns">
 	</div>
