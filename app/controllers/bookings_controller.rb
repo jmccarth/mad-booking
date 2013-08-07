@@ -2,7 +2,6 @@ include BookingsHelper
 class BookingsController < ApplicationController
   before_filter :format_schedule_write, :only => [:create,:update]
   
-  
   # GET /bookings
   # GET /bookings.json
   def index
@@ -64,20 +63,13 @@ class BookingsController < ApplicationController
   # POST /bookings.json
   def create
     @booking = Booking.new(params[:booking])
-    conflict_bookings = has_conflict(@booking,params[:booking][:equipment_ids])
     respond_to do |format|
-      if conflict_bookings.length == 0
-        if @booking.save
-          format.html { redirect_to @booking, notice: 'Booking was successfully created.' }
-          format.json { render json: @booking, status: :created, location: @booking }
-        else
-          format.html { render action: "new" }
-          format.json { render json: @booking.errors, status: :unprocessable_entity }
-        end
+      if @booking.save
+        format.html { redirect_to @booking, notice: 'Booking was successfully created.' }
+        format.json { render json: @booking, status: :created, location: @booking }
       else
-        format.html { flash[:notice] = "Conflicts found with the following bookings:" + conflict_bookings.to_s 
-          render action: "new" }
-        #TODO: Json format  
+        format.html { render action: "new" }
+        format.json { render json: @booking.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -85,9 +77,6 @@ class BookingsController < ApplicationController
   # PUT /bookings/1
   # PUT /bookings/1.json
   def update
-    
-    
-    
     params[:booking][:equipment_ids] ||= []
     params[:booking][:sign_out_ids] ||= []
     params[:booking][:sign_in_ids] ||= []
@@ -128,7 +117,6 @@ class BookingsController < ApplicationController
     conflict_bookings = has_conflict(@booking,params[:booking][:equipment_ids])
 
     respond_to do |format|
-      
       if conflict_bookings.length == 0
         if @booking.update_attributes(params[:booking])
           format.html { redirect_to @booking, notice: 'Booking was successfully updated.' }
@@ -141,6 +129,7 @@ class BookingsController < ApplicationController
         format.html { flash[:notice] = "Conflicts found with the following bookings:" + conflict_bookings.to_s 
           render action: "new" }
         #TODO: Json format  
+        #TODO: Shouldn't the render action be "Update"
       end
     end
   end
@@ -179,6 +168,15 @@ private
     params[:booking].merge!({:schedule => s.to_yaml()})
   end
   
+  def check_user_exists
+    uname = params[:booking][:user]
+    if User.where(username: uname).length == 0
+      respond_to do |format|
+        format.html { flash[:notice] = "User does not exist: " + uname 
+          render action: "new" }
+      end
+    end
+  end
 
   
 end

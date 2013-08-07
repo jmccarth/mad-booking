@@ -1,6 +1,6 @@
 module BookingsHelper
   
- def has_conflict(booking, equip_ids)
+  def has_conflict(booking,equip_ids)
     conflicts = false
     conflict_ids=[]
     #given an array of equipment ids, check to see if there are conflicting events
@@ -43,7 +43,7 @@ module BookingsHelper
     end
   
     event = {
-      title: booking.user,
+      title: booking.user.username,
       start: startDate,
       end: endDate,
       id: booking.id,

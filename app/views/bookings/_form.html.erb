@@ -36,8 +36,8 @@
 				</div>
 				<div class="large-8 columns">
 					<div class="field">
-						<h3><%= f.label :user %></h3>
-						<%= f.text_field :user, :class => 'usersearch' %>
+						<%= f.collection_select(:user_id, User.all, :id, :username)%>
+						
 						<div class="field">
 							<h3><%= f.label :schedule %></h3>
 							<% if @booking.schedule != nil %>
@@ -48,7 +48,7 @@
 								<% start_t = sd.strftime("%I:%M %p")%>
 								<% end_d = ed.strftime("%m/%d/%Y") %>
 								<% end_t = ed.strftime("%I:%M %p")%>
-								<% else %>
+							<% else %>
 								<% start_d = Time.now.strftime("%m/%d/%Y") %>
 								<% start_t = Time.now.strftime("%I:%M %p") %>
 								<% end_d = start_d %>

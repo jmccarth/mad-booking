@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   before_save :default_values
   has_many :bookings
+  accepts_nested_attributes_for :bookings
   
   def default_values
     if self.admin.nil?
