@@ -17,6 +17,36 @@
 	<%= content_tag :div, msg, class: "alert-box" %>
 <% end %>
 
+
+<div id="sign_out_tab" class="reveal-modal">
+	<% for equip in Equipment.find(:all) %>
+		<% if @booking.equipments.include?(equip) %>
+			<% if !@booking.sign_out_times.key?(equip.id) %>
+					<% sign_out = true %>
+				<p>
+					<%= check_box_tag "booking[sign_out_ids][]", equip.id, false, { :id => "bc_out_#{equip.barcode}" } %>
+					<%= equip.name %>
+				</p>
+			<% end %>
+		<% end %>
+	<% end %>
+	<a href="#" class="small button success" onclick="$('#sign_out_tab').foundation('reveal','close')">Done</a>
+</div>
+<div id="sign_in_tab" class="reveal-modal">
+	<% for equip in Equipment.find(:all) %>
+		<% if @booking.equipments.include?(equip) %>
+			<% if !@booking.sign_in_times.key?(equip.id) and @booking.sign_out_times.key?(equip.id) %>
+				<% sign_in = true %>
+				<p>
+					<%= check_box_tag "booking[sign_in_ids][]", equip.id, false, { :id => "bc_in_#{equip.barcode}" } %>
+					<%= equip.name %>
+				</p>
+			<% end %>
+		<% end %>
+	<% end %>
+	<a href="#" class="small button success" onclick="$('#sign_in_tab').foundation('reveal','close')">Done</a>
+</div>
+
 <div class="row">
 	<div class="large-5 columns">
 		
@@ -44,8 +74,12 @@
 				</div>
 			</section>
 		</div>
-		<a href="#" class="button" data-reveal-id="sign_out_tab">Sign Out</a>
-		<a href="#" class="button" data-reveal-id="sign_in_tab">Sign In</a>
+		<% if sign_out %>
+			<a id="sign_out_button" href="#" class="button" data-reveal-id="sign_out_tab">Sign Out</a>	
+		<% end %>
+		<% if sign_in %>
+			<a id="sign_in_button" href="#" class="button" data-reveal-id="sign_in_tab">Sign In</a>
+		<% end %>
 	</div>
 	<div class="large-7 columns">
 		<div class="field">
@@ -95,32 +129,7 @@
 
 
 
-	<div id="sign_out_tab" class="reveal-modal">
-		<% for equip in Equipment.find(:all) %>
-			<% if @booking.equipments.include?(equip) %>
-				<% if !@booking.sign_out_times.key?(equip.id) %>
-					<p>
-						<%= check_box_tag "booking[sign_out_ids][]", equip.id, false, { :id => "bc_out_#{equip.barcode}" } %>
-						<%= equip.name %>
-					</p>
-				<% end %>
-			<% end %>
-		<% end %>
-		<a href="#" class="small button success" onclick="$('#sign_out_tab').foundation('reveal','close')">Done</a>
-	</div>
-	<div id="sign_in_tab" class="reveal-modal">
-		<% for equip in Equipment.find(:all) %>
-			<% if @booking.equipments.include?(equip) %>
-				<% if !@booking.sign_in_times.key?(equip.id) and @booking.sign_out_times.key?(equip.id) %>
-					<p>
-						<%= check_box_tag "booking[sign_in_ids][]", equip.id, false, { :id => "bc_in_#{equip.barcode}" } %>
-						<%= equip.name %>
-					</p>
-				<% end %>
-			<% end %>
-		<% end %>
-		<a href="#" class="small button success" onclick="$('#sign_in_tab').foundation('reveal','close')">Done</a>
-	</div>
+	
 
 
 <div class="actions">
