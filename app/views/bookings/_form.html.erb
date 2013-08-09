@@ -49,8 +49,8 @@
 	</div>
 	<div class="large-7 columns">
 		<div class="field">
-			<%= f.collection_select(:user_id, User.all, :id, :username)%>
-			
+			<% username = @booking.user.nil? ? "" : @booking.user.username %>
+			<%= f.text_field :user, :class => 'usersearch', :value => username %>
 			<div class="field">
 				<h3><%= f.label :schedule %></h3>
 				<% if @booking.schedule != nil %>

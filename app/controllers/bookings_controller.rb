@@ -35,7 +35,6 @@ class BookingsController < ApplicationController
   # GET /bookings/1.json
   def show
     @booking = Booking.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @booking }
@@ -62,7 +61,11 @@ class BookingsController < ApplicationController
   # POST /bookings
   # POST /bookings.json
   def create
+    username = params[:booking].delete :user
+    user = User.find_by_username(username)
+    
     @booking = Booking.new(params[:booking])
+    @booking.user = user
     respond_to do |format|
       if @booking.save
         format.html { redirect_to @booking, notice: 'Booking was successfully created.' }
@@ -81,6 +84,11 @@ class BookingsController < ApplicationController
     params[:booking][:sign_out_ids] ||= []
     params[:booking][:sign_in_ids] ||= []
     @booking = Booking.find(params[:id])
+    
+    username = params[:booking].delete :user
+    user = User.find_by_username(username)
+    
+    @booking.user = user
     
     #Grab ids of items being signed out and do some hash magic
     so_ids = params[:booking].delete :sign_out_ids
