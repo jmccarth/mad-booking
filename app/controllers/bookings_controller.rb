@@ -63,7 +63,10 @@ class BookingsController < ApplicationController
   def create
     username = params[:booking].delete :user
     user = User.find_by_username(username)
-    
+    if (user.nil? and params[:create_if_new])
+      User.create(:username => username)
+      user = User.find_by_username(username)
+    end
     @booking = Booking.new(params[:booking])
     @booking.user = user
     respond_to do |format|
@@ -87,7 +90,10 @@ class BookingsController < ApplicationController
     
     username = params[:booking].delete :user
     user = User.find_by_username(username)
-    
+    if (user.nil? and params[:create_if_new])
+      User.create(:username => username)
+      user = User.find_by_username(username)
+    end
     @booking.user = user
     
     #Grab ids of items being signed out and do some hash magic

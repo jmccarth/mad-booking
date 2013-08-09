@@ -51,6 +51,8 @@
 		<div class="field">
 			<% username = @booking.user.nil? ? "" : @booking.user.username %>
 			<%= f.text_field :user, :class => 'usersearch', :value => username %>
+			<%= check_box_tag 'create_if_new', 'create', false %>
+			<%= "Create user if new?"%>
 			<div class="field">
 				<h3><%= f.label :schedule %></h3>
 				<% if @booking.schedule != nil %>
