@@ -24,10 +24,16 @@ $(document).ready(function() {
 		},
 		eventRender: function(calEvent,element){
 			if (calEvent.status == 0){
+				calEvent.color = "purple"
+			}
+			else if (calEvent.status == 1){
 				calEvent.color = "blue"
 			}
-			else{
+			else if (calEvent.status == 2){
 				calEvent.color = "green"
+			}
+			else{
+				calEvent.color = "red"
 			}
 		}
 	});

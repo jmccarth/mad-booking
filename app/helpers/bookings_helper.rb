@@ -43,8 +43,13 @@ module BookingsHelper
     end
   
     if booking.equipments.count == booking.sign_in_times.count
+      #Everything is signed in, booking is done
+      b_status = 2
+    elsif booking.sign_out_times.count > 0
+      #At least 1 item is signed out, booking is active
       b_status = 1
     else
+      #Nothing signed out, booking is pending
       b_status = 0
     end
   
