@@ -9,6 +9,8 @@ class Booking < ActiveRecord::Base
   serialize :sign_out_times, Hash
   validate :real_user
   validate :correct_times
+  validates_presence_of :equipments
+  
   
   private
   def real_user
