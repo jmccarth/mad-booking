@@ -30,7 +30,7 @@
 			<% end %>
 		<% end %>
 	<% end %>
-	<a href="#" class="small button success" onclick="$('#sign_out_tab').foundation('reveal','close')">Done</a>
+	<a class="close-reveal-modal">x</a>
 </div>
 <div id="sign_in_tab" class="reveal-modal">
 	<% for equip in Equipment.find(:all) %>
@@ -44,7 +44,29 @@
 			<% end %>
 		<% end %>
 	<% end %>
-	<a href="#" class="small button success" onclick="$('#sign_in_tab').foundation('reveal','close')">Done</a>
+	<a class="close-reveal-modal">x</a>
+</div>
+<div class="row">
+	<div class="large-12 columns">
+		<div class="panel">
+			<h3>Equipment Status</h3>
+			<% for equip in @booking.equipments %>
+				<%= equip.name %>
+				<% if @booking.sign_in_times.key?(equip.id) %>
+					<span class="success label">In</span>
+				<% elsif @booking.sign_out_times.key?(equip.id) %>
+					<% if @booking.sign_out_times[equip.id] < DateTime.now %>
+						<span class="alert label">Overdue</span>
+					<% else %>
+						<span class="label">Out</span>
+					<% end %>
+				<% else %>
+					<span class="secondary label">Booked</span>
+				<% end %>
+				<br />
+			<% end %>
+		</div>
+	</div>	
 </div>
 
 <div class="row">
@@ -121,6 +143,9 @@
 				<h3><%= f.label :comments %></h3>
 				<%= f.text_area :comments %>
 			</div>
+			<div class="actions">
+				<%= f.submit %>
+			</div>
 		</div>
 	</div>
 </div>
@@ -136,7 +161,5 @@
 	
 
 
-<div class="actions">
-	<%= f.submit %>
-</div>
+
 <% end %>
