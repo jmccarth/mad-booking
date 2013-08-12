@@ -13,7 +13,6 @@
  *= require jquery.timepicker.css
  *= require_tree .
  *= require fullcalendar
- *= require fullcalendar.print
 */
  *= require foundation_and_overrides
 

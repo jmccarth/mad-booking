@@ -42,12 +42,19 @@ module BookingsHelper
       isAllDay = true
     end
   
+    if booking.equipments.count == booking.sign_in_times.count
+      b_status = 1
+    else
+      b_status = 0
+    end
+  
     event = {
       title: booking.user.username,
       start: startDate,
       end: endDate,
       id: booking.id,
-      allDay: isAllDay
+      allDay: isAllDay,
+      status: b_status
     }
     
   end
