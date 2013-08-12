@@ -8,6 +8,7 @@ class Booking < ActiveRecord::Base
   serialize :sign_in_times, Hash
   serialize :sign_out_times, Hash
   validate :real_user
+  validate :allowed_user
   validate :correct_times
   validates_presence_of :equipments
   
@@ -17,6 +18,21 @@ class Booking < ActiveRecord::Base
     #Check to see if the user already exists. If not fail the validation.
     valid = User.exists?(self.user_id)
     self.errors.add(:user, "doesn't exist. Please create the user first.") unless valid
+  end
+  
+  def allowed_user
+    #Check to see that the user is allowed to book equipment.
+    #status = 0 - user is in good standing
+    #status = 1 - user is greylisted
+    #status = 2 - user is blacklisted
+    
+    status = User.find(self.user_id).status
+    
+    if status == 2
+      self.errors.add(:user, "has been blacklisted and is not allowed to book equipment.")
+    elsif status == 1
+      self.errors.add(:user, "has been greylisted and is not allowed to book equipment.")
+    end
   end
   
   def correct_times
