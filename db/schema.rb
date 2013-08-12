@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130807134232) do
+ActiveRecord::Schema.define(:version => 20130812145846) do
 
   create_table "bookings", :force => true do |t|
     t.string   "schedule"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(:version => 20130807134232) do
     t.text     "sign_in_times"
     t.text     "sign_out_times"
     t.integer  "user_id"
+    t.text     "comments"
   end
 
   create_table "bookings_equipment", :id => false, :force => true do |t|
