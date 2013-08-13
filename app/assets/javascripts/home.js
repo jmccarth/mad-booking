@@ -21,21 +21,8 @@ $(document).ready(function() {
 		}],
 		eventClick : function(calEvent, jsEvent, view) {
 			window.open("bookings/" + calEvent.id + "/edit")
-		},
-		eventRender: function(calEvent,element){
-			if (calEvent.status == 0){
-				calEvent.color = "purple"
-			}
-			else if (calEvent.status == 1){
-				calEvent.color = "blue"
-			}
-			else if (calEvent.status == 2){
-				calEvent.color = "green"
-			}
-			else{
-				calEvent.color = "red"
-			}
 		}
+
 	});
 });
 
@@ -62,7 +49,7 @@ function reloadCalendar(items) {
 			}
 		}],
 		eventClick : function(calEvent, jsEvent, view) {
-			window.open("bookings/" + calEvent.id)
+			window.open("bookings/" + calEvent.id + "/edit");
 		}
 	});
 }
