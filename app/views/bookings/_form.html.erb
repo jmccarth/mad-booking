@@ -55,7 +55,7 @@
 				<% if @booking.sign_in_times.key?(equip.id) %>
 					<span class="success label">In</span>
 				<% elsif @booking.sign_out_times.key?(equip.id) %>
-					<% if @booking.sign_out_times[equip.id] < DateTime.now %>
+					<% if IceCube::Schedule.from_yaml(@booking.schedule).end_time < DateTime.now %>
 						<span class="alert label">Overdue</span>
 					<% else %>
 						<span class="label">Out</span>
