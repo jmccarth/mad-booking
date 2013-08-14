@@ -44,7 +44,7 @@ function reloadCalendar(items) {
 			center : 'title',
 			right : 'month,agendaWeek,agendaDay'
 		},
-		editable : true,
+		editable : false,
 		eventSources : [{
 			url : "/bookings",
 			data : {
