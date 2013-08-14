@@ -61,7 +61,7 @@
 					<span class="success label">In</span> at <%= @booking.sign_in_times[equip.id] %> 
 				<% elsif @booking.sign_out_times.key?(equip.id) %>
 					<% if IceCube::Schedule.from_yaml(@booking.schedule).end_time < DateTime.now %>
-						<span class="alert label">Overdue</span>
+						<span class="alert label">Overdue</span> out at <%= @booking.sign_out_times[equip.id] %>
 					<% else %>
 						<span class="label">Out</span> at <%= @booking.sign_out_times[equip.id] %>
 					<% end %>
@@ -102,10 +102,10 @@
 			</section>
 		</div>
 		<% if sign_out %>
-			<a id="sign_out_button" href="#" class="button" data-reveal-id="sign_out_tab">Sign Out</a>	
+			<a id="sign_out_button" href="#" class="small button" data-reveal-id="sign_out_tab">Sign Out</a>	
 		<% end %>
 		<% if sign_in %>
-			<a id="sign_in_button" href="#" class="button" data-reveal-id="sign_in_tab">Sign In</a>
+			<a id="sign_in_button" href="#" class="small button" data-reveal-id="sign_in_tab">Sign In</a>
 		<% end %>
 	</div>
 	<div class="large-7 columns">
@@ -150,7 +150,7 @@
 			</div>
 			<div class="actions">
 				<% if !disable_ui %>
-					<%= f.submit %>
+					<%= f.submit 'Update Booking', :class => 'large button success' %>
 				<% end %>
 			</div>
 		</div>
