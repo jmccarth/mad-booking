@@ -69,6 +69,7 @@ class BookingsController < ApplicationController
     end
     @booking = Booking.new(params[:booking])
     @booking.user = user
+    
     respond_to do |format|
       if @booking.save
         format.html { redirect_to @booking, notice: 'Booking was successfully created.' }
@@ -128,22 +129,15 @@ class BookingsController < ApplicationController
     in_times = {:sign_in_times=>sit}
     params[:booking].merge!(in_times)
 
-    conflict_bookings = has_conflict(@booking,params[:booking][:equipment_ids])
+    
 
     respond_to do |format|
-      if conflict_bookings.length == 0
-        if @booking.update_attributes(params[:booking])
-          format.html { redirect_to @booking, notice: 'Booking was successfully updated.' }
-          format.json { head :no_content }
-        else
-          format.html { render action: "edit" }
-          format.json { render json: @booking.errors, status: :unprocessable_entity }
-        end
+      if @booking.update_attributes(params[:booking])
+        format.html { redirect_to @booking, notice: 'Booking was successfully updated.' }
+        format.json { head :no_content }
       else
-        format.html { flash[:notice] = "Conflicts found with the following bookings:" + conflict_bookings.to_s 
-          render action: "new" }
-        #TODO: Json format  
-        #TODO: Shouldn't the render action be "Update"
+        format.html { render action: "edit" }
+        format.json { render json: @booking.errors, status: :unprocessable_entity }
       end
     end
   end
