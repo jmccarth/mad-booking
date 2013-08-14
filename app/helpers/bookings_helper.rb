@@ -36,12 +36,24 @@ module BookingsHelper
     startD = Date.parse(startDate.to_s)
     endD = Date.parse(endDate.to_s)
   
+    #All day event?
     if startD === endD
       isAllDay = false
     else
       isAllDay = true
     end
   
+    #Booking title
+    user = booking.user.username
+    equip_list = "["
+    for e in booking.equipments do
+      equip_list += e.name + ","
+    end
+    equip_list = equip_list[0,equip_list.length - 1]
+    equip_list += "]"
+    b_title = user + " " + equip_list
+  
+    #Equipment status
     if booking.equipments.count == booking.sign_in_times.count
       #Everything is signed in, booking is done
       b_status = 2
@@ -57,7 +69,7 @@ module BookingsHelper
     end
   
     event = {
-      title: booking.user.username,
+      title: b_title,
       start: startDate,
       end: endDate,
       id: booking.id,

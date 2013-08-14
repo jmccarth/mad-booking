@@ -17,6 +17,11 @@
 	<%= content_tag :div, msg, class: "alert-box" %>
 <% end %>
 
+<% if @booking.equipments.count == @booking.sign_in_times.count %>
+	<% disable_ui = true %>
+<% else %>
+	<% disable_ui = false %>
+<% end %>
 
 <div id="sign_out_tab" class="reveal-modal">
 	<% for equip in Equipment.find(:all) %>
@@ -53,12 +58,12 @@
 			<% for equip in @booking.equipments %>
 				<%= equip.name %>
 				<% if @booking.sign_in_times.key?(equip.id) %>
-					<span class="success label">In</span>
+					<span class="success label">In</span> at <%= @booking.sign_in_times[equip.id] %> 
 				<% elsif @booking.sign_out_times.key?(equip.id) %>
 					<% if IceCube::Schedule.from_yaml(@booking.schedule).end_time < DateTime.now %>
 						<span class="alert label">Overdue</span>
 					<% else %>
-						<span class="label">Out</span>
+						<span class="label">Out</span> at <%= @booking.sign_out_times[equip.id] %>
 					<% end %>
 				<% else %>
 					<span class="secondary label">Booked</span>
@@ -78,7 +83,7 @@
 					<p class="title"><a href="#"><%= cat.name %></a></p>
 					<div class="content">
 						<% for equip in cat.equipments.order('name ASC') %>
-							<%= check_box_tag "booking[equipment_ids][]", equip.id, @booking.equipments.include?(equip) %>
+							<%= check_box_tag "booking[equipment_ids][]", equip.id, @booking.equipments.include?(equip), :disabled => disable_ui %>
 							<%= equip.name %>
 							<br />
 						<% end %>
@@ -89,7 +94,7 @@
 				<p class="title"><a href="#">Uncategorized</a></p>
 				<div class="content">
 					<% for e in Equipment.where(category_id: nil).order('name ASC') %>
-						<%= check_box_tag "booking[equipment_ids][]", e.id, @booking.equipments.include?(e) %>
+						<%= check_box_tag "booking[equipment_ids][]", e.id, @booking.equipments.include?(e), :disabled => disable_ui %>
 						<%= e.name %>
 						<br />
 					<% end %>
@@ -106,8 +111,8 @@
 	<div class="large-7 columns">
 		<div class="field">
 			<% username = @booking.user.nil? ? "" : @booking.user.username %>
-			<%= f.text_field :user, :class => 'usersearch', :value => username %>
-			<%= check_box_tag 'create_if_new', 'create', false %>
+			<%= f.text_field :user, :class => 'usersearch', :value => username, :disabled => disable_ui %>
+			<%= check_box_tag 'create_if_new', 'create', false, :disabled => disable_ui %>
 			<%= "Create user if new?"%>
 			<div class="field">
 				<h3><%= f.label :schedule %></h3>
@@ -127,24 +132,26 @@
 				<% end %>
 				<p>
 					Start Date:
-					<%= text_field_tag :schedule_start, start_d %>
+					<%= text_field_tag :schedule_start, start_d, :disabled => disable_ui %>
 					<br />
 					Start Time:
-					<%= text_field_tag :schedule_start_time, start_t %>
+					<%= text_field_tag :schedule_start_time, start_t, :disabled => disable_ui %>
 					<br />
 					End Date:
-					<%= text_field_tag :schedule_end, end_d %>
+					<%= text_field_tag :schedule_end, end_d, :disabled => disable_ui %>
 					<br />
 					End Time:
-					<%= text_field_tag :schedule_end_time, end_t %>
+					<%= text_field_tag :schedule_end_time, end_t, :disabled => disable_ui %>
 				</p>
 			</div>
 			<div class="field">
 				<h3><%= f.label :comments %></h3>
-				<%= f.text_area :comments %>
+				<%= f.text_area :comments, :disabled => disable_ui %>
 			</div>
 			<div class="actions">
-				<%= f.submit %>
+				<% if !disable_ui %>
+					<%= f.submit %>
+				<% end %>
 			</div>
 		</div>
 	</div>
