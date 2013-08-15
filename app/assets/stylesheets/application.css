@@ -45,12 +45,17 @@
 	padding-bottom:0;
 }
 
+.accordion a.book {
+	padding-bottom:12px !important; /* glitch fix */
+}
+
 /* CALENDAR */
 
 table.fc-header {
 	border:none;
 }
 
+/* TYPEAHEAD */
 
 .twitter-typeahead {
 	width:100%;

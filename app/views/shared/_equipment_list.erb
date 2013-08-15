@@ -32,9 +32,14 @@
 			</a>
 		</p>
 		<div class="content" data-section-content>
-			<% uncat.each do |e| %>
-				<%= link_to e.name, "#", :onclick => "reloadCalendar([#{e.id}])" %>
-			<% end %>
+			<ul class="side-nav">
+				<% uncat.each do |e| %>
+					<li>
+						<span class="right"><input type="checkbox" /></span>
+						<%= link_to e.name, "#", :onclick => "reloadCalendar([#{e.id}])" %>
+					</li>
+				<% end %>
+			</ul>
 		</div>
 	</section>
 </div>
