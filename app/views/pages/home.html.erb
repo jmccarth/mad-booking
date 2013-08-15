@@ -1,36 +1,13 @@
-<h1>MAD Equipment</h1>
-
-<hr />
+<div class="row">
+	<div class="small-12 columns">
+		<h1>Bookings <%= link_to '[+]', new_booking_path %></h1>
+	</div>
+</div>
 
 <div class="row">
-	<div class="large-4 columns">
-		<div class="section-container accordion" data-section="accordion">
-				<% for cat in Category.find(:all) %>
-					<section>
-						<p class="title" data-section-title><a href="#"><%= cat.name %></a></p>
-						<div class="content" data-section-content>
-							<% for equip in cat.equipments.order('name ASC') %>
-								<%= link_to equip.name, "#", :onclick => "reloadCalendar([#{equip.id}])" %>
-								<br />
-							<% end %>
-						</div>
-					</section>
-				<% end %>
-				<section>
-					<p class="title" data-section-title><a href="#">Uncategorized</a></p>
-					<div class="content" data-section-content>
-						<% for e in Equipment.where(category_id: nil).order('name ASC') %>
-							<%= link_to e.name, "#", :onclick => "reloadCalendar([#{e.id}])" %>
-							<br />
-						<% end %>
-					</div>
-				</section>
-				
-		</div>
-		<%= link_to "Show all equipment", "#", :onclick => "reloadCalendar()" %>
+	<div class="small-12 large-3 columns">
+		<%= render 'shared/equipment_list' %>
 	</div>
-	<div id="calendar" class="large-8 columns">
+	<div id="calendar" class="small-12 large-9 columns">
 	</div>
-	<%= link_to 'New Booking', new_booking_path, class: "button" %>
-	
 </div>
