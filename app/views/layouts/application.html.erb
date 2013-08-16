@@ -25,25 +25,25 @@
 
 	<%= render 'shared/navigation' %>
 
-			<% if notice %>
-				<div class="alert-box" id="notice"><%= notice %></div>
-			<% end %>
-			
-			<%= yield %>
-			
-			<hr />
-			<footer>
-				<div class="row">
-					<div class="small-6 columns">
-						<p>&copy; 2013 uWaterloo</p>
-					</div>
-					<div class="small-6 columns">
-						<ul class="inline-list right">
-							<li><%= link_to "Bookings", bookings_path %></li>
-							<li><%= link_to 'Contact us', '/contact' %></li>
-						</ul>
-					</div>
-			</footer>
+	<% if notice %>
+		<div class="alert-box" id="notice"><%= notice %></div>
+	<% end %>
+	
+	<%= yield %>
+	
+	<hr />
+	<footer>
+		<div class="row">
+			<div class="small-6 columns">
+				<p>&copy; 2013 uWaterloo</p>
+			</div>
+			<div class="small-6 columns">
+				<ul class="inline-list right">
+					<li><%= link_to "Bookings", bookings_path %></li>
+					<li><%= link_to 'Contact us', '/contact' %></li>
+				</ul>
+			</div>
+	</footer>
 			
     <%= javascript_include_tag "application" %>
   </body>
