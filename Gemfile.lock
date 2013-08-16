@@ -75,6 +75,7 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.23)
     multi_json (1.7.7)
+    mysql2 (0.3.11)
     mysql2 (0.3.11-x86-mingw32)
     polyglot (0.3.3)
     rack (1.4.5)
@@ -128,6 +129,7 @@ GEM
       sass (>= 3.2.0)
 
 PLATFORMS
+  ruby
   x86-mingw32
 
 DEPENDENCIES
@@ -144,4 +146,4 @@ DEPENDENCIES
   sass-rails (~> 3.2.3)
   twitter-typeahead-rails
   uglifier (>= 1.0.3)
-  zurb-foundation (= 4.3.1)
+  zurb-foundation (~> 4.3.1)

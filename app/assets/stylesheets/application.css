@@ -9,12 +9,53 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require jquery.ui.datepicker
+ *= require jquery.ui.all
  *= require jquery.timepicker.css
  *= require_tree .
  *= require fullcalendar
-*/
  *= require foundation_and_overrides
+*/
+
+/* TEMPLATE */
+ 
+#mad .row {
+	width:100%;
+	max-width:100%;
+}
+
+/* ACCORDION */
+
+.accordion .label {
+	display:inline-block;
+	margin-left:10px;
+	font-size:110%;
+}
+
+.accordion input[type=checkbox] {
+	font-size:115%;
+}
+
+.accordion .side-nav li {
+	border-bottom:1px solid #ddd;
+	padding-bottom:7px;
+}
+
+.accordion .side-nav li:last-child {
+	border:none;
+	padding-bottom:0;
+}
+
+.accordion a.book {
+	padding-bottom:12px !important; /* glitch fix */
+}
+
+/* CALENDAR */
+
+table.fc-header {
+	border:none;
+}
+
+/* TYPEAHEAD */
 
 .twitter-typeahead {
 	width:100%;

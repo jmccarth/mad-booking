@@ -1,0 +1,45 @@
+<div class="section-container accordion" data-section="accordion">
+		<% for cat in Category.find(:all) %>
+		<section>
+			<p class="title" data-section-title>
+				<a href="#">
+					<%= cat.name %>
+					<span class="right radius label">
+						2 / <%= cat.equipments.count %>
+					</span>
+				</a>
+			</p>
+			<div class="content" data-section-content>
+				<ul class="side-nav">
+				<% for equip in cat.equipments.order('name ASC') %>
+					<li>
+						<span class="right"><input type="checkbox" /></span>
+						<%= link_to equip.name, "#", :onclick => "reloadCalendar([#{equip.id}])" %>
+					</li>
+				<% end %>
+				</ul>
+			</div>
+		</section>
+	<% end %>
+	<section>
+		<% uncat = Equipment.where(category_id: nil).order('name ASC') %>
+		<p class="title" data-section-title>
+			<a href="#">
+				Uncategorized
+				<span class="right radius label secondary">
+					0 / <%= uncat.count %>
+				</span>
+			</a>
+		</p>
+		<div class="content" data-section-content>
+			<ul class="side-nav">
+				<% uncat.each do |e| %>
+					<li>
+						<span class="right"><input type="checkbox" /></span>
+						<%= link_to e.name, "#", :onclick => "reloadCalendar([#{e.id}])" %>
+					</li>
+				<% end %>
+			</ul>
+		</div>
+	</section>
+</div>

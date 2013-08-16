@@ -1,36 +1,90 @@
-<h1>MAD Equipment</h1>
-
-<hr />
-
+<br />
 <div class="row">
-	<div class="large-4 columns">
+	<div class="small-12 large-3 columns">
+		<%= render 'shared/equipment_list' %>
+		
 		<div class="section-container accordion" data-section="accordion">
-				<% for cat in Category.find(:all) %>
-					<section>
-						<p class="title" data-section-title><a href="#"><%= cat.name %></a></p>
-						<div class="content" data-section-content>
-							<% for equip in cat.equipments.order('name ASC') %>
-								<%= link_to equip.name, "#", :onclick => "reloadCalendar([#{equip.id}])" %>
-								<br />
-							<% end %>
-						</div>
-					</section>
-				<% end %>
-				<section>
-					<p class="title" data-section-title><a href="#">Uncategorized</a></p>
-					<div class="content" data-section-content>
-						<% for e in Equipment.where(category_id: nil).order('name ASC') %>
-							<%= link_to e.name, "#", :onclick => "reloadCalendar([#{e.id}])" %>
-							<br />
-						<% end %>
-					</div>
-				</section>
-				
+			<section>
+				<p class="title" data-section-title>
+					<a href="#">
+						<span class="label radius right">3 items</span>
+						Booking details
+					</a>
+				</p>
+				<div class="content" data-section-content>
+					<ul class="side-nav">
+						<li>
+							<a class="label radius secondary right">x</a>
+							Item 1
+						</li>
+						<li>
+							<a class="label radius secondary right">x</a>
+							Item 2
+						</li>
+						<li>
+							<a class="label radius secondary right">x</a>
+							Item 3
+						</li>
+					</ul>
+					<a class="button expand book">Book 3 items</a>
+				</div>
+			</section>
 		</div>
-		<%= link_to "Show all equipment", "#", :onclick => "reloadCalendar()" %>
 	</div>
-	<div id="calendar" class="large-8 columns">
+	<div id="calendar" class="small-12 large-6 columns">
 	</div>
-	<%= link_to 'New Booking', new_booking_path, class: "button" %>
-	
+	<div class="small-12 large-3 columns">
+		<div class="section-container accordion" data-section="accordion">
+			<section>
+				<p class="title" data-section-title>
+					<a href="#">
+						<span class="label radius right">3</span>
+						Upcoming bookings
+					</a>
+				</p>
+				<div class="content" data-section-content>
+					<ul class="side-nav">
+						<li>
+							<span class="right">12:00</span>
+							Booking 1
+						</li>
+						<li>
+							<span class="right">1:00</span>
+							Booking 2
+						</li>
+						<li>
+							<span class="right">2:30</span>
+							Booking 3
+						</li>
+					</ul>
+				</div>
+			</section>
+		</div>
+		<div class="section-container accordion" data-section="accordion">
+			<section>
+				<p class="title" data-section-title>
+					<a href="#">
+						<span class="label radius right">3</span>
+						Upcoming returns
+					</a>
+				</p>
+				<div class="content" data-section-content>
+					<ul class="side-nav">
+						<li>
+							<span class="right">4:30</span>
+							Return 1
+						</li>
+						<li>
+							<span class="right">5:00</span>
+							Return 2
+						</li>
+						<li>
+							<span class="right">11:00</span>
+							Return 3
+						</li>
+					</ul>
+				</div>
+			</section>
+		</div>
+	</div>
 </div>

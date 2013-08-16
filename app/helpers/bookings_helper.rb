@@ -36,46 +36,25 @@ module BookingsHelper
     startD = Date.parse(startDate.to_s)
     endD = Date.parse(endDate.to_s)
   
-    #All day event?
     if startD === endD
       isAllDay = false
     else
       isAllDay = true
     end
   
-    #Booking title
-    user = booking.user.username
-    equip_list = "["
-    for e in booking.equipments do
-      equip_list += e.name + ","
-    end
-    equip_list = equip_list[0,equip_list.length - 1]
-    equip_list += "]"
-    b_title = user + " " + equip_list
-  
-    #Equipment status
     if booking.equipments.count == booking.sign_in_times.count
-      #Everything is signed in, booking is done
-      b_status = 2
-      b_color = "green"
-    elsif booking.sign_out_times.count > 0
-      #At least 1 item is signed out, booking is active
       b_status = 1
-      b_color = "blue"
     else
-      #Nothing signed out, booking is pending
       b_status = 0
-      b_color = "purple"
     end
   
     event = {
-      title: b_title,
+      title: booking.user.username,
       start: startDate,
       end: endDate,
       id: booking.id,
       allDay: isAllDay,
-      status: b_status,
-      color: b_color
+      status: b_status
     }
     
   end

@@ -22,12 +22,14 @@ $(document).ready(function() {
 		eventClick : function(calEvent, jsEvent, view) {
 			window.open("bookings/" + calEvent.id + "/edit")
 		},
-		eventRender : function(event, jqElement, view){
-			if (view.name == 'month'){
-				jqElement.height(15);
+		eventRender: function(calEvent,element){
+			if (calEvent.status == 0){
+				calEvent.color = "blue"
+			}
+			else{
+				calEvent.color = "green"
 			}
 		}
-
 	});
 });
 
@@ -44,7 +46,7 @@ function reloadCalendar(items) {
 			center : 'title',
 			right : 'month,agendaWeek,agendaDay'
 		},
-		editable : false,
+		editable : true,
 		eventSources : [{
 			url : "/bookings",
 			data : {
@@ -54,12 +56,7 @@ function reloadCalendar(items) {
 			}
 		}],
 		eventClick : function(calEvent, jsEvent, view) {
-			window.open("bookings/" + calEvent.id + "/edit");
-		},
-		eventRender : function(event, jqElement, view){
-			if (view.name == 'month'){
-				jqElement.height(15);
-			}
+			window.open("bookings/" + calEvent.id)
 		}
 	});
 }
