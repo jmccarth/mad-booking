@@ -91,7 +91,7 @@
 									<a class="label radius secondary right">x</a>
 									<%= Equipment.find(id).name %>
 									<%= id %>
-									<%= f.hidden_field "equipment_ids[]", :value => id %>
+									<%= hidden_field_tag "booking[equipment_ids][]", id %>
 								</li>
 							<% end %>
 						<% end %>

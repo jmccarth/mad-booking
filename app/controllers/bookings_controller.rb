@@ -68,7 +68,6 @@ class BookingsController < ApplicationController
       User.create(:username => username)
       user = User.find_by_username(username)
     end
-    debugger
     
     @booking = Booking.new(params[:booking])
     @booking.user = user
