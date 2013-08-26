@@ -1,5 +1,6 @@
 include BookingsHelper
 class BookingsController < ApplicationController
+  layout false
   before_filter :format_schedule_write, :only => [:create,:update]
   
   # GET /bookings
