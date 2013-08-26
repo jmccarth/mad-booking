@@ -13,7 +13,7 @@
 				<ul class="side-nav">
 				<% for equip in cat.equipments.order('name ASC') %>
 					<li>
-						<span class="right"><input type="checkbox" /></span>
+						<span class="right"><%= check_box_tag "booking[equipment_ids][]", equip.id %></span>
 						<%= link_to equip.name, "#", :onclick => "reloadCalendar([#{equip.id}])" %>
 					</li>
 				<% end %>

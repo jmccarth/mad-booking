@@ -45,10 +45,21 @@ $(function() {
 	
 	/* Modals */
 	
+	/*
 	$('.modal').each(function() {
 		$(this).attr('data-reveal-id', 'modalContainer').attr('data-reveal-ajax', 'true');
 	});
-
+	*/
+	$('a.book').click(function(e){
+		var $this = $(this);
+		e.preventDefault();
+		$('#modalContainer').foundation('reveal', 'open', {
+			url: $this.attr('href'),
+			data: {
+				ids : [213, 214]
+			}
+		}); 
+	});
 });
 
 $(document).ready(function() {
