@@ -11,6 +11,7 @@ $(document).ready(function() {
 			center : 'title',
 			right : 'month,agendaWeek,agendaDay'
 		},
+		defaultView: 'agendaWeek',
 		editable : false,
 		eventSources : [{
 			url : "/bookings",
@@ -44,6 +45,7 @@ function reloadCalendar(items) {
 			center : 'title',
 			right : 'month,agendaWeek,agendaDay'
 		},
+		defaultView: 'agendaWeek',
 		editable : false,
 		eventSources : [{
 			url : "/bookings",
