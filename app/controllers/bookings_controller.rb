@@ -89,10 +89,6 @@ class BookingsController < ApplicationController
   # PUT /bookings/1
   # PUT /bookings/1.json
   def update
-<<<<<<< HEAD
-=======
-    
->>>>>>> d360e6e8ee5304334cf34f5c929555f9d92f33b4
     params[:booking][:equipment_ids] ||= []
     params[:booking][:sign_out_ids] ||= []
     params[:booking][:sign_in_ids] ||= []
