@@ -23,60 +23,6 @@
 	<% disable_ui = false %>
 <% end %>
 
-<div id="sign_out_tab" class="reveal-modal">
-	<% for equip in Equipment.find(:all) %>
-		<% if @booking.equipments.include?(equip) %>
-			<% if !@booking.sign_out_times.key?(equip.id) %>
-				<% sign_out = true %>
-				<p>
-					<%= check_box_tag "booking[sign_out_ids][]", equip.id, false, { :id => "bc_out_#{equip.barcode}" } %>
-					<%= equip.name %>
-				</p>
-			<% end %>
-		<% end %>
-	<% end %>
-	<a class="close-reveal-modal">x</a>
-</div>
-<div id="sign_in_tab" class="reveal-modal">
-	<% for equip in Equipment.find(:all) %>
-		<% if @booking.equipments.include?(equip) %>
-			<% if !@booking.sign_in_times.key?(equip.id) and @booking.sign_out_times.key?(equip.id) %>
-				<% sign_in = true %>
-				<p>
-					<%= check_box_tag "booking[sign_in_ids][]", equip.id, false, { :id => "bc_in_#{equip.barcode}" } %>
-					<%= equip.name %>
-				</p>
-			<% end %>
-		<% end %>
-	<% end %>
-	<a class="close-reveal-modal">x</a>
-</div>
-
-<% if @booking.equipments.count > 0 %>
-<div class="row">
-	<div class="large-12 columns">
-		<div class="panel">
-			<h3>Equipment Status</h3>
-			<% for equip in @booking.equipments %>
-			<%= equip.name %>
-			<% if @booking.sign_in_times.key?(equip.id) %>
-			<span class="success label">In</span> at <%= @booking.sign_in_times[equip.id] %>
-			<% elsif @booking.sign_out_times.key?(equip.id) %>
-			<% if IceCube::Schedule.from_yaml(@booking.schedule).end_time < DateTime.now %>
-			<span class="alert label">Overdue</span> out at <%= @booking.sign_out_times[equip.id] %>
-			<% else %>
-			<span class="label">Out</span> at <%= @booking.sign_out_times[equip.id] %>
-			<% end %>
-			<% else %>
-			<span class="secondary label">Booked</span>
-			<% end %>
-			<br />
-			<% end %>
-		</div>
-	</div>
-</div>
-<% end %>
-
 <div class="row">
 	<div class="large-6 columns">
 		<div class="section-container accordion" data-section="accordion">
@@ -90,22 +36,39 @@
 							<% params[:ids].each do |id| %>
 								<li>
 									<a class="label radius secondary right">x</a>
-									<%= Equipment.find(id).name %>
+									<%= Equipment.find(id).name %><span class="round secondary label">Booking</span>
 									<%= hidden_field_tag "booking[equipment_ids][]", id %>
 								</li>
 							<% end %>
+						<% end %>
+						<% if @booking.equipments.count > 0 %>
+							<% for equip in @booking.equipments %>
+								<li>
+									<%= equip.name %>
+									<%= hidden_field_tag "booking[equipment_ids][]", equip.id %>
+									<% if @booking.sign_in_times.key?(equip.id) %>
+										<span id="status_<%= equip.barcode %>" class="success label">In</span> at <%= @booking.sign_in_times[equip.id] %>
+									<% elsif @booking.sign_out_times.key?(equip.id) %>
+										<%= hidden_field_tag "booking[sign_in_ids][]", nil, {:data => equip.id, :class => "scannable", :id => "bc_in_#{equip.barcode}"}%>
+										<% if IceCube::Schedule.from_yaml(@booking.schedule).end_time < DateTime.now %>
+											<span id="status_<%= equip.barcode %>" class="alert label">Overdue</span> out at <%= @booking.sign_out_times[equip.id] %>
+										<% else %>
+											<span id="status_<%= equip.barcode %>" class="label">Out</span> at <%= @booking.sign_out_times[equip.id] %>
+										<% end %>
+									<% else %>
+										<%= hidden_field_tag "booking[sign_out_ids][]", nil, {:data => equip.id, :class => "scannable", :id => "bc_out_#{equip.barcode}"}%>
+										<span id="status_<%= equip.barcode %>" class="secondary label">Booked</span>
+									<% end %>
+									<br />
+								</li>
+							<% end %>	
 						<% end %>
 					</ul>
 				</div>
 			</section>
 		</div>
 	</div>
-	<% if sign_out %>
-	<a id="sign_out_button" href="#" class="small button" data-reveal-id="sign_out_tab">Sign Out</a>
-	<% end %>
-	<% if sign_in %>
-	<a id="sign_in_button" href="#" class="small button" data-reveal-id="sign_in_tab">Sign In</a>
-	<% end %>
+
 	<div class="large-6 columns">
 		<div class="field">
 			<% username = @booking.user.nil? ? "" : @booking.user.username %>
