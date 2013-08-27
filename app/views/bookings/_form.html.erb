@@ -1,52 +1,53 @@
 <%= form_for(@booking) do |f| %>
 <% if @booking.errors.any? %>
-<div id="error_explanation">
-	<h2><%= pluralize(@booking.errors.count, "error") %> prohibited this booking from being saved:</h2>
-
-	<ul>
-		<% @booking.errors.full_messages.each do |msg| %>
-		<li>
-			<%= msg %>
-		</li>
-		<% end %>
-	</ul>
-</div>
+	<div id="error_explanation">
+		<h2><%= pluralize(@booking.errors.count, "error") %> prohibited this booking from being saved:</h2>
+	
+		<ul>
+			<% @booking.errors.full_messages.each do |msg| %>
+			<li>
+				<%= msg %>
+			</li>
+			<% end %>
+		</ul>
+	</div>
 <% end %>
+
 <% flash.each do |name, msg| %>
-<%= content_tag :div, msg, class: "alert-box" %>
+	<%= content_tag :div, msg, class: "alert-box" %>
 <% end %>
 
 <% if (@booking.equipments.count == @booking.sign_in_times.count) and @booking.equipments.count > 0 %>
-<% disable_ui = true %>
+	<% disable_ui = true %>
 <% else %>
-<% disable_ui = false %>
+	<% disable_ui = false %>
 <% end %>
 
 <div id="sign_out_tab" class="reveal-modal">
 	<% for equip in Equipment.find(:all) %>
-	<% if @booking.equipments.include?(equip) %>
-	<% if !@booking.sign_out_times.key?(equip.id) %>
-	<% sign_out = true %>
-	<p>
-		<%= check_box_tag "booking[sign_out_ids][]", equip.id, false, { :id => "bc_out_#{equip.barcode}" } %>
-		<%= equip.name %>
-	</p>
-	<% end %>
-	<% end %>
+		<% if @booking.equipments.include?(equip) %>
+			<% if !@booking.sign_out_times.key?(equip.id) %>
+				<% sign_out = true %>
+				<p>
+					<%= check_box_tag "booking[sign_out_ids][]", equip.id, false, { :id => "bc_out_#{equip.barcode}" } %>
+					<%= equip.name %>
+				</p>
+			<% end %>
+		<% end %>
 	<% end %>
 	<a class="close-reveal-modal">x</a>
 </div>
 <div id="sign_in_tab" class="reveal-modal">
 	<% for equip in Equipment.find(:all) %>
-	<% if @booking.equipments.include?(equip) %>
-	<% if !@booking.sign_in_times.key?(equip.id) and @booking.sign_out_times.key?(equip.id) %>
-	<% sign_in = true %>
-	<p>
-		<%= check_box_tag "booking[sign_in_ids][]", equip.id, false, { :id => "bc_in_#{equip.barcode}" } %>
-		<%= equip.name %>
-	</p>
-	<% end %>
-	<% end %>
+		<% if @booking.equipments.include?(equip) %>
+			<% if !@booking.sign_in_times.key?(equip.id) and @booking.sign_out_times.key?(equip.id) %>
+				<% sign_in = true %>
+				<p>
+					<%= check_box_tag "booking[sign_in_ids][]", equip.id, false, { :id => "bc_in_#{equip.barcode}" } %>
+					<%= equip.name %>
+				</p>
+			<% end %>
+		<% end %>
 	<% end %>
 	<a class="close-reveal-modal">x</a>
 </div>
@@ -90,7 +91,6 @@
 								<li>
 									<a class="label radius secondary right">x</a>
 									<%= Equipment.find(id).name %>
-									<%= id %>
 									<%= hidden_field_tag "booking[equipment_ids][]", id %>
 								</li>
 							<% end %>

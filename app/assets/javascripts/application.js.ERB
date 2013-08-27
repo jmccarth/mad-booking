@@ -53,12 +53,26 @@ $(function() {
 	$('a.book').click(function(e){
 		var $this = $(this);
 		e.preventDefault();
+		equip_ids = []
+		lis = $('#bookDetails').children('li')
+		for (index = 0; index < lis.length; index++){
+			equip_ids.push(lis[index].value);
+		}
 		$('#modalContainer').foundation('reveal', 'open', {
 			url: $this.attr('href'),
 			data: {
-				ids : [213, 214]
+				ids : equip_ids
 			}
 		}); 
+	});
+	
+	$('.equipCheck').click(function(){
+		if ($('#book' + this.value).length == 0){
+			$("#bookDetails").append("<li value='" + this.value + "' id='book" + this.value + "'>" + this.name + "</li>");
+		}
+		else{
+			$('#book' + this.value).remove();
+		}
 	});
 });
 
