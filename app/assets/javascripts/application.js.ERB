@@ -20,15 +20,23 @@
 //= require barcode_listener
 //= require twitter/typeahead
 
+function initializeComponents($container) {
+	$container.find('input.date').datepicker();
+	$container.find('input.time').timepicker({
+		'timeFormat' : 'h:i A'
+	});
+	
+	$container.foundation('section', 'reflow');
+	
+	$('li > a.remove').click(function() {
+		$(this).parent().remove();
+	});
+}
+
 $(function() {
-	$("#schedule_start").datepicker();
-	$("#schedule_end").datepicker();
-	$("#schedule_start_time").timepicker({
-		'timeFormat' : 'h:i A'
-	});
-	$("#schedule_end_time").timepicker({
-		'timeFormat' : 'h:i A'
-	});
+	initializeComponents($('body'));
+	
+	/* Search */
 
 	var $search_input = $('.usersearch')
 	$search_input.typeahead([
@@ -45,31 +53,56 @@ $(function() {
 	
 	/* Modals */
 	
+	var $modalContainer = $("#modalContainer");
+	
+	$modalContainer.on('opened', function () {
+	  $(this).foundation('section', 'reflow');
+	});
+	
 
-	$('a.book').click(function(e){
-		var $this = $(this);
-		e.preventDefault();
+	$('#createBooking').click(function(){
+		
+		if ($(this).hasClass('disabled')) return;
+		
+		var $items = $('#equipmentList').find('.equipCheck:checked')
 		var equip_ids = [];
-		var $lis = $('#bookDetails').children('li');
-		for (index = 0; index < $lis.length; index++){
-			equip_ids.push($lis[index].value);
-		}
-		$('#modalContainer').foundation('reveal', 'open', {
-			url: $this.attr('href'),
+		
+		$items.each(function(index) {
+			equip_ids.push(this.value);
+		});
+		
+		$modalContainer.foundation('reveal', 'open', {
+			url: 'bookings/new',
 			data: {
 				ids : equip_ids
+			},
+			complete: function() {
+				initializeComponents($modalContainer);
+				$modalContainer.find('p.title').trigger('click'); //force accordion open
+			}, 
+			error: function() {
+				alert('loading error');
 			}
 		}); 
 	});
 	
+	/* Equipment List */
+	
+	var $equipmentList = $("#equipmentList");
+	var $createBooking = $("#createBooking");
+	
 	$('.equipCheck').click(function(){
-		if ($('#book' + this.value).length == 0){
-			$("#bookDetails").append("<li value='" + this.value + "' id='book" + this.value + "'>" + this.name + "</li>");
+		var count = $equipmentList.find('.equipCheck:checked').length;
+		if (count > 0) {
+			$createBooking.removeClass('disabled');
+			$createBooking.html('Book ' + count + ' items');
 		}
-		else{
-			$('#book' + this.value).remove();
+		else {
+			$createBooking.addClass('disabled');
+			$createBooking.html('No items selected');
 		}
 	});
+	
 });
 
 $(document).ready(function() {
