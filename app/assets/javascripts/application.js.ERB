@@ -26,6 +26,8 @@ function initializeComponents($container) {
 		'timeFormat' : 'h:i A'
 	});
 	
+	$container.foundation('section', 'reflow');
+	
 	$('li > a.remove').click(function() {
 		$(this).parent().remove();
 	});
@@ -53,6 +55,10 @@ $(function() {
 	
 	var $modalContainer = $("#modalContainer");
 	
+	$modalContainer.on('opened', function () {
+	  $(this).foundation('section', 'reflow');
+	});
+	
 
 	$('#createBooking').click(function(){
 		
@@ -72,6 +78,7 @@ $(function() {
 			},
 			complete: function() {
 				initializeComponents($modalContainer);
+				$modalContainer.find('p.title').trigger('click'); //force accordion open
 			}, 
 			error: function() {
 				alert('loading error');
