@@ -22,7 +22,7 @@ $(document).ready(function() {
 		}],
 		eventClick : function(calEvent, jsEvent, view) {
 			$('#modalContainer').foundation('reveal', 'open', {
-				url: "bookings/" + calEvent.id + "/edit",
+				url: "bookings/" + calEvent.id + "/edit"
 			}); 
 		},
 		eventRender : function(event, jqElement, view){

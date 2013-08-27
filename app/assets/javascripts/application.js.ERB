@@ -31,14 +31,8 @@ function initializeComponents($container) {
 	$('li > a.remove').click(function() {
 		$(this).parent().remove();
 	});
-}
-
-$(function() {
-	initializeComponents($('body'));
 	
-	/* Search */
-
-	var $search_input = $('.usersearch')
+	var $search_input = $container.find('.usersearch')
 	$search_input.typeahead([
 		{
 			name: 'name', 
@@ -50,6 +44,15 @@ $(function() {
 	$search_input.on('usersearch:selected', function() {
 		$(this).closest('form').submit();
 	});
+	
+	
+}
+
+$(function() {
+	initializeComponents($('body'));
+	
+	/* Search */
+
 	
 	/* Modals */
 	
