@@ -89,6 +89,10 @@ class BookingsController < ApplicationController
   # PUT /bookings/1
   # PUT /bookings/1.json
   def update
+<<<<<<< HEAD
+=======
+    
+>>>>>>> d360e6e8ee5304334cf34f5c929555f9d92f33b4
     params[:booking][:equipment_ids] ||= []
     params[:booking][:sign_out_ids] ||= []
     params[:booking][:sign_in_ids] ||= []
@@ -106,14 +110,18 @@ class BookingsController < ApplicationController
     so_ids = params[:booking].delete :sign_out_ids
     out = {}
     so_ids.each do |so_id|
-      out[so_id.to_i] = DateTime.now
+      if so_id != ""
+        out[so_id.to_i] = DateTime.now
+      end
     end
 
     #Grab ids of items being signed in and do some hash magic
     si_ids = params[:booking].delete :sign_in_ids
     sign_in = {}
     si_ids.each do |si_id|
-      sign_in[si_id.to_i] = DateTime.now
+      if si_id != ""
+        sign_in[si_id.to_i] = DateTime.now
+      end
     end
     
     b = Booking.find(params[:id])
