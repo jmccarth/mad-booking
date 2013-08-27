@@ -89,7 +89,7 @@
 						<% if params[:ids] %>
 							<% params[:ids].each do |id| %>
 								<li>
-									<a class="label radius secondary right">x</a>
+									<a class="label radius secondary right remove">x</a>
 									<%= Equipment.find(id).name %>
 									<%= hidden_field_tag "booking[equipment_ids][]", id %>
 								</li>
@@ -132,16 +132,16 @@
 				<% end %>
 				<p>
 					Start Date:
-					<%= text_field_tag :schedule_start, start_d, :disabled => disable_ui %>
+					<%= text_field_tag :schedule_start, start_d, :disabled => disable_ui, :class => 'date' %>
 					<br />
 					Start Time:
-					<%= text_field_tag :schedule_start_time, start_t, :disabled => disable_ui %>
+					<%= text_field_tag :schedule_start_time, start_t, :disabled => disable_ui, :class => 'time' %>
 					<br />
 					End Date:
-					<%= text_field_tag :schedule_end, end_d, :disabled => disable_ui %>
+					<%= text_field_tag :schedule_end, end_d, :disabled => disable_ui, :class => 'date' %>
 					<br />
 					End Time:
-					<%= text_field_tag :schedule_end_time, end_t, :disabled => disable_ui %>
+					<%= text_field_tag :schedule_end_time, end_t, :disabled => disable_ui, :class => 'time' %>
 				</p>
 			</div>
 			<div class="field">
