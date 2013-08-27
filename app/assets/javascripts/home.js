@@ -21,7 +21,9 @@ $(document).ready(function() {
 			}
 		}],
 		eventClick : function(calEvent, jsEvent, view) {
-			window.open("bookings/" + calEvent.id + "/edit")
+			$('#modalContainer').foundation('reveal', 'open', {
+				url: "bookings/" + calEvent.id + "/edit",
+			}); 
 		},
 		eventRender : function(event, jqElement, view){
 			if (view.name == 'month'){

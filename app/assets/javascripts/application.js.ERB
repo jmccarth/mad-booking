@@ -45,18 +45,14 @@ $(function() {
 	
 	/* Modals */
 	
-	/*
-	$('.modal').each(function() {
-		$(this).attr('data-reveal-id', 'modalContainer').attr('data-reveal-ajax', 'true');
-	});
-	*/
+
 	$('a.book').click(function(e){
 		var $this = $(this);
 		e.preventDefault();
-		equip_ids = []
-		lis = $('#bookDetails').children('li')
-		for (index = 0; index < lis.length; index++){
-			equip_ids.push(lis[index].value);
+		var equip_ids = [];
+		var $lis = $('#bookDetails').children('li');
+		for (index = 0; index < $lis.length; index++){
+			equip_ids.push($lis[index].value);
 		}
 		$('#modalContainer').foundation('reveal', 'open', {
 			url: $this.attr('href'),
