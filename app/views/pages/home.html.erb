@@ -9,53 +9,45 @@
 	</div>
 	<div class="small-12 large-3 columns">
 		<div class="section-container accordion" data-section="accordion">
-			<section class="active">
+			<section>
+				<% upcoming = BookingsHelper::find_by_date_range(Time.now, Time.now + 3.day) %>
 				<p class="title" data-section-title>
 					<a href="#">
-						<span class="label radius right">3</span>
+						<span class="label radius right"><%= upcoming.length %></span>
 						Upcoming bookings
 					</a>
 				</p>
+
 				<div class="content" data-section-content>
 					<ul class="side-nav">
-						<li>
-							<span class="right">12:00</span>
-							Booking 1
-						</li>
-						<li>
-							<span class="right">1:00</span>
-							Booking 2
-						</li>
-						<li>
-							<span class="right">2:30</span>
-							Booking 3
-						</li>
+						<% for b in upcoming.sort_by{|booking| IceCube::Schedule.from_yaml(booking.schedule).start_time} %>
+							<li>
+								<span class="right"><%= IceCube::Schedule.from_yaml(b.schedule).start_time.strftime("%b %-d, %Y %I:%M %p") %></span>
+								<%= b.user.username %>
+							</li>
+							
+						<% end %>
 					</ul>
 				</div>
 			</section>
 		</div>
 		<div class="section-container accordion" data-section="accordion">
 			<section>
+				<% returns = BookingsHelper::find_by_date_range(Time.now, Time.now + 3.day) %>
 				<p class="title" data-section-title>
 					<a href="#">
-						<span class="label radius right">3</span>
+						<span class="label radius right"><%= returns.length %></span>
 						Upcoming returns
 					</a>
 				</p>
 				<div class="content" data-section-content>
 					<ul class="side-nav">
-						<li>
-							<span class="right">4:30</span>
-							Return 1
-						</li>
-						<li>
-							<span class="right">5:00</span>
-							Return 2
-						</li>
-						<li>
-							<span class="right">11:00</span>
-							Return 3
-						</li>
+						<% for b in upcoming.sort_by{|booking| IceCube::Schedule.from_yaml(booking.schedule).end_time} %>
+							<li>
+								<span class="right"><%= IceCube::Schedule.from_yaml(b.schedule).end_time.strftime("%b %-d, %Y %I:%M %p") %></span>
+								<%= b.user.username %>
+							</li>
+						<% end %>
 					</ul>
 				</div>
 			</section>
