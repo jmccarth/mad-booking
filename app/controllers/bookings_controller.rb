@@ -77,7 +77,7 @@ class BookingsController < ApplicationController
     
     respond_to do |format|
       if @booking.save
-        format.html { redirect_to @booking, notice: 'Booking was successfully created.' }
+        format.html { redirect_to root_path, notice: 'Booking was successfully created.' }
         format.json { render json: @booking, status: :created, location: @booking }
       else
         format.html { render action: "new" }
@@ -89,7 +89,6 @@ class BookingsController < ApplicationController
   # PUT /bookings/1
   # PUT /bookings/1.json
   def update
-    debugger
     params[:booking][:equipment_ids] ||= []
     params[:booking][:sign_out_ids] ||= []
     params[:booking][:sign_in_ids] ||= []
@@ -139,7 +138,7 @@ class BookingsController < ApplicationController
 
     respond_to do |format|
       if @booking.update_attributes(params[:booking])
-        format.html { redirect_to @booking, notice: 'Booking was successfully updated.' }
+        format.html { redirect_to root_path, notice: 'Booking was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -155,7 +154,7 @@ class BookingsController < ApplicationController
     @booking.destroy
 
     respond_to do |format|
-      format.html { redirect_to bookings_url }
+      format.html { redirect_to root_path }
       format.json { head :no_content }
     end
   end
