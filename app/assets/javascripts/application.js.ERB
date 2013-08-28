@@ -47,6 +47,19 @@ function initializeComponents($container) {
 		$(this).closest('form').submit();
 	});
 	
+	var $equip_input = $('.equipsearch')
+	$equip_input.typeahead([
+		{
+			name: 'equipment',
+			local: <%= Equipment.select('distinct name').collect { |equip| equip.name } %>,
+			header: '<h5>Equipment Name</h5>'
+		}
+	]);
+	
+	$equip_input.on('typeahead:selected',function(e){
+		$("[name*='" + e.target.value + "']")[0].click();
+	});
+	
 }
 
 $(function() {
