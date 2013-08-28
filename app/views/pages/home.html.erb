@@ -53,5 +53,28 @@
 				</div>
 			</section>
 		</div>
+		<div class="section-container accordion" data-section="accordion">
+			<section>
+				<% overdue = BookingsHelper::get_overdue_items() %>
+				<p class="title" data-section-title>
+					<a href="#">
+						<span class="label radius right"><%= overdue.length %></span>
+						Overdue bookings
+					</a>
+				</p>
+
+				<div class="content" data-section-content>
+					<ul class="side-nav">
+						<% for b in overdue.sort_by{|booking| IceCube::Schedule.from_yaml(booking.schedule).end_time} %>
+							<li>
+								<span class="right"><%= IceCube::Schedule.from_yaml(b.schedule).end_time.strftime("%b %-d, %Y %I:%M %p") %></span>
+								<%= b.user.username %>
+							</li>
+							
+						<% end %>
+					</ul>
+				</div>
+			</section>
+		</div>
 	</div>
 </div>
