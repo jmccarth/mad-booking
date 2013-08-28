@@ -59,7 +59,6 @@ function initializeComponents($container) {
 	$equip_input.on('typeahead:selected',function(e){
 		var $chkbox = $("[name*='" + e.target.value + "']").eq(0);
 		$chkbox.click();
-		console.log($chkbox.closest('.title a'));
 	});
 	
 }
