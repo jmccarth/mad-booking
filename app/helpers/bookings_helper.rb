@@ -60,8 +60,15 @@ module BookingsHelper
       b_color = "green"
     elsif booking.sign_out_times.count > 0
       #At least 1 item is signed out, booking is active
-      b_status = 1
-      b_color = "blue"
+      if endDate < Time.now
+        #Booking is overdue
+        b_status = 3
+        b_color = "red"
+      else
+        #Booking is upcoming
+        b_status = 1
+        b_color = "blue"
+      end
     else
       #Nothing signed out, booking is pending
       b_status = 0
@@ -79,5 +86,18 @@ module BookingsHelper
     }
     
   end
+
+  def get_overdue_items()
+    @all_bookings = Booking.all
+    overdue_bookings = []
+    @all_bookings.each do |booking|
+      ev_sched = IceCube::Schedule.from_yaml(booking.schedule)
+      if ev_sched.end_time < Time.now and booking.sign_in_times.count < booking.sign_out_times.count
+        overdue_bookings.push(booking)
+      end
+    end
+    overdue_bookings
+  end
+  
 
 end

@@ -2,6 +2,7 @@
 <div class="row">
 	<div class="small-12 large-3 columns">
 		<a id="createBooking" class="button expand disabled">No items selected</a>
+		<%= text_field_tag :equipment, nil, :class => 'equipsearch' %>
 		<%= render 'shared/equipment_list' %>
 	</div>
 	<div id="calendar" class="small-12 large-6 columns">
@@ -20,7 +21,7 @@
 
 				<div class="content" data-section-content>
 					<ul class="side-nav">
-						<% for b in upcoming.sort_by{|booking| IceCube::Schedule.from_yaml(booking.schedule).start_time} %>
+						<% for b in upcoming.sort_by{|booking| IceCube::Schedule.from_yaml(booking.schedule).start_time}[0..4] %>
 							<li>
 								<span class="right"><%= IceCube::Schedule.from_yaml(b.schedule).start_time.strftime("%b %-d, %Y %I:%M %p") %></span>
 								<%= b.user.username %>
@@ -42,11 +43,34 @@
 				</p>
 				<div class="content" data-section-content>
 					<ul class="side-nav">
-						<% for b in upcoming.sort_by{|booking| IceCube::Schedule.from_yaml(booking.schedule).end_time} %>
+						<% for b in upcoming.sort_by{|booking| IceCube::Schedule.from_yaml(booking.schedule).end_time}[0..4] %>
 							<li>
 								<span class="right"><%= IceCube::Schedule.from_yaml(b.schedule).end_time.strftime("%b %-d, %Y %I:%M %p") %></span>
 								<%= b.user.username %>
 							</li>
+						<% end %>
+					</ul>
+				</div>
+			</section>
+		</div>
+		<div class="section-container accordion" data-section="accordion">
+			<section>
+				<% overdue = BookingsHelper::get_overdue_items() %>
+				<p class="title" data-section-title>
+					<a href="#">
+						<span class="label radius right"><%= overdue.length %></span>
+						Overdue bookings
+					</a>
+				</p>
+
+				<div class="content" data-section-content>
+					<ul class="side-nav">
+						<% for b in overdue.sort_by{|booking| IceCube::Schedule.from_yaml(booking.schedule).end_time} %>
+							<li>
+								<span class="right"><%= IceCube::Schedule.from_yaml(b.schedule).end_time.strftime("%b %-d, %Y %I:%M %p") %></span>
+								<%= b.user.username %>
+							</li>
+							
 						<% end %>
 					</ul>
 				</div>
