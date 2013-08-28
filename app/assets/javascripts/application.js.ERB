@@ -32,12 +32,14 @@ function initializeComponents($container) {
 		$(this).parent().remove();
 	});
 	
+	/* Search */
+	
 	var $search_input = $container.find('.usersearch')
 	$search_input.typeahead([
 		{
 			name: 'name', 
 			local: <%= User.select('distinct username').collect { |user| user.username } %>,
-			header: '<h5>Username</h5>'
+			header: ''
 		}
 	]);
 
@@ -45,15 +47,11 @@ function initializeComponents($container) {
 		$(this).closest('form').submit();
 	});
 	
-	
 }
 
 $(function() {
 	initializeComponents($('body'));
-	
-	/* Search */
 
-	
 	/* Modals */
 	
 	var $modalContainer = $("#modalContainer");
@@ -106,9 +104,8 @@ $(function() {
 		}
 	});
 	
-});
-
-$(document).ready(function() {
+	/* Barcodes */
+	
 	var chars = [];
 	var barcode = "";
 	$(window).keypress(function(e) {
@@ -130,6 +127,7 @@ $(document).ready(function() {
 			barcode = "";
 		}
 	});
+	
 });
 
 $(document).foundation();
