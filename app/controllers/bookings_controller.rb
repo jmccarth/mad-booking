@@ -108,6 +108,7 @@ class BookingsController < ApplicationController
     so_ids.each do |so_id|
       if so_id != ""
         out[so_id.to_i] = DateTime.now
+        Equipment.update(so_id.to_i, :status => 0)
       end
     end
 
@@ -117,6 +118,7 @@ class BookingsController < ApplicationController
     si_ids.each do |si_id|
       if si_id != ""
         sign_in[si_id.to_i] = DateTime.now
+        Equipment.update(si_id.to_i, :status => 1)
       end
     end
     

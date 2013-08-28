@@ -5,6 +5,7 @@
     <th>Barcode</th>
     <th>Name</th>
     <th>Stored</th>
+    <th>Status</th>
     <th></th>
     <th></th>
     <th></th>
@@ -15,6 +16,7 @@
     <td><%= equipment.barcode %></td>
     <td><%= equipment.name %></td>
     <td><%= equipment.stored %></td>
+    <td><%= equipment.status %></td>
     <td><%= link_to 'Show', equipment %></td>
     <td><%= link_to 'Edit', edit_equipment_path(equipment) %></td>
     <td><%= link_to 'Destroy', equipment, confirm: 'Are you sure?', method: :delete %></td>
