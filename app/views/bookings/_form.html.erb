@@ -42,7 +42,7 @@
 						<% if params[:ids] %>
 							<% params[:ids].each do |id| %>
 								<li>
-									<a class="label radius alert right remove">x</a>
+									<a class="label radius alert right remove"><i class="icon-remove"></i></a>
 									<%= Equipment.find(id).category.name %>
 									>
 									<%= Equipment.find(id).name %>
@@ -91,9 +91,13 @@
 	</div>
 
 	<div class="large-6 columns">
-		<label>User name</label>
 		<div class="row collapse">
-			<div class="small-9 columns">
+			<div class="small-1 columns">
+				<span class="prefix">
+					<i class="icon-user"></i>
+				</span>
+			</div>
+			<div class="small-8 columns">
 				<% username = @booking.user.nil? ? "" : @booking.user.username %>
 				<%= f.text_field :user, :class => 'usersearch', :value => username, :disabled => disable_ui, :placeholder => 'Type a user name' %>
 			</div>
@@ -101,7 +105,7 @@
 				<span class="postfix">
 					<label>
 						<%= check_box_tag 'create_if_new', 'create', false, :disabled => disable_ui %>
-						Create if new?
+						create
 					</label>
 				</span>
 			</div>
@@ -122,34 +126,79 @@
 			<% end_t = start_t %>
 		<% end %>
 
-		<div class="panel">
-
+		<hr />
+		
 		<div class="row">
 			<div class="small-6 columns">
-				<label>Booking date:</label>
-				<%= text_field_tag :schedule_start, start_d, :disabled => disable_ui, :class => 'date' %>
+				<label>Booking date</label>
+				<div class="row collapse">
+					<div class="small-2 columns">
+						<span class="prefix">
+							<i class="icon-calendar"></i>
+						</span>
+					</div>
+					<div class="small-10 columns">
+						<%= text_field_tag :schedule_start, start_d, :disabled => disable_ui, :class => 'date' %>
+					</div>
+				</div>
 			</div>
 			<div class="small-6 columns">
-				<label>Booking time:</label>
-				<%= text_field_tag :schedule_start_time, start_t, :disabled => disable_ui, :class => 'time' %>
+				<label>Booking time</label>
+				<div class="row collapse">
+					<div class="small-2 columns">
+						<span class="prefix">
+							<i class="icon-time"></i>
+						</span>
+					</div>
+					<div class="small-10 columns">
+						<%= text_field_tag :schedule_start_time, start_t, :disabled => disable_ui, :class => 'time' %>
+					</div>
+				</div>
 			</div>
 		</div>
-		
+	
 		<div class="row">
 			<div class="small-6 columns">
 				<label>Return date:</label>
-				<%= text_field_tag :schedule_end, end_d, :disabled => disable_ui, :class => 'date' %>
+				<div class="row collapse">
+					<div class="small-2 columns">
+						<span class="prefix">
+							<i class="icon-calendar"></i>
+						</span>
+					</div>
+					<div class="small-10 columns">
+						<%= text_field_tag :schedule_end, end_d, :disabled => disable_ui, :class => 'date' %>
+					</div>
+				</div>
 			</div>
 			<div class="small-6 columns">
 				<label>Return time:</label>
-				<%= text_field_tag :schedule_end_time, end_t, :disabled => disable_ui, :class => 'time' %>
+				<div class="row collapse">
+					<div class="small-2 columns">
+						<span class="prefix">
+							<i class="icon-time"></i>
+						</span>
+					</div>
+					<div class="small-10 columns">
+						<%= text_field_tag :schedule_end_time, end_t, :disabled => disable_ui, :class => 'time' %>
+					</div>
+				</div>
 			</div>
 		</div>
-		
+
+		<hr />
+
+		<div class="row collapse">
+			<div class="small-1 columns">
+				<span class="prefix">
+					<i class="icon-comments"></i>
+				</span>
+			</div>
+			<div class="small-11 columns">
+				<%= f.text_area :comments, :disabled => disable_ui, :placeholder => 'Enter comments related to this booking' %>
+			</div>
 		</div>
-		
-		<label>Comments</label>
-		<%= f.text_area :comments, :disabled => disable_ui, :placeholder => 'Enter comments related to this booking' %>
+
 		<br />
 	</div>
 	<hr />

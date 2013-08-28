@@ -27,6 +27,13 @@
 	max-width:100%;
 }
 
+/* FONTS */
+
+#mad input, #mad .prefix, #mad .postfix, #mad textarea {
+    font-size:115%;
+}
+
+
 /* ACCORDION */
 
 #mad section.selected p.title {
