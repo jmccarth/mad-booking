@@ -27,7 +27,11 @@ class Booking < ActiveRecord::Base
     #status = 1 - user is greylisted
     #status = 2 - user is blacklisted
     
-    status = User.find(self.user_id).status
+    if !self.user_id.nil?
+      status = User.find(self.user_id).status
+    else
+      self.errors.add(:user, "does not exist.")
+    end
     
     if status == 2
       self.errors.add(:user, "has been blacklisted and is not allowed to book equipment.")
