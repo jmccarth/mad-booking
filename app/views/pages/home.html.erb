@@ -21,7 +21,7 @@
 
 				<div class="content" data-section-content>
 					<ul class="side-nav">
-						<% for b in upcoming.sort_by{|booking| IceCube::Schedule.from_yaml(booking.schedule).start_time} %>
+						<% for b in upcoming.sort_by{|booking| IceCube::Schedule.from_yaml(booking.schedule).start_time}[0..4] %>
 							<li>
 								<span class="right"><%= IceCube::Schedule.from_yaml(b.schedule).start_time.strftime("%b %-d, %Y %I:%M %p") %></span>
 								<%= b.user.username %>
@@ -43,7 +43,7 @@
 				</p>
 				<div class="content" data-section-content>
 					<ul class="side-nav">
-						<% for b in upcoming.sort_by{|booking| IceCube::Schedule.from_yaml(booking.schedule).end_time} %>
+						<% for b in upcoming.sort_by{|booking| IceCube::Schedule.from_yaml(booking.schedule).end_time}[0..4] %>
 							<li>
 								<span class="right"><%= IceCube::Schedule.from_yaml(b.schedule).end_time.strftime("%b %-d, %Y %I:%M %p") %></span>
 								<%= b.user.username %>
