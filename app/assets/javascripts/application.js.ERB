@@ -56,13 +56,13 @@ function initializeComponents($container) {
 		}
 	]);
 	
-	$main_equip_search = $('#equipment');
+	var $main_equip_search = $('#equipment');
 	$main_equip_search.on('typeahead:selected',function(e){
 		var $chkbox = $("[name*='" + e.target.value + "']").eq(0);
 		$chkbox.click();
 	});
 	
-	$add_equip = $('#add_equipment');
+	var $add_equip = $('#equipment_details .equipsearch');
 	$add_equip.on('typeahead:selected',function(e){
 		$.ajax({
 			url: "equipment.json",
