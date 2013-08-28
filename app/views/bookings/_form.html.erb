@@ -55,7 +55,7 @@
 							<% for equip in @booking.equipments %>
 								<li>
 									<% if !@booking.sign_out_times.key?(equip.id) %>
-										<a class="label radius alert right remove">x</a>
+										<a class="label radius alert right remove"><i class="icon-remove"></i></a>
 									<% end %>
 									<%= equip.name %>
 									<%= hidden_field_tag "booking[equipment_ids][]", equip.id %>
