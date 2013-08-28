@@ -80,4 +80,17 @@ module BookingsHelper
     
   end
 
+  def get_overdue_items()
+    @all_bookings = Booking.all
+    overdue_bookings = []
+    @all_bookings.each do |booking|
+      ev_sched = IceCube::Schedule.from_yaml(booking.schedule)
+      if ev_sched.end_time < Time.now and booking.sign_in_times.count < booking.sign_out_times.count
+        overdue_bookings.push(booking)
+      end
+    end
+    overdue_bookings
+  end
+  
+
 end
