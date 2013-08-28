@@ -54,6 +54,9 @@
 						<% if @booking.equipments.count > 0 %>
 							<% for equip in @booking.equipments %>
 								<li>
+									<% if !@booking.sign_out_times.key?(equip.id) %>
+										<a class="label radius alert right remove">x</a>
+									<% end %>
 									<%= equip.name %>
 									<%= hidden_field_tag "booking[equipment_ids][]", equip.id %>
 									<% if @booking.sign_in_times.key?(equip.id) %>

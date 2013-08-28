@@ -21,8 +21,12 @@ $(document).ready(function() {
 			}
 		}],
 		eventClick : function(calEvent, jsEvent, view) {
-			$('#modalContainer').foundation('reveal', 'open', {
-				url: "bookings/" + calEvent.id + "/edit"
+			$modalContainer = $('#modalContainer');
+			$modalContainer.foundation('reveal', 'open', {
+				url: "bookings/" + calEvent.id + "/edit",
+				complete: function() {
+					initializeComponents($modalContainer);
+				}
 			}); 
 		},
 		eventRender : function(event, jqElement, view){
@@ -58,8 +62,12 @@ function reloadCalendar(items) {
 			}
 		}],
 		eventClick : function(calEvent, jsEvent, view) {
-			$('#modalContainer').foundation('reveal', 'open', {
-				url: "bookings/" + calEvent.id + "/edit"
+			$modalContainer = $('#modalContainer');
+			$modalContainer.foundation('reveal', 'open', {
+				url: "bookings/" + calEvent.id + "/edit",
+				complete: function() {
+					initializeComponents($modalContainer);
+				}
 			}); 
 		},
 		eventRender : function(event, jqElement, view){
