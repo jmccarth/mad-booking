@@ -18,12 +18,20 @@
 
 /* TEMPLATE */
  
+#mad .top-bar {
+	margin-bottom:0;
+}
+
 #mad .row {
 	width:100%;
 	max-width:100%;
 }
 
 /* ACCORDION */
+
+#mad section.selected p.title {
+	background:#aaeeaa;
+}
 
 .accordion .label {
 	display:inline-block;

@@ -93,14 +93,26 @@ $(function() {
 	var $createBooking = $("#createBooking");
 	
 	$('.equipCheck').click(function(){
-		var count = $equipmentList.find('.equipCheck:checked').length;
-		if (count > 0) {
+	
+		var $parent = $(this).closest('section');
+
+		var count_all = $equipmentList.find('.equipCheck:checked').length;
+		var count_this = $parent.find('.equipCheck:checked').length;
+		
+		if (count_all > 0) {
 			$createBooking.removeClass('disabled');
-			$createBooking.html('Book ' + count + ' items');
+			$createBooking.html('Book ' + count_all + ' items');
 		}
 		else {
 			$createBooking.addClass('disabled');
 			$createBooking.html('No items selected');
+		}
+		
+		if (count_this > 0) {
+			$parent.addClass('selected');
+		}
+		else {
+			$parent.removeClass('selected');
 		}
 	});
 	

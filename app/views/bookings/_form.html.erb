@@ -1,3 +1,10 @@
+<div class="row">
+	<div class="small-12 columns">
+		<h3>Booking details</h3>
+		<hr />
+	</div>
+</div>
+
 <%= form_for(@booking) do |f| %>
 <% if @booking.errors.any? %>
 	<div id="error_explanation">
@@ -28,15 +35,18 @@
 		<div class="section-container accordion" data-section="accordion">
 			<section>
 				<p class="title" data-section-title>
-					<a href="#"> <span class="label radius right">3 items</span> Booking details </a>
+					<a href="#"> <span class="label radius right">3 items</span> Equipment </a>
 				</p>
 				<div class="content" data-section-content>
 					<ul class="side-nav">
 						<% if params[:ids] %>
 							<% params[:ids].each do |id| %>
 								<li>
-									<a class="label radius secondary right remove">x</a>
-									<%= Equipment.find(id).name %><span class="round secondary label">Booking</span>
+									<a class="label radius alert right remove">x</a>
+									<%= Equipment.find(id).category.name %>
+									>
+									<%= Equipment.find(id).name %>
+									<span class="round secondary label right">Booking</span>
 									<%= hidden_field_tag "booking[equipment_ids][]", id %>
 								</li>
 							<% end %>
@@ -76,53 +86,73 @@
 	</div>
 
 	<div class="large-6 columns">
-		<div class="field">
-			<% username = @booking.user.nil? ? "" : @booking.user.username %>
-			
-			
-			<%= f.text_field :user, :class => 'usersearch', :value => username, :disabled => disable_ui %>
-			<%= check_box_tag 'create_if_new', 'create', false, :disabled => disable_ui %>
-			<%= "Create user if new?"%>
-			<div class="field">
-				<h3><%= f.label :schedule %></h3>
-				<% if @booking.schedule != nil %>
-				<% s = IceCube::Schedule.from_yaml(@booking.schedule) %>
-				<% sd = DateTime.parse(s.start_time.to_s) %>
-				<% ed = DateTime.parse(s.end_time.to_s) %>
-				<% start_d = sd.strftime("%m/%d/%Y") %>
-				<% start_t = sd.strftime("%I:%M %p")%>
-				<% end_d = ed.strftime("%m/%d/%Y") %>
-				<% end_t = ed.strftime("%I:%M %p")%>
-				<% else %>
-				<% start_d = Time.now.strftime("%m/%d/%Y") %>
-				<% start_t = Time.now.strftime("%I:%M %p") %>
-				<% end_d = start_d %>
-				<% end_t = start_t %>
-				<% end %>
-				<p>
-					Start Date:
-					<%= text_field_tag :schedule_start, start_d, :disabled => disable_ui, :class => 'date' %>
-					<br />
-					Start Time:
-					<%= text_field_tag :schedule_start_time, start_t, :disabled => disable_ui, :class => 'time' %>
-					<br />
-					End Date:
-					<%= text_field_tag :schedule_end, end_d, :disabled => disable_ui, :class => 'date' %>
-					<br />
-					End Time:
-					<%= text_field_tag :schedule_end_time, end_t, :disabled => disable_ui, :class => 'time' %>
-				</p>
+		<label>User name</label>
+		<div class="row collapse">
+			<div class="small-9 columns">
+				<% username = @booking.user.nil? ? "" : @booking.user.username %>
+				<%= f.text_field :user, :class => 'usersearch', :value => username, :disabled => disable_ui, :placeholder => 'Type a user name' %>
 			</div>
-			<div class="field">
-				<h3><%= f.label :comments %></h3>
-				<%= f.text_area :comments, :disabled => disable_ui %>
-			</div>
-			<div class="actions">
-				<% if !disable_ui %>
-				<%= f.submit 'Update Booking', :class => 'large button success' %>
-				<% end %>
+			<div class="small-3 columns">
+				<span class="postfix">
+					<label>
+						<%= check_box_tag 'create_if_new', 'create', false, :disabled => disable_ui %>
+						Create if new?
+					</label>
+				</span>
 			</div>
 		</div>
+
+		<% if @booking.schedule != nil %>
+			<% s = IceCube::Schedule.from_yaml(@booking.schedule) %>
+			<% sd = DateTime.parse(s.start_time.to_s) %>
+			<% ed = DateTime.parse(s.end_time.to_s) %>
+			<% start_d = sd.strftime("%m/%d/%Y") %>
+			<% start_t = sd.strftime("%I:%M %p")%>
+			<% end_d = ed.strftime("%m/%d/%Y") %>
+			<% end_t = ed.strftime("%I:%M %p")%>
+		<% else %>
+			<% start_d = Time.now.strftime("%m/%d/%Y") %>
+			<% start_t = Time.now.strftime("%I:%M %p") %>
+			<% end_d = start_d %>
+			<% end_t = start_t %>
+		<% end %>
+
+		<div class="panel">
+
+		<div class="row">
+			<div class="small-6 columns">
+				<label>Booking date:</label>
+				<%= text_field_tag :schedule_start, start_d, :disabled => disable_ui, :class => 'date' %>
+			</div>
+			<div class="small-6 columns">
+				<label>Booking time:</label>
+				<%= text_field_tag :schedule_start_time, start_t, :disabled => disable_ui, :class => 'time' %>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="small-6 columns">
+				<label>Return date:</label>
+				<%= text_field_tag :schedule_end, end_d, :disabled => disable_ui, :class => 'date' %>
+			</div>
+			<div class="small-6 columns">
+				<label>Return time:</label>
+				<%= text_field_tag :schedule_end_time, end_t, :disabled => disable_ui, :class => 'time' %>
+			</div>
+		</div>
+		
+		</div>
+		
+		<label>Comments</label>
+		<%= f.text_area :comments, :disabled => disable_ui, :placeholder => 'Enter comments related to this booking' %>
+		<br />
+	</div>
+	<hr />
+	
+	<div class="actions">
+		<% if !disable_ui %>
+		<%= f.submit 'Update Booking', :class => 'button success' %>
+		<% end %>
 	</div>
 </div>
 <% end %>
