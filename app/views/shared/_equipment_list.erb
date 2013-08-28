@@ -5,7 +5,7 @@
 				<a href="#">
 					<%= cat.name %>
 					<span class="right radius label">
-						2 / <%= cat.equipments.count %>
+						<%= cat.equipments.where(:status => 1).count %> / <%= cat.equipments.count %>
 					</span>
 				</a>
 			</p>
@@ -27,7 +27,7 @@
 			<a href="#">
 				Uncategorized
 				<span class="right radius label secondary">
-					0 / <%= uncat.count %>
+					<%= Equipment.where(:status => 1, :category_id => nil).count %> / <%= uncat.count %>
 				</span>
 			</a>
 		</p>
