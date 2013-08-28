@@ -47,7 +47,7 @@ function initializeComponents($container) {
 		$(this).closest('form').submit();
 	});
 	
-	var $equip_input = $('.equipsearch')
+	var $equip_input = $('.equipsearch');
 	$equip_input.typeahead([
 		{
 			name: 'equipment',
@@ -56,9 +56,25 @@ function initializeComponents($container) {
 		}
 	]);
 	
-	$equip_input.on('typeahead:selected',function(e){
+	$main_equip_search = $('#equipment');
+	$main_equip_search.on('typeahead:selected',function(e){
 		var $chkbox = $("[name*='" + e.target.value + "']").eq(0);
 		$chkbox.click();
+	});
+	
+	$add_equip = $('#add_equipment');
+	$add_equip.on('typeahead:selected',function(e){
+		$.ajax({
+			url: "equipment.json",
+			success: function(data){
+				for (i = 0; i < data.length; i++){
+					if (data[i].name == e.target.value){
+						$('#equip_list').append('<li><a class="label radius alert right remove">x</a>' + data[i].name + '<input id="booking_equipment_ids_" name="booking[equipment_ids][]" type="hidden" value="' + data[i].id + '"><span class="secondary label right">Booking</span></li>');
+					}
+				}
+			}
+		});
+		
 	});
 	
 }

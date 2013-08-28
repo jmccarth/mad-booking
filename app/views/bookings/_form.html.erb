@@ -38,7 +38,7 @@
 					<a href="#"> <span class="label radius right">3 items</span> Equipment </a>
 				</p>
 				<div class="content" data-section-content>
-					<ul class="side-nav">
+					<ul id="equip_list" class="side-nav">
 						<% if params[:ids] %>
 							<% params[:ids].each do |id| %>
 								<li>
@@ -83,8 +83,10 @@
 							<% end %>	
 						<% end %>
 					</ul>
+					<%= text_field_tag :add_equipment, nil, :class => 'equipsearch', :placeholder => "Add..." %>
 				</div>
 			</section>
+			
 		</div>
 	</div>
 
