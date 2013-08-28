@@ -88,9 +88,11 @@ $(function() {
 	});
 	
 	/* Equipment List */
-	
+		
 	var $equipmentList = $("#equipmentList");
 	var $createBooking = $("#createBooking");
+	
+	$equipmentList.find('section.active').removeClass('active'); // force accordion closed
 	
 	$('.equipCheck').click(function(){
 	
