@@ -1,5 +1,7 @@
 include BookingsHelper
 class BookingsController < ApplicationController
+  helper :all
+  helper_method :find_by_date_range
   layout false
   before_filter :format_schedule_write, :only => [:create,:update]
   

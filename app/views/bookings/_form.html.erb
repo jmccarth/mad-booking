@@ -32,7 +32,7 @@
 
 <div class="row">
 	<div class="large-6 columns">
-		<div id="equipment_details" class="section-container accordion" data-section="accordion">
+		<div class="section-container accordion" data-section="accordion">
 			<section>
 				<p class="title" data-section-title>
 					<a href="#"> <span class="label radius right">3 items</span> Equipment </a>
@@ -42,17 +42,11 @@
 						<% if params[:ids] %>
 							<% params[:ids].each do |id| %>
 								<li>
-									<div class="row">
-										<div class="small-8 columns">
-											<%= Equipment.find(id).category.name %>
-											>
-											<%= Equipment.find(id).name %>
-										</div>
-										<div class="small-4 columns">
-											<a class="label radius alert right remove"><i class="icon-remove"></i></a>
-											<span class="round secondary label right">Booking</span>
-										</div>
-									</div>
+									<a class="label radius alert right remove"><i class="icon-remove"></i></a>
+									<%= Equipment.find(id).category.name %>
+									>
+									<%= Equipment.find(id).name %>
+									<span class="round secondary label right">Booking</span>
 									<%= hidden_field_tag "booking[equipment_ids][]", id %>
 								</li>
 							<% end %>
@@ -68,7 +62,7 @@
 									<% if @booking.sign_in_times.key?(equip.id) %>
 										<span id="status_<%= equip.barcode %>" class="right success label">In</span>
 										<br />
-										In at <%= @booking.sign_in_times[equip.id].strftime("%b %-d, %Y %I:%M %p") %>
+										In at <%= @booking.git sign_in_times[equip.id].strftime("%b %-d, %Y %I:%M %p") %>
 									<% elsif @booking.sign_out_times.key?(equip.id) %>
 										<%= hidden_field_tag "booking[sign_in_ids][]", nil, {:data => equip.id, :class => "scannable", :id => "bc_in_#{equip.barcode}"}%>
 										<% if IceCube::Schedule.from_yaml(@booking.schedule).end_time < DateTime.now %>
@@ -89,7 +83,7 @@
 							<% end %>	
 						<% end %>
 					</ul>
-					<%= render 'shared/search_form' %>
+					<%= text_field_tag :add_equipment, nil, :class => 'equipsearch', :placeholder => "Add..." %>
 				</div>
 			</section>
 			
@@ -211,8 +205,7 @@
 	
 	<div class="actions">
 		<% if !disable_ui %>
-		<%= f.submit 'Update booking', :class => 'button success' %>
-		<a class="close-reveal-modal"><i class="icon-remove"></i></a>
+		<%= f.submit 'Update Booking', :class => 'button success' %>
 		<% end %>
 	</div>
 </div>
