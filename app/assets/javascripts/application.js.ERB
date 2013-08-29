@@ -205,6 +205,9 @@ function validateBookingForm(){
 		equip_ids.push(parseInt(input.value));
 	});
 	
+	/* Get ID of current event */
+	var booking_id = $('#booking_id')[0].value;
+	
 	var errors = [];
 	
 	/* Validate timestamps */
@@ -272,20 +275,22 @@ function validateBookingForm(){
 	var calEvents = $('#calendar').fullCalendar('clientEvents');
 	
 	$.each(calEvents,function(i,ev){
-		//Event A is fullCalendar event
-		//Event B is pending event
-		//Method is described here - http://stackoverflow.com/questions/325933/determine-whether-two-date-ranges-overlap
-		var a_start = ev.start;
-		var a_end = ev.end;
-		var b_start = new Date(sd);
-		var b_end = new Date(ed);
-		if ((a_start <= b_end) && (a_end >= b_start)){
-			//Event conflicts with respect to time, now check equipment
-			$.each(ev.equip,function(i,eq){
-				if (equip_ids.indexOf(eq.id) != -1){
-					errors.push("Conflict with another event.");
-				}
-			});
+		if(ev.id != booking_id && ev.status != 2){
+			//Event A is fullCalendar event
+			//Event B is pending event
+			//Method is described here - http://stackoverflow.com/questions/325933/determine-whether-two-date-ranges-overlap
+			var a_start = ev.start;
+			var a_end = ev.end;
+			var b_start = new Date(sd);
+			var b_end = new Date(ed);
+			if ((a_start <= b_end) && (a_end >= b_start)){
+				//Event conflicts with respect to time, now check equipment
+				$.each(ev.equip,function(i,eq){
+					if (equip_ids.indexOf(eq.id) != -1){
+						errors.push("Conflict with another event.");
+					}
+				});
+			}
 		}
 		
 	});
