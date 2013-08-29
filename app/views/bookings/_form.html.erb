@@ -32,7 +32,7 @@
 
 <div class="row">
 	<div class="large-6 columns">
-		<div id="equipment_details" class="section-container accordion" data-section="accordion">
+		<div class="section-container accordion" data-section="accordion">
 			<section>
 				<p class="title" data-section-title>
 					<a href="#"> <span class="label radius right">3 items</span> Equipment </a>
@@ -89,7 +89,7 @@
 							<% end %>	
 						<% end %>
 					</ul>
-					<%= render 'shared/search_form' %>
+					<%= text_field_tag :add_equipment, nil, :class => 'equipsearch', :placeholder => "Add..." %>
 				</div>
 			</section>
 			
