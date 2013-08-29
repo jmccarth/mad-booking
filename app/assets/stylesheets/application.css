@@ -29,6 +29,13 @@
 
 /* FONTS */
 
+.muted {
+	opacity:0.6;
+}
+
+.gt {
+	padding:0 4px;
+}
 
 /* FORMS */
 

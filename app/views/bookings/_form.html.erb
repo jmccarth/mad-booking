@@ -32,7 +32,7 @@
 
 <div class="row">
 	<div class="large-6 columns">
-		<div class="section-container accordion" data-section="accordion">
+		<div id="equipment_details" class="section-container accordion" data-section="accordion">
 			<section>
 				<p class="title" data-section-title>
 					<a href="#"> <span class="label radius right">3 items</span> Equipment </a>
@@ -42,17 +42,13 @@
 						<% if params[:ids] %>
 							<% params[:ids].each do |id| %>
 								<li>
-									<div class="row">
-										<div class="small-8 columns">
-											<%= Equipment.find(id).category.name %>
-											&gt;
+											<span class="muted">
+												<%= Equipment.find(id).category.name %>
+												<span class="gt"><i class="icon-angle-right"></i></span>
+											</span>
 											<%= Equipment.find(id).name %>
-										</div>
-										<div class="small-4 columns">
 											<a class="label radius alert right remove"><i class="icon-remove"></i></a>
 											<span class="round secondary label right">Booking</span>
-										</div>
-									</div>
 									<%= hidden_field_tag "booking[equipment_ids][]", id %>
 								</li>
 							<% end %>
@@ -89,7 +85,7 @@
 							<% end %>	
 						<% end %>
 					</ul>
-					<%= text_field_tag :add_equipment, nil, :class => 'equipsearch', :placeholder => "Add..." %>
+					<%= render 'shared/search_form' %>
 				</div>
 			</section>
 			
