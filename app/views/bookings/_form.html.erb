@@ -1,3 +1,5 @@
+<a class="close-reveal-modal"><i class="icon-remove"></i></a>
+
 <div class="row">
 	<div class="small-12 columns">
 		<h3>Booking details</h3>
@@ -35,7 +37,7 @@
 		<div id="equipment_details" class="section-container accordion" data-section="accordion">
 			<section>
 				<p class="title" data-section-title>
-					<a href="#"> <span class="label radius right">3 items</span> Equipment </a>
+					<a href="#">Equipment </a>
 				</p>
 				<div class="content" data-section-content>
 					<ul id="equip_list" class="side-nav">
@@ -56,6 +58,10 @@
 						<% if @booking.equipments.count > 0 %>
 							<% for equip in @booking.equipments %>
 								<li>
+									<span class="muted">
+										<%= equip.category.name %>
+										<span class="gt"><i class="icon-angle-right"></i></span>
+									</span>
 									<% if !@booking.sign_out_times.key?(equip.id) %>
 										<a class="label radius alert right remove"><i class="icon-remove"></i></a>
 									<% end %>
@@ -207,9 +213,8 @@
 	
 	<div class="actions">
 		<% if !disable_ui %>
-			<%= f.submit 'Update booking', :class => 'button success', :id => "submitBooking" %>
-			<%= link_to 'Delete Booking', @booking, confirm: 'Are you sure? This cannot be undone.', method: :delete, :class => 'button alert right' %>
-			<a class="close-reveal-modal"><i class="icon-remove"></i></a>
+			<%= f.submit 'Update booking', :class => 'button success right', :id => "submitBooking" %>
+			<%= link_to 'Delete Booking', @booking, confirm: 'Are you sure? This cannot be undone.', method: :delete, :class => 'button alert' %>
 		<% end %>
 	</div>
 </div>

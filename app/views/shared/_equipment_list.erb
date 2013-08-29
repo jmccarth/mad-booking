@@ -1,5 +1,5 @@
 <div id="equipmentList" class="section-container accordion" data-section="accordion" datd-options="one_up: false">
-		<% for cat in Category.find(:all) %>
+		<% for cat in Category.find(:all, :order => 'name') %>
 		<section>
 			<p class="title" data-section-title>
 				<a href="#">
