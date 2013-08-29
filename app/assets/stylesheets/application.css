@@ -29,10 +29,34 @@
 
 /* FONTS */
 
+
+/* FORMS */
+
 #mad input, #mad .prefix, #mad .postfix, #mad textarea {
     font-size:115%;
 }
 
+#mad textarea {
+	min-height:100px;
+}
+
+/* TABLES */
+
+table {
+	width:100%;
+}
+
+th {
+	text-align:left;
+}
+
+td.actions {
+	width:10%;
+}
+
+table .inline-list, table .inline-list li:first-child {
+	margin:0;
+}
 
 /* ACCORDION */
 

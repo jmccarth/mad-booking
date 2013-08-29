@@ -5,7 +5,12 @@
   	</ul>
 	<section class="top-bar-section">
 		<ul class="right">
-			<li><%= link_to 'Users', '/users' %></li>
+			<li class="has-dropdown"><a href="#">Users</a>
+				<ul class="dropdown">
+					<li><%= link_to 'List', users_path, :class => 'modal' %></li>
+					<li><%= link_to 'New', new_user_path, :class => 'modal' %></li>
+				</ul>
+			</li>
 			<li><%= link_to 'Equipment', '/equipment' %></li>
 		</ul>
 	</section>
