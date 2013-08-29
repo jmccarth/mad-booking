@@ -290,10 +290,13 @@ function validateBookingForm(){
 		$('#submitBooking').closest('form').submit();
 	}
 	else{
+		
 		var $modalContainer = $('#modalContainer');
+		$modalContainer.find('.alert-box').remove();
 		$.each(errors,function(i,v){
-			$modalContainer.prepend(v);
+			$modalContainer.prepend("<div data-alert class='alert-box alert'>" + v + "</div>");
 		});
+		
 	}
 	
 	
