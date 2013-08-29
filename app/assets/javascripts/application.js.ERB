@@ -77,6 +77,12 @@ function initializeComponents($container) {
 		
 	});
 	
+	$submitBooking = $("#submitBooking");
+	$submitBooking.bind('click',function(e){
+		e.preventDefault();
+		validateBookingForm();
+	});
+	
 }
 
 $(function() {
@@ -173,5 +179,89 @@ $(function() {
 	});
 	
 });
+
+function validateBookingForm(){
+	/* Get user list we will need for a bunch of validations */
+	var userList;
+	$.ajax({
+		url: "users.json",
+		async: false,
+		success: function(data){
+			userList = data;
+		}
+	});
+	
+	var errors = [];
+	
+	/* Validate timestamps */
+	/* Start time must come before the end time */
+	var start_d = $('#schedule_start').eq(0).attr('value');
+	var end_d = $('#schedule_end').eq(0).attr('value');
+	var start_t = $('#schedule_start_time').eq(0).attr('value');
+	var end_t = $('#schedule_end_time').eq(0).attr('value');
+	
+	var sd = Date.parse(start_d + " " + start_t);
+	var ed = Date.parse(end_d + " " + end_t);
+	
+	if (sd >= ed){
+		errors.push("Start time must be before end time.");
+	}
+	
+	
+	/* Validate that at least one piece of equipment is being booked */
+	var $equip_list_li = $('#equip_list li');
+	if ($equip_list_li.length <= 0 ){
+		errors.push("You must book at least one piece of equipment.")
+	}
+	
+	var userName = $('#booking_user')[0].value;
+	
+	/* Validate that the user is an existing user */
+	/* Only needs to be done if the "create?" box is unchecked */
+	if (!$('#create_if_new')[0].checked){
+		var userExists = false;
+		for (i = 0; i < userList.length; i++){
+			if (userList[i].username == userName){
+				userExists = true;
+			}
+		}
+		if (!userExists){
+			errors.push("User " + userName + " does not exist.");
+		}
+	}
+	
+	
+	/* Validate that the user isn't blacklisted */
+	/* Only applies if the user exists */
+	if (userExists){
+		var userStatusOK = false;
+		for (i = 0; i < userList.length; i++){
+			if (userList[i].username == userName){
+				if (userList[i].status == 0){
+					userStatusOK = true;
+				}
+			}
+		}
+		/* If the user's status is not okay, we only want to raise an error if the user isn't new */
+		if (!userStatusOK){
+			errors.push("User " + userName + " is blacklisted. Do not loan them equipment.");
+		}
+	}
+	
+
+
+	
+	/* Submit the form if there are no validation errors */
+	if (errors.length == 0){
+		$('#submitBooking').closest('form').submit();
+	}
+	else{
+		$.each(errors,function(i,v){
+			alert(v);
+		});
+	}
+	
+	
+}
 
 $(document).foundation();
