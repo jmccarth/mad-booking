@@ -82,7 +82,8 @@ module BookingsHelper
       id: booking.id,
       allDay: isAllDay,
       status: b_status,
-      color: b_color
+      color: b_color,
+      equip: booking.equipments
     }
     
   end

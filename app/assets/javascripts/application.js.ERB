@@ -191,14 +191,21 @@ function validateBookingForm(){
 		}
 	});
 	
+	
+	/* Get list of equipment IDs being booked */
+	var equip_ids = [];
+	$.each($('#equip_list li input'),function(i,input){
+		equip_ids.push(parseInt(input.value));
+	});
+	
 	var errors = [];
 	
 	/* Validate timestamps */
 	/* Start time must come before the end time */
-	var start_d = $('#schedule_start').eq(0).attr('value');
-	var end_d = $('#schedule_end').eq(0).attr('value');
-	var start_t = $('#schedule_start_time').eq(0).attr('value');
-	var end_t = $('#schedule_end_time').eq(0).attr('value');
+	var start_d = $('#schedule_start').datepicker('getDate').toDateString();
+	var end_d = $('#schedule_end').datepicker('getDate').toDateString();
+	var start_t = $('#schedule_start_time').timepicker('getTime').toTimeString();
+	var end_t = $('#schedule_end_time').timepicker('getTime').toTimeString();
 	
 	var sd = Date.parse(start_d + " " + start_t);
 	var ed = Date.parse(end_d + " " + end_t);
@@ -215,6 +222,11 @@ function validateBookingForm(){
 	}
 	
 	var userName = $('#booking_user')[0].value;
+	
+	/* Validate that user name isn't blank */
+	if (userName == ""){
+		errors.push("User name cannot be blank.");
+	}
 	
 	/* Validate that the user is an existing user */
 	/* Only needs to be done if the "create?" box is unchecked */
@@ -248,6 +260,28 @@ function validateBookingForm(){
 		}
 	}
 	
+	/* Validate that we aren't double-booking equipment */
+	// Get events from calendar
+	var calEvents = $('#calendar').fullCalendar('clientEvents');
+	
+	$.each(calEvents,function(i,ev){
+		//Event A is fullCalendar event
+		//Event B is pending event
+		//Method is described here - http://stackoverflow.com/questions/325933/determine-whether-two-date-ranges-overlap
+		var a_start = ev.start;
+		var a_end = ev.end;
+		var b_start = new Date(sd);
+		var b_end = new Date(ed);
+		if ((a_start <= b_end) && (a_end >= b_start)){
+			//Event conflicts with respect to time, now check equipment
+			$.each(ev.equip,function(i,eq){
+				if (equip_ids.indexOf(eq.id) != -1){
+					errors.push("Conflict with another event.");
+				}
+			});
+		}
+		
+	});
 
 
 	
@@ -256,8 +290,9 @@ function validateBookingForm(){
 		$('#submitBooking').closest('form').submit();
 	}
 	else{
+		var $modalContainer = $('#modalContainer');
 		$.each(errors,function(i,v){
-			alert(v);
+			$modalContainer.prepend(v);
 		});
 	}
 	
