@@ -1,13 +1,12 @@
-<h1>Listing users</h1>
+<h3>User list</h3>
 
 <table>
   <tr>
     <th>Username</th>
     <th>Admin</th>
     <th>Status</th>
-    <th></th>
-    <th></th>
-    <th></th>
+	<th>Comments</th>
+    <th>Actions</th>
   </tr>
 
 <% @users.each do |user| %>
@@ -15,13 +14,14 @@
     <td><%= user.username %></td>
     <td><%= user.admin %></td>
     <td><%= user.status %></td>
-    <td><%= link_to 'Show', user %></td>
-    <td><%= link_to 'Edit', edit_user_path(user) %></td>
-    <td><%= link_to 'Destroy', user, confirm: 'Are you sure?', method: :delete %></td>
+	<td><%= user.comments %></td>
+    <td class="actions">
+		<ul class="inline-list">
+			<li><%= link_to 'Show', user %></li>
+			<li><%= link_to 'Edit', edit_user_path(user) %></li>
+    		<li><%= link_to 'Destroy', user, confirm: 'Are you sure?', method: :delete %></li>
+		</ul>
+	</td>
   </tr>
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'New User', new_user_path %>

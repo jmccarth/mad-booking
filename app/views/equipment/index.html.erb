@@ -6,9 +6,7 @@
     <th>Name</th>
     <th>Stored</th>
     <th>Status</th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>Actions</th>
   </tr>
 
 <% @equipment.each do |equipment| %>
@@ -17,9 +15,13 @@
     <td><%= equipment.name %></td>
     <td><%= equipment.stored %></td>
     <td><%= equipment.status %></td>
-    <td><%= link_to 'Show', equipment %></td>
-    <td><%= link_to 'Edit', edit_equipment_path(equipment) %></td>
-    <td><%= link_to 'Destroy', equipment, confirm: 'Are you sure?', method: :delete %></td>
+    <td class="actions">
+		<ul class="inline-list">
+			<li><%= link_to 'Show', equipment %></li>
+			<li><%= link_to 'Edit', edit_equipment_path(equipment) %></li>
+			<li><%= link_to 'Destroy', equipment, confirm: 'Are you sure?', method: :delete %></li>
+		</ul>
+	</td>
   </tr>
 <% end %>
 </table>
