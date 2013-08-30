@@ -122,6 +122,10 @@ table.fc-header {
 	border:none;
 }
 
+#calendar h2 {
+	font-size:130%;
+}
+
 /* TYPEAHEAD */
 
 .twitter-typeahead {

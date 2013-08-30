@@ -211,9 +211,9 @@ $(function() {
 	var $inputs = $views.find('input');
 	var $columns = $('#layout > .columns');
 	
-	var $leftColumn = $('.left-column');
-	var $middleColumn = $('.middle-column');
-	var $rightColumn = $('.right-column');
+	var $leftColumn = $columns.eq(0);
+	var $middleColumn = $columns.eq(1);
+	var $rightColumn = $columns.eq(2);
 	
 	var sizeArray = [];
 	

@@ -1,15 +1,16 @@
 <br />
 <div id="content">
 	<div id="layout" class="row">
-	<div class="small-12 large-3 columns left-column">
+	<div class="large-3 columns">
 		<a id="createBooking" class="button expand disabled">No items selected</a>
 		<%= render 'shared/search_form' %>
 		<%= render 'shared/equipment_list' %>
 	</div>
-	<div id="calendar" class="small-12 large-6 columns middle-column">
+	<div class="large-6 columns">
+		<div id="calendar"></div>
 		<%= link_to "Show all equipment", "#", :onclick => "reloadCalendar()" %>
 	</div>
-	<div class="small-12 large-3 columns right-column">
+	<div class="large-3 columns">
 		<div class="section-container accordion" data-section="accordion" data-options="one_up:false">
 			<section>
 				<% upcoming = find_by_date_range(Time.now, Time.now + 3.day) %>

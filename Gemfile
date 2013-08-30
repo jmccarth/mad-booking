@@ -28,7 +28,7 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'jquery-timepicker-rails'
 gem 'ice_cube'
-gem 'fullcalendar-rails'
+#gem 'fullcalendar-rails'
 gem 'twitter-typeahead-rails'
 
 # To use ActiveModel has_secure_password
