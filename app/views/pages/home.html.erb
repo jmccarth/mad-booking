@@ -9,7 +9,7 @@
 		<%= link_to "Show all equipment", "#", :onclick => "reloadCalendar()" %>
 	</div>
 	<div class="small-12 large-3 columns">
-		<div class="section-container accordion" data-section="accordion">
+		<div class="section-container accordion" data-section="accordion" data-options="one_up:false">
 			<section>
 				<% upcoming = find_by_date_range(Time.now, Time.now + 3.day) %>
 				<p class="title" data-section-title>

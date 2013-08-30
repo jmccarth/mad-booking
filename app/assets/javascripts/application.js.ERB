@@ -63,6 +63,7 @@ function initializeComponents($container) {
 	$main_equip_search.on('typeahead:selected',function(e){
 		var $chkbox = $("[name*='" + e.target.value + "']").eq(0);
 		$chkbox.click();
+		$chkbox.closest('p').remove();
 	});
 	
 	var $add_equip = $('#equipment_details .equipsearch');
@@ -306,7 +307,7 @@ function validateBookingForm(){
 		var $modalContainer = $('#modalContainer');
 		$modalContainer.find('.alert-box').remove();
 		$.each(errors,function(i,v){
-			$modalContainer.prepend("<div data-alert class='alert-box alert'>" + v + "</div>");
+			$modalContainer.find('.errors').append("<div data-alert class='alert-box alert'>" + v + "</div>");
 		});
 		
 	}
