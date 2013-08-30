@@ -27,6 +27,27 @@
 	max-width:100%;
 }
 
+#mad .columns {
+	/*transition: all 0.5s;*/
+}
+
+/* NAVIGATION */
+
+#views {
+	width:500px;
+	background:#000;
+}
+
+#views .columns > label {
+	color:#fff;
+	padding:0;
+	background:none;
+}
+
+#views .switch label {
+	background:none;
+}
+
 /* FONTS */
 
 .muted {
@@ -68,7 +89,7 @@ table .inline-list, table .inline-list li:first-child {
 /* ACCORDION */
 
 #mad section.selected p.title {
-	background:#aaeeaa;
+	background:#e1f5d1;
 }
 
 .accordion .label {

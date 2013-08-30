@@ -186,6 +186,84 @@ $(function() {
 		}
 	});
 	
+	/* Expand
+	
+	$(".expand").click(function() {
+		var $container = $('.middle-column');
+		var $others = $container.siblings('.columns');
+
+		$others.each(function() {
+			$(this).attr('class', 'columns large-1');
+		});
+		
+		$container.attr('class', 'columns middle-column large-' + (12-$others.length));
+		
+		setTimeout(function() {
+			$(window).trigger('resize');
+		}, 1000);
+	});
+	
+	*/
+	
+	/* Views */
+	
+	var $views = $('#views');
+	var $inputs = $views.find('input');
+	var $columns = $('#layout > .columns');
+	
+	var $leftColumn = $('.left-column');
+	var $middleColumn = $('.middle-column');
+	var $rightColumn = $('.right-column');
+	
+	var sizeArray = [];
+	
+	$inputs.click(function() {
+		updateViews();
+	});
+	
+	function updateViews() {
+		var switchLeft = $views.find("#leftOn").is(':checked');
+		var switchMiddle = $views.find("#middleOn").is(':checked');
+		var switchRight = $views.find("#rightOn").is(':checked');
+
+		$leftColumn.css('display', switchLeft ? 'block' : 'none');
+		$middleColumn.css('display', switchMiddle ? 'block' : 'none');
+		$rightColumn.css('display', switchRight ? 'block' : 'none');
+
+
+		if (switchLeft && switchMiddle && switchRight) {
+			sizeArray = [3, 6, 3];
+		}
+		else if (!switchLeft && switchMiddle && switchRight) {
+ 			sizeArray = [0, 9, 3];
+		}
+		else if (switchLeft && !switchMiddle && switchRight) {
+			sizeArray = [6, 0, 6];
+		}
+		else if (switchLeft && switchMiddle && !switchRight) {
+			sizeArray = [3, 9, 0];
+		}
+		else if (switchLeft && !switchMiddle && !switchRight) {
+			sizeArray = [12, 0, 0];
+		}
+		else if (!switchLeft && switchMiddle && !switchRight) {
+			sizeArray = [0, 12, 0];
+		}
+		else if (!switchLeft && !switchMiddle && switchRight) {
+			sizeArray = [0, 0, 12];
+		}
+		else if (!switchLeft && !switchMiddle && !switchRight) {
+			sizeArray = [0, 0, 0];
+		}
+		
+		sizeArray.forEach(function(size, index) {
+			console.log(index);
+			$columns.eq(index).attr('class', 'columns large-' + size);
+		});
+		
+		$(window).trigger('resize');
+	}
+	
 });
 
 function validateBookingForm(){
@@ -310,8 +388,7 @@ function validateBookingForm(){
 			$modalContainer.find('.errors').append("<div data-alert class='alert-box alert'>" + v + "</div>");
 		});
 		
-	}
-	
+	}	
 	
 }
 

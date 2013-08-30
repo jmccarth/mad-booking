@@ -1,10 +1,11 @@
 <nav class="top-bar">
-	<ul class="title-area">
+	<ul class="left title-area">
     	<li class="name"><h1><%= link_to 'MAD Booking', '/' %></h1></li>
 		<li class="toggle-topbar menu-icon"><a href="#"><span></span></a></li>
   	</ul>
 	<section class="top-bar-section">
-		<ul class="right">
+		<ul>
+			<li class="divider"></li>
 			<li class="has-dropdown"><a href="#">Users</a>
 				<ul class="dropdown">
 					<li><%= link_to 'List', users_path, :class => 'modal' %></li>
@@ -12,7 +13,58 @@
 				</ul>
 			</li>
 			<li><%= link_to 'Equipment', '/equipment' %></li>
+			<li class="divider"></li>
 		</ul>
+	</section>
+	<section class="top-bar-section">
+		<ul class="right">
+			<li class="divider"></li>
+			<li class="has-dropdown">
+				<a href="#">View</a>
+				<ul id="views" class="dropdown">
+					<li>
+						<div class="row">
+							<div class="small-4 columns">
+								<label>Left</label>
+								<div class="switch">
+									<input id="leftOff" name="switch-left" type="radio">
+									<label for="leftOff" onclick="">Hide</label>
+							
+									<input id="leftOn" name="switch-left" type="radio" checked>
+									<label for="leftOn" onclick="">Show</label>
+							
+									<span></span>
+								</div>
+							</div>
+							<div class="small-4 columns">
+								<label>Middle</label>
+								<div class="switch">
+									<input id="middleOff" name="switch-middle" type="radio">
+									<label for="middleOff" onclick="">Hide</label>
+							
+									<input id="middleOn" name="switch-middle" type="radio" checked>
+									<label for="middleOn" onclick="">Show</label>
+									
+									<span></span>
+								</div>
+							</div>
+							<div class="small-4 columns">
+								<label>Right</label>
+								<div class="switch">
+									<input id="rightOff" name="switch-right" type="radio">
+									<label for="rightOff" onclick="">Hide</label>
+							
+									<input id="rightOn" name="switch-right" type="radio" checked>
+									<label for="rightOn" onclick="">Show</label>
+									
+									<span></span>
+								</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</li>
+		<ul>
 	</section>
 </nav>
 
