@@ -4,8 +4,14 @@ $(document).ready(function() {
 	var endDate = new Date() / 1000 + 31556900;
 
 	var events;
+	
+	var $calendar = $("#calendar");
 
-	$('#calendar').fullCalendar({
+	var calHeight = $(window).height() - $calendar.offset().top - $('footer').height();
+	
+	alert($('footer').height());
+
+	$calendar.fullCalendar({
 		header : {
 			left : 'prev,next today',
 			center : 'title',
@@ -33,19 +39,26 @@ $(document).ready(function() {
 			if (view.name == 'month'){
 				jqElement.height(15);
 			}
-		}
+		},
+		height: calHeight,
+		weekMode: 'liquid'
 
 	});
 });
 
 function reloadCalendar(items) {
-	$('#calendar').fullCalendar('destroy');
 	var startDate = new Date() / 1000 - 31556900;
 	var endDate = new Date() / 1000 + 31556900;
 
+	var $calendar = $("#calendar");
+
+	var calHeight = $(window).height() - $calendar.offset().top - $('footer').height();
+
+	$calendar.fullCalendar('destroy');
+
 	var events;
 
-	$('#calendar').fullCalendar({
+	$calendar.fullCalendar({
 		header : {
 			left : 'prev,next today',
 			center : 'title',
@@ -74,6 +87,8 @@ function reloadCalendar(items) {
 			if (view.name == 'month'){
 				jqElement.height(15);
 			}
-		}
+		},
+		height: calHeight,
+		weekMode: 'liquid'
 	});
 }
