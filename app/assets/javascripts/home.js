@@ -8,8 +8,6 @@ $(document).ready(function() {
 	var $calendar = $("#calendar");
 
 	var calHeight = $(window).height() - $calendar.offset().top - $('footer').height();
-	
-	alert($('footer').height());
 
 	$calendar.fullCalendar({
 		header : {
