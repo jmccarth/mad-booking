@@ -1,3 +1,5 @@
+require 'bundler/capistrano'
+
 set :application, "MAD Booking"
 set :repository,  "ssh://git@github.com/jmccarth/mad-booking.git"
 
