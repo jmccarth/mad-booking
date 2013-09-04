@@ -34,7 +34,7 @@ function initializeComponents($container) {
 	
 	/* Search */
 	
-	var $search_input = $container.find('.usersearch')
+	var $search_input = $container.find('.usersearch');
 	$search_input.typeahead([
 		{
 			name: 'name', 
@@ -109,7 +109,7 @@ $(function() {
 		
 		if ($(this).hasClass('disabled')) return;
 		
-		var $items = $('#equipmentList').find('.equipCheck:checked')
+		var $items = $('#equipmentList').find('.equipCheck:checked');
 		var equip_ids = [];
 		
 		$items.each(function(index) {
@@ -306,7 +306,7 @@ function validateBookingForm(){
 	/* Validate that at least one piece of equipment is being booked */
 	var $equip_list_li = $('#equip_list li');
 	if ($equip_list_li.length <= 0 ){
-		errors.push("You must book at least one piece of equipment.")
+		errors.push("You must book at least one piece of equipment.");
 	}
 	
 	var userName = $('#booking_user')[0].value;
