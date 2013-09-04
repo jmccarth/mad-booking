@@ -38,7 +38,7 @@ function initializeComponents($container) {
 	$search_input.typeahead([
 		{
 			name: 'name', 
-			local: <%= User.select('distinct username').collect { |user| user.username } %>,
+			local: <%= User.select('distinct username').collect { |user| user.username }.to_json %>,
 			header: ''
 		}
 	]);
@@ -52,7 +52,7 @@ function initializeComponents($container) {
 		<% Category.all.each do |category, index| %>
 		{
 			name: "<%= category.name %>",
-			local: <%= category.equipments.collect { |equip| equip.name } %>,
+			local: <%= category.equipments.collect { |equip| equip.name }.to_json %>,
 			header: '<h5><%= category.name %></h5>',
 			empty: ''
 		},
