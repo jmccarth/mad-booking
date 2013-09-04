@@ -23,7 +23,7 @@
 function initializeComponents($container) {
 	$container.find('input.date').datepicker();
 	$container.find('input.time').timepicker({
-		'timeFormat' : 'h:i A'
+		"timeFormat" : "h:i A"
 	});
 	
 	$container.foundation('section', 'reflow');
@@ -37,9 +37,9 @@ function initializeComponents($container) {
 	var $search_input = $container.find('.usersearch');
 	$search_input.typeahead([
 		{
-			name: 'name', 
+			name: "name", 
 			local: <%= User.select('distinct username').collect { |user| user.username }.to_json %>,
-			header: ''
+			header: ""
 		}
 	]);
 
@@ -53,8 +53,8 @@ function initializeComponents($container) {
 		{
 			name: "<%= category.name %>",
 			local: <%= category.equipments.collect { |equip| equip.name }.to_json %>,
-			header: '<h5><%= category.name %></h5>',
-			empty: ''
+			header: "<h5><%= category.name %></h5>",
+			empty: ""
 		},
 		<% end %>
 	]);
@@ -117,7 +117,7 @@ $(function() {
 		});
 		
 		$modalContainer.foundation('reveal', 'open', {
-			url: 'bookings/new',
+			url: "bookings/new",
 			data: {
 				ids : equip_ids
 			},
