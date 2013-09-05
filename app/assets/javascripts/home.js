@@ -27,7 +27,7 @@ $(document).ready(function() {
 		eventClick : function(calEvent, jsEvent, view) {
 			$modalContainer = $('#modalContainer');
 			$modalContainer.foundation('reveal', 'open', {
-				url: "bookings/" + calEvent.id + "/edit",
+				url: document.location + "/bookings/" + calEvent.id + "/edit",
 				complete: function() {
 					initializeComponents($modalContainer);
 				}
@@ -75,7 +75,7 @@ function reloadCalendar(items) {
 		eventClick : function(calEvent, jsEvent, view) {
 			$modalContainer = $('#modalContainer');
 			$modalContainer.foundation('reveal', 'open', {
-				url: "bookings/" + calEvent.id + "/edit",
+				url: document.location + "/bookings/" + calEvent.id + "/edit",
 				complete: function() {
 					initializeComponents($modalContainer);
 				}
