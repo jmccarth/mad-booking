@@ -71,7 +71,7 @@ function initializeComponents($container) {
 	var $add_equip = $('#equipment_details .equipsearch');
 	$add_equip.on('typeahead:selected',function(e){
 		$.ajax({
-			url: "equipment.json",
+			url: document.location + "/equipment.json",
 			success: function(data){
 				for (i = 0; i < data.length; i++){
 					if (data[i].name == e.target.value){
@@ -271,7 +271,7 @@ function validateBookingForm(){
 	/* Get user list we will need for a bunch of validations */
 	var userList;
 	$.ajax({
-		url: "users.json",
+		url: document.location + "/users.json",
 		async: false,
 		success: function(data){
 			userList = data;
