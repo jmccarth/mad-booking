@@ -39,7 +39,8 @@ function initializeComponents($container) {
 	
 	$search_input.typeahead({
 		name: "name", 
-		local: JSON.parse('<%= User.select('distinct username').collect { |user| user.username } %>'),
+		prefetch: window.location.origin + "/users.json",
+		//local: JSON.parse('<%= User.select('distinct username').collect { |user| user.username } %>'),
 		header: ""
 	});
 	
@@ -55,8 +56,7 @@ function initializeComponents($container) {
 			{
 				name: "<%= category.name %>",
 				local: JSON.parse('<%= category.equipments.collect { |equip| equip.name }.to_json.gsub("'", %q(\\\')) %>'),
-				header: "<h5><%= category.name %></h5>",
-				empty: ""
+				header: "<h5><%= category.name %></h5>"
 			}<% if index < Category.all.size - 1 %>, <% end %>
 		<% end %>
 	]);
@@ -71,7 +71,7 @@ function initializeComponents($container) {
 	var $add_equip = $('#equipment_details .equipsearch');
 	$add_equip.on('typeahead:selected',function(e){
 		$.ajax({
-			url: document.location + "/equipment.json",
+			url: window.location.origin + "/equipment.json",
 			success: function(data){
 				for (i = 0; i < data.length; i++){
 					if (data[i].name == e.target.value){
@@ -119,7 +119,7 @@ $(function() {
 		});
 		
 		$modalContainer.foundation('reveal', 'open', {
-			url: document.location + "/bookings/new",
+			url: window.location.origin + "/bookings/new",
 			data: {
 				ids : equip_ids
 			},
@@ -271,7 +271,7 @@ function validateBookingForm(){
 	/* Get user list we will need for a bunch of validations */
 	var userList;
 	$.ajax({
-		url: document.location + "/users.json",
+		url: window.location.origin + "/users.json",
 		async: false,
 		success: function(data){
 			userList = data;

@@ -18,7 +18,7 @@ $(document).ready(function() {
 		defaultView: 'agendaWeek',
 		editable : false,
 		eventSources : [{
-			url : document.location + "/bookings",
+			url : window.location.origin + "/bookings",
 			data : {
 				start_date : startDate,
 				end_date : endDate
@@ -27,7 +27,7 @@ $(document).ready(function() {
 		eventClick : function(calEvent, jsEvent, view) {
 			$modalContainer = $('#modalContainer');
 			$modalContainer.foundation('reveal', 'open', {
-				url: document.location + "/bookings/" + calEvent.id + "/edit",
+				url: window.location.origin + "/bookings/" + calEvent.id + "/edit",
 				complete: function() {
 					initializeComponents($modalContainer);
 				}
@@ -65,7 +65,7 @@ function reloadCalendar(items) {
 		defaultView: 'agendaWeek',
 		editable : false,
 		eventSources : [{
-			url : document.location + "/bookings",
+			url : window.location.origin + "/bookings",
 			data : {
 				start_date : startDate,
 				end_date : endDate,
@@ -75,7 +75,7 @@ function reloadCalendar(items) {
 		eventClick : function(calEvent, jsEvent, view) {
 			$modalContainer = $('#modalContainer');
 			$modalContainer.foundation('reveal', 'open', {
-				url: document.location + "/bookings/" + calEvent.id + "/edit",
+				url: window.location.origin + "/bookings/" + calEvent.id + "/edit",
 				complete: function() {
 					initializeComponents($modalContainer);
 				}
