@@ -35,13 +35,11 @@ function initializeComponents($container) {
 	/* Search */
 	
 	var $search_input = $container.find('.usersearch');
-	$search_input.typeahead([
-		{
-			name: "name", 
-			local:<%= User.select('distinct username').collect { |user| user.username }.to_json %>,
-			header: ""
-		}
-	]);
+	$search_input.typeahead({
+		name: "name", 
+		local: <%= User.select('distinct username').collect { |user| user.username }.to_json %>,
+		header: ""
+	});
 
 	$search_input.on('usersearch:selected', function() {
 		$(this).closest('form').submit();
@@ -49,13 +47,13 @@ function initializeComponents($container) {
 	
 	var $equip_input = $('.equipsearch');
 	$equip_input.typeahead([
-		<% Category.all.each do |category, index| %>
-		{
-			name: "<%= category.name %>",
-			local: <%= category.equipments.collect { |equip| equip.name }.to_json %>,
-			header: "<h5><%= category.name %></h5>",
-			empty: ""
-		},
+		<% Category.all.each_with_index do |category, index| %>
+			{
+				name: "<%= category.name %>",
+				local: <%= category.equipments.collect { |equip| equip.name }.to_json %>,
+				header: "<h5><%= category.name %></h5>",
+				empty: ""
+			}<% if index < Category.all.size - 1 %>, <% end %>
 		<% end %>
 	]);
 	
