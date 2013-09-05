@@ -37,7 +37,7 @@ function initializeComponents($container) {
 	var $search_input = $container.find('.usersearch');
 	$search_input.typeahead({
 		name: "name", 
-		local: JSON.parse('<%= User.select('distinct username').collect { |user| user.username } %>'),
+		local: JSON.parse("<%= User.select('distinct username').collect { |user| user.username } %>"),
 		header: ""
 	});
 
