@@ -50,7 +50,7 @@ function initializeComponents($container) {
 		<% Category.all.each_with_index do |category, index| %>
 			{
 				name: "<%= category.name %>",
-				local: <%= category.equipments.collect { |equip| equip.name } %>,
+				local: JSON.parse("<%= category.equipments.collect { |equip| equip.name } %>"),
 				header: "<h5><%= category.name %></h5>",
 				empty: ""
 			}<% if index < Category.all.size - 1 %>, <% end %>
