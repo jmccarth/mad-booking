@@ -1,6 +1,17 @@
 class EquipmentController < ApplicationController
+
+  layout false
   # GET /equipment
   # GET /equipment.json
+
+  def column
+    @equipment = Equipment.pluck(request.params[:column])
+
+    respond_to do |format|
+      format.json { render json: @equipment }
+    end
+  end
+
   def index
     @equipment = Equipment.all
 

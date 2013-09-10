@@ -1,5 +1,14 @@
 class UsersController < ApplicationController
   layout false
+
+  def column
+    @users = User.pluck(request.params[:column])
+
+    respond_to do |format|
+      format.json { render json: @users }
+    end
+  end
+
   # GET /users
   # GET /users.json
   def index

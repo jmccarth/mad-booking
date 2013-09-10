@@ -1,4 +1,9 @@
 Equip::Application.routes.draw do
+
+  get '/users/:column.json', to: "users#column", defaults: {format: :json}, constraints: lambda{|request|User.column_names.include?(request.params[:column])}
+  get '/equipment/:column.json', to: "equipment#column", defaults: {format: :json}, constraints: lambda{|request|Equipment.column_names.include?(request.params[:column])}
+  get '/bookings/:column.json', to: "bookings#column", defaults: {format: :json}, constraints: lambda{|request|Bookings.column_names.include?(request.params[:column])}
+
   resources :categories
 
   resources :users
