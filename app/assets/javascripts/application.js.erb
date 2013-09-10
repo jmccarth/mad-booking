@@ -20,6 +20,8 @@
 //= require barcode_listener
 //= require twitter/typeahead
 
+var app_path = window.location.protocol+"//"+window.location.host;
+
 function initializeComponents($container) {
 	$container.find('input.date').datepicker();
 	$container.find('input.time').timepicker({
@@ -71,7 +73,7 @@ function initializeComponents($container) {
 	var $add_equip = $('#equipment_details .equipsearch');
 	$add_equip.on('typeahead:selected',function(e){
 		$.ajax({
-			url: "/equipment.json",
+			url: app_path + "/equipment.json",
 			success: function(data){
 				for (i = 0; i < data.length; i++){
 					if (data[i].name == e.target.value){
@@ -119,7 +121,7 @@ $(function() {
 		});
 		
 		$modalContainer.foundation('reveal', 'open', {
-			url: "/bookings/new",
+			url: app_path + "/bookings/new",
 			data: {
 				ids : equip_ids
 			},
@@ -271,7 +273,7 @@ function validateBookingForm(){
 	/* Get user list we will need for a bunch of validations */
 	var userList;
 	$.ajax({
-		url: "/users.json",
+		url: app_path + "/users.json",
 		async: false,
 		success: function(data){
 			userList = data;
