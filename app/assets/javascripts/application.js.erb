@@ -20,7 +20,10 @@
 //= require barcode_listener
 //= require twitter/typeahead
 
-var app_path = window.location.protocol+"//"+window.location.host;
+// PRODUCTION
+var app_path = '/mad-booking';
+// DEV
+// var app_path = '';
 
 function initializeComponents($container) {
 	$container.find('input.date').datepicker();
@@ -41,7 +44,7 @@ function initializeComponents($container) {
 	
 	$search_input.typeahead({
 		name: "name", 
-		prefetch: "users/username.json"
+		prefetch: app_path + "/users/username.json"
 	});
 	
 
