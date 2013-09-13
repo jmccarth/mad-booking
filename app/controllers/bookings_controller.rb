@@ -7,22 +7,23 @@ class BookingsController < ApplicationController
   before_filter :format_schedule_write, :only => [:create,:update]
   
   def daterange
-    equips = params[:equip_ids]
     sTime = Time.at(params[:start_date].to_i)
     eTime = Time.at(params[:end_date].to_i)
     @bookings = find_by_date_range(sTime,eTime)
     b = []
-    if equips.nil?
-      @bookings.each do |booking|
-         b.push(convert_booking_to_fcevent(booking))
-      end
-    else
+
+    if(params.has_key?(:equip_ids))
+      equips = params[:equip_ids]
       @bookings.each do |booking|
         for equip in equips do
           if booking.equipments.include?(Equipment.find(equip))
             b.push(convert_booking_to_fcevent(booking))  
           end    
         end
+      end
+    else
+      @bookings.each do |booking|
+         b.push(convert_booking_to_fcevent(booking))
       end
     end
 

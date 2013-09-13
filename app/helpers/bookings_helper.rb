@@ -44,7 +44,11 @@ module BookingsHelper
     end
   
     #Booking title
-    user = booking.user.username
+    if booking.user.nil?
+      user = "UNKNOWN USER"
+    else
+      user = booking.user.username
+    end
     equip_list = "["
     for e in booking.equipments do
       equip_list += e.name + ","
