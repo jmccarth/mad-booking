@@ -6,17 +6,7 @@ class BookingsController < ApplicationController
   layout false
   before_filter :format_schedule_write, :only => [:create,:update]
   
-  def column
-    @bookings = Booking.pluck(request.params[:column])
-
-    respond_to do |format|
-      format.json { render json: @bookings }
-    end
-  end
-
-  # GET /bookings
-  # GET /bookings.json
-  def index
+  def daterange
     equips = params[:equip_ids]
     sTime = Time.at(params[:start_date].to_i)
     eTime = Time.at(params[:end_date].to_i)
@@ -35,11 +25,28 @@ class BookingsController < ApplicationController
         end
       end
     end
-      
+
+    respond_to do |format|
+      format.json { render json: b }
+    end
+  end
+
+  def column
+    @bookings = Booking.pluck(request.params[:column])
+
+    respond_to do |format|
+      format.json { render json: @bookings }
+    end
+  end
+
+  # GET /bookings
+  # GET /bookings.json
+  def index
+    @bookings = Booking.all
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: b }
+      format.json { render json: @bookings }
     end
   end
 
