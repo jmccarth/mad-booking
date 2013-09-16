@@ -6,6 +6,32 @@ class BookingsController < ApplicationController
   layout false
   before_filter :format_schedule_write, :only => [:create,:update]
   
+  def daterange
+    sTime = Time.at(params[:start_date].to_i)
+    eTime = Time.at(params[:end_date].to_i)
+    @bookings = find_by_date_range(sTime,eTime)
+    b = []
+
+    if(params.has_key?(:equip_ids))
+      equips = params[:equip_ids]
+      @bookings.each do |booking|
+        for equip in equips do
+          if booking.equipments.include?(Equipment.find(equip))
+            b.push(convert_booking_to_fcevent(booking))  
+          end    
+        end
+      end
+    else
+      @bookings.each do |booking|
+         b.push(convert_booking_to_fcevent(booking))
+      end
+    end
+
+    respond_to do |format|
+      format.json { render json: b }
+    end
+  end
+
   def column
     @bookings = Booking.pluck(request.params[:column])
 
@@ -17,29 +43,11 @@ class BookingsController < ApplicationController
   # GET /bookings
   # GET /bookings.json
   def index
-    equips = params[:equip_ids]
-    sTime = Time.at(params[:start_date].to_i)
-    eTime = Time.at(params[:end_date].to_i)
-    @bookings = find_by_date_range(sTime,eTime)
-    b = []
-    if equips.nil?
-      @bookings.each do |booking|
-         b.push(convert_booking_to_fcevent(booking))
-      end
-    else
-      @bookings.each do |booking|
-        for equip in equips do
-          if booking.equipments.include?(Equipment.find(equip))
-            b.push(convert_booking_to_fcevent(booking))  
-          end    
-        end
-      end
-    end
-      
+    @bookings = Booking.all
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: b }
+      format.json { render json: @bookings }
     end
   end
 

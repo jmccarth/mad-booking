@@ -18,7 +18,7 @@ $(document).ready(function() {
 		defaultView: 'basicWeek',
 		editable : false,
 		eventSources : [{
-			url : app_path + "/bookings",
+			url : app_path + "/bookings/daterange",
 			data : {
 				start_date : startDate,
 				end_date : endDate
@@ -65,7 +65,7 @@ function reloadCalendar(items) {
 		defaultView: 'agendaWeek',
 		editable : false,
 		eventSources : [{
-			url : app_path + "/bookings",
+			url : app_path + "/bookings/daterange",
 			data : {
 				start_date : startDate,
 				end_date : endDate,
