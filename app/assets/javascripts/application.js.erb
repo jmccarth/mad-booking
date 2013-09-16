@@ -23,7 +23,7 @@
 // PRODUCTION
 var app_path = '/mad-booking';
 // DEV
-// var app_path = '';
+//var app_path = '';
 
 function initializeComponents($container) {
 	$container.find('input.date').datepicker();
@@ -41,8 +41,7 @@ function initializeComponents($container) {
 	
 	var $search_input = $container.find('.usersearch');
 	
-	
-	$search_input.typeahead({
+	$search_input.typeahead('destroy').typeahead({
 		name: "name", 
 		prefetch: app_path + "/users/username.json"
 	});
@@ -158,7 +157,7 @@ $(function() {
 		}
 		else {
 			$createBooking.addClass('disabled');
-			$createBooking.html('No items selected');
+			$createBooking.html('Select items to create a booking');
 		}
 		
 		if (count_this > 0) {

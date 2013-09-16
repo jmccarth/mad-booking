@@ -13,9 +13,9 @@ $(document).ready(function() {
 		header : {
 			left : 'prev,next today',
 			center : 'title',
-			right : 'month,agendaWeek,agendaDay'
+			right : 'month,basicWeek,basicDay'
 		},
-		defaultView: 'agendaWeek',
+		defaultView: 'basicWeek',
 		editable : false,
 		eventSources : [{
 			url : app_path + "/bookings",
@@ -34,12 +34,12 @@ $(document).ready(function() {
 			}); 
 		},
 		eventRender : function(event, jqElement, view){
-			if (view.name == 'month'){
-				jqElement.height(15);
-			}
+			jqElement.find('.fc-event-title').html(event.title);
 		},
 		height: calHeight,
-		weekMode: 'liquid'
+		weekMode: 'liquid',
+		weekends:false,
+		slotEventOverlap:false
 
 	});
 });
@@ -83,7 +83,7 @@ function reloadCalendar(items) {
 		},
 		eventRender : function(event, jqElement, view){
 			if (view.name == 'month'){
-				jqElement.height(15);
+				//jqElement.height(15);
 			}
 		},
 		height: calHeight,

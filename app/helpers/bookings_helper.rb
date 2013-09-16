@@ -45,13 +45,13 @@ module BookingsHelper
   
     #Booking title
     user = booking.user.username
-    equip_list = "["
+    equip_list = "<ul>"
     for e in booking.equipments do
-      equip_list += e.name + ","
+      equip_list += "<li>" + e.name + "</li>"
     end
-    equip_list = equip_list[0,equip_list.length - 1]
-    equip_list += "]"
-    b_title = user + " " + equip_list
+    #equip_list = equip_list[0,equip_list.length - 1]
+    equip_list += "</ul>"
+    b_title = "<a class='username' href='#'>" + user + "</a> <div class='list'>" + equip_list + "</div>"
   
     #Equipment status
     if booking.equipments.count == booking.sign_in_times.count

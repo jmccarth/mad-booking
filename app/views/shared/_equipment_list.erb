@@ -1,4 +1,11 @@
 <div id="equipmentList" class="section-container accordion" data-section="accordion" data-options="one_up: false">
+		<section>
+			<p class="top title" data-section-title>
+				<a href="#">
+					<input type="text" class="date" />
+				</a>
+			</p>
+		</section>
 		<% for cat in Category.find(:all, :order => 'name') %>
 		<section>
 			<p class="title" data-section-title>
