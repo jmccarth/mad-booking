@@ -180,12 +180,13 @@ table .inline-list, table .inline-list li:first-child {
 	display:none;
 }
 
-#mad .fc-view-basicWeek .fc-event-time, #mad .fc-view-basicDay .fc-event-time {
+#mad .fc-view-basicWeek .fc-event-time, #mad .fc-view-agendaDay .fc-event-time {
 	border-bottom: 1px solid rgba(255,255,255,0.4);
 	display:block;
+	font-size:inherit;
 }
 
-#mad .fc-view-basicWeek .fc-event-title, #mad .fc-view-basicDay .fc-event-title {
+#mad .fc-view-basicWeek .fc-event-title, #mad .fc-view-agendaDay .fc-event-title {
 	padding:5px;
 	display:block;
 }
@@ -199,6 +200,7 @@ table .inline-list, table .inline-list li:first-child {
 }
 
 #mad #calendar li {
+	white-space: nowrap;
 }
 
 /* TYPEAHEAD */

@@ -62,22 +62,22 @@ module BookingsHelper
     if booking.equipments.count == booking.sign_in_times.count
       #Everything is signed in, booking is done
       b_status = 2
-      b_color = "green"
+      b_color = "#00aa22"
     elsif booking.sign_out_times.count > 0
       #At least 1 item is signed out, booking is active
       if endDate < Time.now
         #Booking is overdue
         b_status = 3
-        b_color = "red"
+        b_color = "#dd0000"
       else
         #Booking is upcoming
         b_status = 1
-        b_color = "blue"
+        b_color = "#3366ff"
       end
     else
       #Nothing signed out, booking is pending
       b_status = 0
-      b_color = "purple"
+      b_color = "#9933cc"
     end
   
     event = {

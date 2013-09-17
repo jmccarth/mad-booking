@@ -32,17 +32,8 @@ function reloadCalendar(items) {
 		$calendar.fullCalendar('destroy');
 
 		$calendar.fullCalendar({
-			header : {
-				left : 'prev,next today',
-				center : 'title',
-				right : 'month,basicWeek,basicDay'
-			},
 			defaultView: 'basicWeek',
 			editable : false,
-			eventSources : [{
-				url : app_path + "/bookings/daterange",
-				data : params
-			}],
 			eventClick : function(calEvent, jsEvent, view) {
 				$modalContainer = $('#modalContainer');
 				$modalContainer.foundation('reveal', 'open', {
@@ -55,11 +46,21 @@ function reloadCalendar(items) {
 			eventRender : function(event, jqElement, view){
 				jqElement.find('.fc-event-title').html(event.title);
 			},
+			eventSources : [{
+				url : app_path + "/bookings/daterange",
+				data : params
+			}],
+			header : {
+				left : 'prev,next today',
+				center : 'title',
+				right : 'month,basicWeek,agendaDay'
+			},
 			height: calHeight,
-			weekMode: 'liquid',
+			maxTime:19,
+			minTime:7,
+			slotEventOverlap:false,
 			weekends:false,
-			slotEventOverlap:false
-
+			weekMode: 'liquid'
 		});
 	}
 
