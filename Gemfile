@@ -33,6 +33,8 @@ gem 'ice_cube'
 #gem 'fullcalendar-rails'
 gem 'twitter-typeahead-rails'
 
+gem 'rubycas-client-rails',  :git => "git://github.com/rubycas/rubycas-client-rails.git"
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

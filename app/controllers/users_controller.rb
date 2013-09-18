@@ -1,6 +1,10 @@
 class UsersController < ApplicationController
   layout false
 
+  before_filter RubyCAS::Filter do |controller|
+      controller.valid_user()
+  end
+
   def column
     @users = User.pluck(request.params[:column])
 

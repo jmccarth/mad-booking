@@ -1,6 +1,11 @@
 class EquipmentController < ApplicationController
 
   layout false
+
+  before_filter RubyCAS::Filter do |controller|
+      controller.valid_user()
+  end
+
   # GET /equipment
   # GET /equipment.json
 

@@ -1,11 +1,19 @@
+include RubyCAS
 include BookingsHelper
 class BookingsController < ApplicationController
 
   helper :all
   helper_method :find_by_date_range
   layout false
+  before_filter RubyCAS::Filter do |controller|
+      controller.valid_user()
+  end
   before_filter :format_schedule_write, :only => [:create,:update]
   
+  def logout
+    RubyCAS::Filter.logout(self,root_path)
+  end
+
   def daterange
     sTime = Time.at(params[:start_date].to_i)
     eTime = Time.at(params[:end_date].to_i)
