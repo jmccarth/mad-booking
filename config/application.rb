@@ -55,5 +55,10 @@ module Equip
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    config.rubycas.cas_base_url = 'https://cas-dev.uwaterloo.ca/cas'
+    config.rubycas.login_url = 'https://cas-dev.uwaterloo.ca/cas/login'
+    config.rubycas.logout_url = 'https://cas-dev.uwaterloo.ca/cas/logout'
+    config.rubycas.logger = Rails.logger
   end
 end

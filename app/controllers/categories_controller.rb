@@ -1,4 +1,9 @@
 class CategoriesController < ApplicationController
+  
+  before_filter RubyCAS::Filter do |controller|
+      controller.valid_user()
+  end
+
   # GET /categories
   # GET /categories.json
   def index
