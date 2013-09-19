@@ -31,6 +31,10 @@
 	/*transition: all 0.5s;*/
 }
 
+.inactive {
+	opacity:0.6;
+}
+
 /* NAVIGATION */
 
 #views {
@@ -92,10 +96,24 @@ table .inline-list, table .inline-list li:first-child {
 	background:#e1f5d1;
 }
 
-.accordion .label {
+#mad .accordion .label {
 	display:inline-block;
-	margin-left:10px;
+	padding:3px 6px;
 	font-size:110%;
+	margin:0;
+}
+
+#mad .accordion .label .right, #mad .accordion .right input {
+	margin-left:10px;
+}
+
+#mad .accordion .label .left, #mad .accordion .left input {
+	margin-right:10px;
+}
+
+#mad .accordion .label * {
+	margin:0;
+	padding:0;
 }
 
 .accordion input[type=checkbox] {

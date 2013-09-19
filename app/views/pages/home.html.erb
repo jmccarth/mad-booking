@@ -11,7 +11,7 @@
 		<%= link_to "Show all equipment", "#", :onclick => "reloadCalendar()" %>
 	</div>
 	<div class="large-3 columns">
-		<div class="section-container accordion" data-section="accordion" data-options="one_up:false">
+		<div class="section-container accordion" data-section="accordion" data-options="one_up:true">
 			<section>
 				<% upcoming = find_by_date_range(Time.now, Time.now + 3.day) %>
 				<p class="title" data-section-title>
@@ -37,6 +37,8 @@
 					<% end %>
 				</div>
 			</section>
+		</div>
+		<div class="section-container accordion" data-section="accordion" data-options="one_up:true">
 			<section>
 				<% returns = find_by_date_range(Time.now, Time.now + 3.day) %>
 				<p class="title" data-section-title>
@@ -60,6 +62,8 @@
 					<% end %>
 				</div>
 			</section>
+		</div>
+		<div class="section-container accordion" data-section="accordion" data-options="one_up:true">
 			<section>
 				<% overdue = get_overdue_items() %>
 				<p class="title" data-section-title>
@@ -86,6 +90,7 @@
 					<% end %>
 				</div>
 			</section>
+		</div>
 		</div>
 		
 	</div>

@@ -4,16 +4,23 @@
 			<p class="title" data-section-title>
 				<a href="#">
 					<%= cat.name %>
-					<span class="right radius label">
-						<%= cat.equipments.where(:status => 1).count %> / <%= cat.equipments.count %>
+					<span class="right radius label inactive preview">
+						<i class="icon-eye-open"></i>
 					</span>
 				</a>
 			</p>
 			<div class="content" data-section-content>
 				<ul class="side-nav">
 				<% for equip in cat.equipments.order('name ASC') %>
-					<li>
-						<span class="right"><%= check_box_tag equip.name, equip.id, false, :class => "equipCheck" %></span>
+					<li class="item" data-id="<%= equip.id %>">
+						<% if equip.status == 0 %>
+							<span class="right label radius error inactive">out</span>
+						<% else %>
+							<span class="right label radius success inactive">in</span>
+						<% end %>
+						<span class="left">
+							<%= check_box_tag equip.name, equip.id, false, :class => "equipCheck" %>
+						</span>
 						<%= link_to equip.name, "#", :onclick => "reloadCalendar([#{equip.id}])" %>
 					</li>
 				<% end %>

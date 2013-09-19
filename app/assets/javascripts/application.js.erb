@@ -21,9 +21,9 @@
 //= require twitter/typeahead
 
 // PRODUCTION
-var app_path = '/mad-booking';
+//var app_path = '/mad-booking';
 // DEV
-//var app_path = '';
+var app_path = '';
 
 function initializeComponents($container) {
 	$container.find('input.date').datepicker();
@@ -36,12 +36,35 @@ function initializeComponents($container) {
 	$('li > a.remove').click(function() {
 		$(this).parent().remove();
 	});
+
+	/* Toggle */
+
+	$preview_links = $(".preview");
+
+	$preview_links.click(function(e) {
+		$(this).toggleClass('inactive success');
+		var ids = new Array();
+
+		$preview_links.filter(':not(.inactive)').each(function() {
+			$(this).closest('section').find('.item').each(function() {
+				ids.push(parseInt($(this).attr('data-id')));
+			});
+		});
+
+		console.log(ids);
+
+		reloadCalendar(ids);
+
+		return false;
+	});
 	
 	/* Search */
 	
 	var $search_input = $container.find('.usersearch');
 	
-	$search_input.typeahead('destroy').typeahead({
+	window.localStorage.clear();
+
+	$search_input.typeahead({
 		name: "name", 
 		prefetch: app_path + "/users/username.json"
 	});
@@ -68,7 +91,7 @@ function initializeComponents($container) {
 	$main_equip_search.on('typeahead:selected',function(e){
 		var $chkbox = $("[name*='" + e.target.value + "']").eq(0);
 		$chkbox.click();
-		$chkbox.closest('p').remove();
+		//$chkbox.closest('p').remove();
 	});
 	
 	var $add_equip = $('#equipment_details .equipsearch');
