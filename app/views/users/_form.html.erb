@@ -29,6 +29,6 @@
   </div>
 
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit @user.new_record? ? 'Create user' : 'Update user', :class => "button submit right", :id => "submitUser" %>
   </div>
 <% end %>

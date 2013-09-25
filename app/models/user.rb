@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   has_many :bookings
   accepts_nested_attributes_for :bookings
   validates :username, :uniqueness => true
+  validates :username, :presence => true
   
   def default_values
     if self.admin.nil?
