@@ -7,6 +7,8 @@ Equip::Application.routes.draw do
   #get '/bookings/:column.json', to: "bookings#column", defaults: {format: :json}, constraints: lambda{|request|Bookings.column_names.include?(request.params[:column])}
   get '/bookings/daterange', to: "bookings#daterange", defaults: {format: :json}
 
+  get '/equipment', to: "equipment#index"
+
   resources :categories
 
   resources :users
