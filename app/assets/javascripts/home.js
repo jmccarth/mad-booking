@@ -10,8 +10,9 @@ function reloadCalendar(items) {
 		var events;
 		
 		var $calendar = $("#calendar");
+		var $calendarLoading = $("#calendar-loading");
 
-		var calHeight = $(window).height() - $calendar.offset().top - $('footer').height();
+		var calHeight = $(window).height() - $calendar.offset().top - $('footer').height() - $("#legend").height() - 50;
 
 		var params = {};
 
@@ -56,6 +57,10 @@ function reloadCalendar(items) {
 				right : 'month,basicWeek,agendaDay'
 			},
 			height: calHeight,
+			loading : function(isLoading) {
+				if (isLoading) $calendarLoading.css('opacity', '1');
+				else $calendarLoading.css('opacity', '0');
+			},
 			maxTime:19,
 			minTime:7,
 			slotEventOverlap:false,

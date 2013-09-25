@@ -21,9 +21,9 @@
 //= require twitter/typeahead
 
 // PRODUCTION
-var app_path = '/mad-booking';
+//var app_path = '/mad-booking';
 // DEV
-//var app_path = '';
+var app_path = '';
 
 function initializeComponents($container) {
 	$container.find('input.date').datepicker();
@@ -42,6 +42,7 @@ function initializeComponents($container) {
 	$preview_links = $(".preview");
 
 	$preview_links.click(function(e) {
+
 		$(this).toggleClass('inactive success');
 		var ids = new Array();
 
@@ -56,6 +57,11 @@ function initializeComponents($container) {
 		reloadCalendar(ids);
 
 		return false;
+	});
+
+	$('#deselect-previews').click(function() {
+		$preview_links.addClass('inactive').removeClass('success');
+		reloadCalendar();
 	});
 	
 	/* Search */

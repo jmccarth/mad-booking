@@ -6,9 +6,12 @@
 		<%= render 'shared/search_form' %>
 		<%= render 'shared/equipment_list' %>
 	</div>
-	<div class="large-6 columns">
+	<div id="calendar-container" class="large-6 columns">
+		<div id="calendar-loading">
+			<%= render 'shared/loading' %>
+		</div>
 		<div id="calendar"></div>
-		<%= link_to "Show all equipment", "#", :onclick => "reloadCalendar()" %>
+		<%= render 'shared/legend' %>
 	</div>
 	<div class="large-3 columns">
 		<div class="section-container accordion" data-section="accordion" data-options="one_up:true">
