@@ -21,11 +21,15 @@ class BookingsController < ApplicationController
     b = []
 
     if(params.has_key?(:equip_ids))
+      found_ids = []
       equips = params[:equip_ids]
       @bookings.each do |booking|
         for equip in equips do
           if booking.equipments.include?(Equipment.find(equip))
-            b.push(convert_booking_to_fcevent(booking))  
+            if !found_ids.include?(booking.id)
+              b.push(convert_booking_to_fcevent(booking))  
+              found_ids.push(booking.id)
+            end
           end    
         end
       end
