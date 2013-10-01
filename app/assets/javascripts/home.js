@@ -54,7 +54,7 @@ function reloadCalendar(items) {
 			header : {
 				left : 'prev,next today',
 				center : 'title',
-				right : 'month,basicWeek,agendaDay'
+				right : 'month,basicWeek,basicDay'
 			},
 			height: calHeight,
 			loading : function(isLoading) {
