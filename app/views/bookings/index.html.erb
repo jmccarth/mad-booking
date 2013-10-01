@@ -15,7 +15,11 @@
     <td><%= booking.schedule %></td>
     <td><%= link_to 'Show', booking %></td>
     <td><%= link_to 'Edit', edit_booking_path(booking) %></td>
-    <td><%= link_to 'Destroy', booking, confirm: 'Are you sure?', method: :delete %></td>
+    <td>
+      <% if booking.sign_out_times.length == 0 %>
+        <%= link_to 'Destroy', booking, confirm: 'Are you sure?', method: :delete %>
+      <% end %>
+    </td>
   </tr>
 <% end %>
 </table>

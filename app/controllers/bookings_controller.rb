@@ -188,7 +188,9 @@ class BookingsController < ApplicationController
   # DELETE /bookings/1.json
   def destroy
     @booking = Booking.find(params[:id])
-    @booking.destroy
+    if @booking.sign_out_times.length == 0
+      @booking.destroy
+    end
 
     respond_to do |format|
       format.html { redirect_to root_path }

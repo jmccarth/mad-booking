@@ -221,7 +221,7 @@
 	<div class="actions">
 		<% if !disable_ui %>
 			<%= f.submit @booking.new_record? ? 'Create booking' : 'Update booking', :class => 'button success right', :id => "submitBooking" %>
-			<% if !@booking.new_record? %>
+			<% if !@booking.new_record?  && @booking.sign_out_times.length == 0 %>
 				<%= link_to 'Delete Booking', @booking, confirm: 'Are you sure? This cannot be undone.', method: :delete, :class => 'button alert' %>
 			<% end %>
 		<% end %>
