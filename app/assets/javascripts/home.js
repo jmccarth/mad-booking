@@ -64,6 +64,7 @@ function reloadCalendar(items) {
 			maxTime:19,
 			minTime:7,
 			slotEventOverlap:false,
+			timeFormat: 'h(:mm)t{ - h(:mm)t',
 			weekends:false,
 			weekMode: 'liquid'
 		});
