@@ -65,12 +65,12 @@ module BookingsHelper
       b_color = "#00aa22"
     elsif booking.sign_out_times.count > 0
       #At least 1 item is signed out, booking is active
-      if endDate < Time.now
+      if endDate < Time.now and booking.sign_out_times.count > booking.sign_in_times.count
         #Booking is overdue
         b_status = 3
         b_color = "#dd0000"
       else
-        #Booking is upcoming
+        #Booking is active
         b_status = 1
         b_color = "#3366ff"
       end
