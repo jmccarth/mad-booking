@@ -11,7 +11,7 @@ development:
   database: booking_development
   pool: 5
   username: root
-  password: 4Ac@dem!c$
+  password: obO712qWMFnO
   host: localhost
 
 
@@ -26,7 +26,7 @@ test:
   database: booking_test
   pool: 5
   username: root
-  password: 4Ac@dem!c$
+  password: obO712qWMFnO
   host: localhost
 
 
@@ -37,5 +37,5 @@ production:
   database: booking_production
   pool: 5
   username: root
-  password: 4Ac@dem!c$
+  password: obO712qWMFnO
   host: localhost
