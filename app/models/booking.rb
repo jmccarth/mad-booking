@@ -60,8 +60,12 @@ class Booking < ActiveRecord::Base
       s = IceCube::Schedule.from_yaml(booking_test.schedule)
       s1 = IceCube::Schedule.from_yaml(self.schedule)
       if s.conflicts_with?(s1) and booking_test.id != self.id
-        conflicts = true
-        conflict_ids.push(booking_test.id)
+        equip_ids.each do |eid|
+          if !booking_test.sign_in_times.has_key?(eid) and booking_test.equipment_ids.include?(eid)
+            conflicts = true
+            conflict_ids.push(booking_test.id)
+          end
+        end
       end
     end
     valid = conflict_ids.length == 0
