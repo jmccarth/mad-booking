@@ -1,21 +1,19 @@
-<h1>Listing equipment</h1>
+<h1>Equipment list</h1>
+
+<p><%= link_to 'Add equipment', new_equipment_path %></p>
 
 <table>
   <tr>
     <th>Barcode</th>
     <th>Name</th>
-    <th>Stored</th>
-    <th>Status</th>
     <th>Actions</th>
   </tr>
 
 <% @equipment.each do |equipment| %>
   <tr>
-    <td><%= equipment.barcode %></td>
-    <td><%= equipment.name %></td>
-    <td><%= equipment.stored %></td>
-    <td><%= equipment.status %></td>
-    <td class="actions">
+    <td width="30%"><%= equipment.barcode %></td>
+    <td width="35%"><%= equipment.name %></td>
+    <td width="30%" class="actions">
 		<ul class="inline-list">
 			<li><%= link_to 'Show', equipment %></li>
 			<li><%= link_to 'Edit', edit_equipment_path(equipment) %></li>
@@ -28,4 +26,4 @@
 
 <br />
 
-<%= link_to 'New Equipment', new_equipment_path %>
+<p><%= link_to 'Add equipment', new_equipment_path %></p>

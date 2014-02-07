@@ -38,7 +38,7 @@ function reloadCalendar(items) {
 			eventClick : function(calEvent, jsEvent, view) {
 				$modalContainer = $('#modalContainer');
 				$modalContainer.foundation('reveal', 'open', {
-					url: app_path + "/bookings/" + calEvent.id + "/edit",
+					url: "/bookings/" + calEvent.id + "/edit",
 					complete: function() {
 						initializeComponents($modalContainer);
 					}
@@ -48,7 +48,7 @@ function reloadCalendar(items) {
 				jqElement.find('.fc-event-title').html(event.title);
 			},
 			eventSources : [{
-				url : app_path + "/bookings/daterange",
+				url : "/bookings/daterange",
 				data : params
 			}],
 			header : {

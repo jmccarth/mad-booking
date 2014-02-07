@@ -9,7 +9,7 @@ function validateUserForm(){
 
 var userList;
 $.ajax({
-	url: app_path + "/users.json",
+	url: "/users.json",
 	async: false,
 	success: function(data){
 		userList = data;

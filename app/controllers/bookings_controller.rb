@@ -100,7 +100,7 @@ class BookingsController < ApplicationController
       user = User.find_by_username(username)
     end
     
-    @booking = Booking.new(params[:booking])
+    @booking = Booking.new(booking_params)
     @booking.user = user
     
 
@@ -174,7 +174,7 @@ class BookingsController < ApplicationController
     
 
     respond_to do |format|
-      if @booking.update_attributes(params[:booking])
+      if @booking.update_attributes(booking_params)
         format.html { redirect_to root_path, notice: 'Booking was successfully updated.' }
         format.json { head :no_content }
       else
@@ -199,6 +199,10 @@ class BookingsController < ApplicationController
   end
   
 private
+
+  def booking_params
+    params.require(:booking).permit!
+  end
   
   def format_schedule_write
     s = IceCube::Schedule.new(Time.now)

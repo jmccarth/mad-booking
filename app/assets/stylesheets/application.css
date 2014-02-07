@@ -87,7 +87,7 @@ th {
 }
 
 td.actions {
-	width:10%;
+	text-align:right;
 }
 
 table .inline-list, table .inline-list li:first-child {
