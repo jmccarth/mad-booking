@@ -26,7 +26,7 @@ Equip::Application.configure do
   # Precompile additional assets
   config.assets.precompile += %w( .svg .eot .woff .ttf )
 
-  #config.relative_url_root = "/mad-booking"
+  config.relative_url_root = "/mad-booking"
 
   # Defaults to Rails.root.join("public/assets")
   # config.assets.manifest = YOUR_PATH
