@@ -8,7 +8,7 @@ class BookingsController < ApplicationController
   before_filter RubyCAS::Filter do |controller|
       controller.valid_user()
   end
-  before_filter :format_schedule_write, :only => [:create,:update]
+  #before_filter :format_schedule_write, :only => [:create,:update]
   
   def logout
     RubyCAS::Filter.logout(self,root_path)
@@ -103,7 +103,20 @@ class BookingsController < ApplicationController
     @booking = Booking.new(booking_params)
     @booking.user = user
     
+    
+    #Schedule start and end dates and times
+    #Dates ("07/29/2013")
+    event_start_d = params[:schedule_start]
+    event_end_d = params[:schedule_end]
+    #Times ("01:00 PM")
+    event_start_t = params[:schedule_start_time]
+    event_end_t = params[:schedule_end_time]
 
+    #Stitch together the strings and parse them
+    event_start_dt = DateTime.strptime(event_start_d + event_start_t, "%m/%d/%Y%I:%M %p");
+    event_end_dt = DateTime.strptime(event_end_d + event_end_t, "%m/%d/%Y%I:%M %p");
+
+    @booking.events.build(:start=>event_start_dt,:end=>event_end_dt)
     
     
     respond_to do |format|
@@ -172,6 +185,20 @@ class BookingsController < ApplicationController
     params[:booking].merge!(in_times)
 
     
+    #Schedule start and end dates and times
+    #Dates ("07/29/2013")
+    event_start_d = params[:schedule_start]
+    event_end_d = params[:schedule_end]
+    #Times ("01:00 PM")
+    event_start_t = params[:schedule_start_time]
+    event_end_t = params[:schedule_end_time]
+
+    #Stitch together the strings and parse them
+    event_start_dt = DateTime.strptime(event_start_d + event_start_t, "%m/%d/%Y%I:%M %p");
+    event_end_dt = DateTime.strptime(event_end_d + event_end_t, "%m/%d/%Y%I:%M %p");
+
+
+    @booking.events.first.update(:start=>event_start_dt,:end=>event_end_dt)
 
     respond_to do |format|
       if @booking.update_attributes(booking_params)

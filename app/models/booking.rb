@@ -4,6 +4,7 @@ class Booking < ActiveRecord::Base
   
   #validates_with BookingsValidator
   belongs_to :user
+  has_many :events
   has_and_belongs_to_many :equipments
   serialize :sign_in_times, Hash
   serialize :sign_out_times, Hash
@@ -44,9 +45,8 @@ class Booking < ActiveRecord::Base
     #Check to see that the times for the booking are sensible
     
     #Is the start date/time before the end date/time?
-    
-    schedule = IceCube::Schedule.from_yaml(self.schedule)
-    valid = schedule.start_time < schedule.end_time 
+    @e = self.events.first
+    valid = @e.start < @e.end
     self.errors.add(:booking, "cannot be saved: Start time must come before end time") unless valid
   end
   
@@ -57,13 +57,19 @@ class Booking < ActiveRecord::Base
     equip_ids = self.equipment_ids
     @equip_conflicts = Booking.find(:all, :include=>:equipments, :conditions=>['equipment.id in (?)',equip_ids])
     @equip_conflicts.each do |booking_test|
-      s = IceCube::Schedule.from_yaml(booking_test.schedule)
-      s1 = IceCube::Schedule.from_yaml(self.schedule)
-      if s.conflicts_with?(s1) and booking_test.id != self.id
-        equip_ids.each do |eid|
-          if !booking_test.sign_in_times.has_key?(eid) and booking_test.equipment_ids.include?(eid)
-            conflicts = true
-            conflict_ids.push(booking_test.id)
+      @e = booking_test.events.first
+      @e1 = self.events.first
+      if @e.nil? == false and @e1.nil? == false
+        #Still using icecube gem to find conflicts
+        s = IceCube::Schedule.new(start = @e.start, :end_time => @e.end)
+        s1 = IceCube::Schedule.new(start = @e1.start, :end_time => @e1.end)
+        
+        if s.conflicts_with?(s1) and booking_test.id != self.id
+          equip_ids.each do |eid|
+            if !booking_test.sign_in_times.has_key?(eid) and booking_test.equipment_ids.include?(eid)
+              conflicts = true
+              conflict_ids.push(booking_test.id)
+            end
           end
         end
       end

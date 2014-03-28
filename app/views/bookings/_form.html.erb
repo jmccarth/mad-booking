@@ -126,10 +126,10 @@
 			</div>
 		</div>
 
-		<% if @booking.schedule != nil %>
-			<% s = IceCube::Schedule.from_yaml(@booking.schedule) %>
-			<% sd = DateTime.parse(s.start_time.to_s) %>
-			<% ed = DateTime.parse(s.end_time.to_s) %>
+		<% if @booking.events.first != nil %>
+			<% s = @booking.events.first %>
+			<% sd = DateTime.parse(s.start.to_s) %>
+			<% ed = DateTime.parse(s.end.to_s) %>
 			<% start_d = sd.strftime("%m/%d/%Y") %>
 			<% start_t = sd.strftime("%I:%M %p")%>
 			<% end_d = ed.strftime("%m/%d/%Y") %>

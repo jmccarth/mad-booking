@@ -1,5 +1,7 @@
 Equip::Application.routes.draw do
 
+  resources :events
+
   get '/logout', to: "bookings#logout"
   get '/invaliduser', to: "pages#invaliduser"
   get '/users/:column.json', to: "users#column", defaults: {format: :json}, constraints: lambda{|request|User.column_names.include?(request.params[:column])}

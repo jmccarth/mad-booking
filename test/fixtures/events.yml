@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  parent_booking_id: 1
+  start: 2014-03-28 09:34:55
+  end: 2014-03-28 09:34:55
+
+two:
+  parent_booking_id: 1
+  start: 2014-03-28 09:34:55
+  end: 2014-03-28 09:34:55
