@@ -231,26 +231,6 @@ private
     params.require(:booking).permit!
   end
   
-  def format_schedule_write
-    s = IceCube::Schedule.new(Time.now)
-    
-    #Schedule start and end dates and times
-    #Dates ("07/29/2013")
-    start_s = params.delete(:schedule_start)
-    end_s = params.delete(:schedule_end)
-    #Times ("01:00 PM")
-    start_t = params.delete(:schedule_start_time)
-    end_t = params.delete(:schedule_end_time) 
-
-    #Stitch together the strings and parse them
-    start_d = DateTime.strptime(start_s + start_t, "%m/%d/%Y%I:%M %p");
-    end_d = DateTime.strptime(end_s + end_t, "%m/%d/%Y%I:%M %p");
-    s.start_time = start_d
-    s.end_time = end_d
-    
-    params[:booking].merge!({:schedule => s.to_yaml()})
-  end
-  
   def check_user_exists
     uname = params[:booking][:user]
     if User.where(username: uname).length == 0

@@ -27,9 +27,9 @@
 				<div class="content" data-section-content>
 					<% if upcoming.length > 0 %>
 					<ul class="side-nav">
-						<% for b in upcoming.sort_by{|booking| IceCube::Schedule.from_yaml(booking.schedule).start_time}[0..4] %>
+						<% for b in upcoming.sort_by{|booking| booking.events.first.start}[0..4] %>
 							<li>
-								<span class="right"><%= IceCube::Schedule.from_yaml(b.schedule).start_time.strftime("%b %-d, %Y %I:%M %p") %></span>
+								<span class="right"><%= b.events.first.start.strftime("%b %-d, %Y %I:%M %p") %></span>
 								<%= b.user.username %>
 							</li>
 							
@@ -53,9 +53,9 @@
 				<div class="content" data-section-content>
 					<% if returns.length > 0 %>
 					<ul class="side-nav">
-						<% for b in upcoming.sort_by{|booking| IceCube::Schedule.from_yaml(booking.schedule).end_time}[0..4] %>
+						<% for b in upcoming.sort_by{|booking| booking.events.first.end}[0..4] %>
 							<li>
-								<span class="right"><%= IceCube::Schedule.from_yaml(b.schedule).end_time.strftime("%b %-d, %Y %I:%M %p") %></span>
+								<span class="right"><%= b.end.strftime("%b %-d, %Y %I:%M %p") %></span>
 								<%= b.user.username %>
 							</li>
 						<% end %>
@@ -80,9 +80,9 @@
 				<div class="content" data-section-content>
 					<% if overdue.length > 0 %>
 					<ul class="side-nav">
-						<% for b in overdue.sort_by{|booking| IceCube::Schedule.from_yaml(booking.schedule).end_time} %>
+						<% for b in overdue.sort_by{|booking| b.events.first.end} %>
 							<li>
-								<span class="right"><%= IceCube::Schedule.from_yaml(b.schedule).end_time.strftime("%b %-d, %Y %I:%M %p") %></span>
+								<span class="right"><%= b.events.first.end.strftime("%b %-d, %Y %I:%M %p") %></span>
 								<%= b.user.username %>
 							</li>
 							

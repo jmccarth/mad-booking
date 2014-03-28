@@ -1,20 +1,10 @@
 module BookingsHelper
   
   def find_by_date_range(start_date,end_date)
-    #@all_bookings = Booking.all
-    #range_bookings = []
     
     # Retrieve all events that do not start after end_date 
     # and do not end before start_date
     range_bookings = Event.where("start <= ? AND end >= ?", end_date, start_date)
-    #@all_bookings.each do |booking|
-    #  if !booking.schedule.nil?
-    #    ev_sched = IceCube::Schedule.from_yaml(booking.schedule)
-    #    if ev_sched.occurs_between?(start_date,end_date)
-    #      range_bookings.push(booking)
-    #    end
-    #  end
-    #end
     range_bookings
   end
   
