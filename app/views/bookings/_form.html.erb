@@ -44,7 +44,7 @@
 		<div id="equipment_details" class="section-container accordion">
 			<section class="active">
 				<p class="title" data-section-title>
-					<a href="#">Equipment </a>
+					<a href="#">Equipment</a>
 				</p>
 				<div class="content" data-section-content>
 					<ul id="equip_list" class="side-nav">
@@ -55,7 +55,9 @@
 												<%= Equipment.find(id).category.name %>
 												<span class="gt"><i class="icon-angle-right"></i></span>
 											</span>
+											
 											<%= Equipment.find(id).name %>
+
 											<a class="label radius alert right remove"><i class="icon-remove"></i></a>
 											<span class="round secondary label right">Booking</span>
 									<%= hidden_field_tag "booking[equipment_ids][]", id %>
@@ -72,7 +74,12 @@
 									<% if !@booking.sign_out_times.key?(equip.id) %>
 										<a class="label radius alert right remove"><i class="icon-remove"></i></a>
 									<% end %>
-									<%= equip.name %>
+									
+									<% if equip.contents.nil? %>
+										<%= equip.name %>	
+									<% else %>
+										<span data-tooltip class="has-tip" title=<%= equip.contents %>><%= equip.name %></span>
+									<% end %>
 									<%= hidden_field_tag "booking[equipment_ids][]", equip.id %>
 									<% if @booking.sign_in_times.key?(equip.id) %>
 										<span id="status_<%= equip.barcode %>" class="right success label">In</span>
