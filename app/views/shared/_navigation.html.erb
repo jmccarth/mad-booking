@@ -63,7 +63,7 @@
 				</ul>
 			</li>
 			<% logout_path = root_path + 'logout' %>
-			<li><%= link_to 'Logout', logout_path %></li>
+			<li><%= link_to 'Logout ' + session[:cas_user], logout_path %></li>
 
 		<ul>
 	</section>

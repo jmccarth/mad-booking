@@ -124,6 +124,7 @@
 					</label>
 				</span>
 			</div>
+
 		</div>
 
 		<% if @booking.events.first != nil %>
@@ -200,7 +201,14 @@
 				</div>
 			</div>
 		</div>
-
+		<div class="row collapse">
+			<label>Booked by:</label>
+			<% if @booking.creator.nil? %>
+				<% @booking.creator = session[:cas_user] %>
+			<% end %>
+			<%= f.text_field :creator, :disabled => true %>
+		</div>
+		
 		<hr />
 
 		<div class="row collapse">

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140328151725) do
+ActiveRecord::Schema.define(version: 20140331130842) do
 
   create_table "bookings", force: true do |t|
     t.string   "schedule"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20140328151725) do
     t.text     "sign_out_times"
     t.integer  "user_id"
     t.text     "comments"
+    t.string   "creator"
   end
 
   create_table "bookings_equipment", id: false, force: true do |t|
