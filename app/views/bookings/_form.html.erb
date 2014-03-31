@@ -87,7 +87,7 @@
 										<% else %>
 											<span id="status_<%= equip.barcode %>" class="right label">Out</span>
 											<br />
-											In at <%= @booking.sign_out_times[equip.id].strftime("%b %-d, %Y %I:%M %p") %>
+											Out at <%= @booking.sign_out_times[equip.id].strftime("%b %-d, %Y %I:%M %p") %>
 										<% end %>
 									<% else %>
 										<%= hidden_field_tag "booking[sign_out_ids][]", nil, {:data => equip.id, :class => "scannable", :id => "bc_out_#{equip.barcode}"}%>
