@@ -56,7 +56,7 @@ class EquipmentController < ApplicationController
   # POST /equipment
   # POST /equipment.json
   def create
-    @equipment = Equipment.new(params[:equipment])
+    @equipment = Equipment.new(equipment_params)
 
     respond_to do |format|
       if @equipment.save
@@ -95,5 +95,11 @@ class EquipmentController < ApplicationController
       format.html { redirect_to equipment_index_url }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def equipment_params
+    params.require(:equipment).permit(:name,:barcode,:category,:stored)
   end
 end
