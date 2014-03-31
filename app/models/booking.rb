@@ -3,7 +3,7 @@ class Booking < ActiveRecord::Base
   include ActiveModel::Validations
   
   belongs_to :user
-  has_many :events
+  has_many :events, :dependent => :destroy
   has_and_belongs_to_many :equipments
   serialize :sign_in_times, Hash
   serialize :sign_out_times, Hash
