@@ -34,9 +34,19 @@ module BookingsHelper
         user = event.booking.user.username
       end
       equip_list = "<ul>"
-      for e in event.booking.equipments do
-        equip_list += "<li>" + e.name + "</li>"
+      if event.booking.equipments.count <= 5
+        for e in event.booking.equipments do
+          equip_list += "<li>" + e.name + "</li>"
+        end
+      else
+        for e in event.booking.equipments[0..3] do
+          equip_list += "<li>" + e.name + "</li>"
+        end
+        equip_list += "<li>& " + (event.booking.equipments.count - 4).to_s + " more items</li>"        
       end
+
+
+
       #equip_list = equip_list[0,equip_list.length - 1]
       equip_list += "</ul>"
       b_title = "<a class='username' href='#'>" + user + "</a> <div class='list'>" + equip_list + "</div>"
@@ -62,7 +72,7 @@ module BookingsHelper
         b_status = 0
         b_color = "#9933cc"
       end
-    
+
       event = {
         title: b_title,
         start: eventStartStr,
