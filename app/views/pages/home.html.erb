@@ -43,7 +43,7 @@
 		</div>
 		<div class="section-container accordion">
 			<section class="active">
-				<% returns = find_by_date_range(Time.now, Time.now + 3.day) %>
+				<% returns = find_active_by_date_range(Time.now, Time.now + 3.day) %>
 				<p class="title" data-section-title>
 					<a href="#">
 						<span class="label radius right"><%= returns.length %></span>

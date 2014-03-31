@@ -4,10 +4,23 @@ module BookingsHelper
     
     # Retrieve all events that do not start after end_date 
     # and do not end before start_date
-    range_bookings = Event.where("start <= ? AND end >= ?", end_date, start_date)
-    range_bookings
+    range_events = Event.where("start <= ? AND end >= ?", end_date, start_date)
+    range_events
   end
   
+  def find_active_by_date_range(start_date,end_date)
+    # Retrieve all events that do not start after end_date 
+    # and do not end before start_date
+    range_events = Event.where("start <= ? AND end >= ?", end_date, start_date)
+    range_events_return = []
+    for re in range_events do
+        if re.booking.sign_out_times.count > re.booking.sign_in_times.count
+          range_events_return.push(re)
+        end
+    end
+    range_events_return
+  end
+
   def convert_booking_to_fcevent(event)
     
       startDate = event.start
