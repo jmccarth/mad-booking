@@ -15,7 +15,10 @@ module BookingsHelper
       
       startD = Date.parse(startDate.to_s)
       endD = Date.parse(endDate.to_s)
-    
+
+      eventStartStr = event.start.to_i
+      eventEndStr = event.end.to_i
+      
       #All day event?
       if startD === endD
         isAllDay = false
@@ -62,8 +65,8 @@ module BookingsHelper
     
       event = {
         title: b_title,
-        start: startDate,
-        end: endDate,
+        start: eventStartStr,
+        end: eventEndStr,
         id: event.booking.id,
         allDay: isAllDay,
         status: b_status,
@@ -74,17 +77,17 @@ module BookingsHelper
   end
 
   def get_overdue_items()
-    @all_bookings = Booking.all
-    overdue_bookings = []
-    @all_bookings.each do |booking|
-      #ev_sched = IceCube::Schedule.from_yaml(booking.schedule)
-      if !booking.events.first.nil?
-        if booking.events.first.end < Time.now and booking.sign_in_times.count < booking.sign_out_times.count
-          overdue_bookings.push(booking)
-        end
+
+    #get all events with an end date before right now
+    @events_before_now = Event.where("end <= ?", Time.now)
+    overdue_events = []
+    @events_before_now.each do |event|
+      if event.end < Time.now and event.booking.sign_in_times.count < event.booking.sign_out_times.count
+        overdue_events.push(event)
       end
     end
-    overdue_bookings
+
+    overdue_events
   end
   
 

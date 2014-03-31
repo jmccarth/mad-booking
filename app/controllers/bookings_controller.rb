@@ -113,11 +113,9 @@ class BookingsController < ApplicationController
     event_end_t = params[:schedule_end_time]
 
     #Stitch together the strings and parse them
-    event_start_dt = DateTime.strptime(event_start_d + event_start_t, "%m/%d/%Y%I:%M %p");
-    event_end_dt = DateTime.strptime(event_end_d + event_end_t, "%m/%d/%Y%I:%M %p");
-
-    @booking.events.build(:start=>event_start_dt,:end=>event_end_dt)
-    
+    event_start_dt = Time.strptime(event_start_d + event_start_t, "%m/%d/%Y%I:%M %p");
+    event_end_dt = Time.strptime(event_end_d + event_end_t, "%m/%d/%Y%I:%M %p");
+    @booking.events.build(:start=>event_start_dt,:end=>event_end_dt)    
     
     respond_to do |format|
       if @booking.save
@@ -194,9 +192,8 @@ class BookingsController < ApplicationController
     event_end_t = params[:schedule_end_time]
 
     #Stitch together the strings and parse them
-    event_start_dt = DateTime.strptime(event_start_d + event_start_t, "%m/%d/%Y%I:%M %p");
-    event_end_dt = DateTime.strptime(event_end_d + event_end_t, "%m/%d/%Y%I:%M %p");
-
+    event_start_dt = Time.strptime(event_start_d + event_start_t, "%m/%d/%Y%I:%M %p");
+    event_end_dt = Time.strptime(event_end_d + event_end_t, "%m/%d/%Y%I:%M %p");
 
     @booking.events.first.update(:start=>event_start_dt,:end=>event_end_dt)
 

@@ -27,10 +27,10 @@
 				<div class="content" data-section-content>
 					<% if upcoming.length > 0 %>
 					<ul class="side-nav">
-						<% for b in upcoming.sort_by{|booking| booking.events.first.start}[0..4] %>
+						<% for e in upcoming.sort_by{|event| event.start}[0..4] %>
 							<li>
-								<span class="right"><%= b.events.first.start.strftime("%b %-d, %Y %I:%M %p") %></span>
-								<%= b.user.username %>
+								<span class="right"><%= e.start.localtime.strftime("%b %-d, %Y %I:%M %p") %></span>
+								<%= e.booking.user.username %>
 							</li>
 							
 						<% end %>
@@ -53,10 +53,10 @@
 				<div class="content" data-section-content>
 					<% if returns.length > 0 %>
 					<ul class="side-nav">
-						<% for b in upcoming.sort_by{|booking| booking.events.first.end}[0..4] %>
+						<% for e in returns.sort_by{|event| event.end}[0..4] %>
 							<li>
-								<span class="right"><%= b.end.strftime("%b %-d, %Y %I:%M %p") %></span>
-								<%= b.user.username %>
+								<span class="right"><%= e.end.localtime.strftime("%b %-d, %Y %I:%M %p") %></span>
+								<%= e.booking.user.username %>
 							</li>
 						<% end %>
 					</ul>
@@ -80,10 +80,10 @@
 				<div class="content" data-section-content>
 					<% if overdue.length > 0 %>
 					<ul class="side-nav">
-						<% for b in overdue.sort_by{|booking| b.events.first.end} %>
+						<% for e in overdue.sort_by{|event| event.end} %>
 							<li>
-								<span class="right"><%= b.events.first.end.strftime("%b %-d, %Y %I:%M %p") %></span>
-								<%= b.user.username %>
+								<span class="right"><%= e.end.localtime.strftime("%b %-d, %Y %I:%M %p") %></span>
+								<%= e.booking.user.username %>
 							</li>
 							
 						<% end %>

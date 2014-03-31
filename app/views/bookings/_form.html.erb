@@ -80,7 +80,7 @@
 										In at <%= @booking.sign_in_times[equip.id].strftime("%b %-d, %Y %I:%M %p") %>
 									<% elsif @booking.sign_out_times.key?(equip.id) %>
 										<%= hidden_field_tag "booking[sign_in_ids][]", nil, {:data => equip.id, :class => "scannable", :id => "bc_in_#{equip.barcode}"}%>
-										<% if booking.events.first.end < DateTime.now %>
+										<% if @booking.events.first.end < DateTime.now %>
 											<span id="status_<%= equip.barcode %>" class="right alert label">Overdue</span>
 											<br />
 											Out at <%= @booking.sign_out_times[equip.id].strftime("%b %-d, %Y %I:%M %p") %>
@@ -129,12 +129,12 @@
 
 		<% if @booking.events.first != nil %>
 			<% s = @booking.events.first %>
-			<% sd = DateTime.parse(s.start.to_s) %>
-			<% ed = DateTime.parse(s.end.to_s) %>
-			<% start_d = sd.strftime("%m/%d/%Y") %>
-			<% start_t = sd.strftime("%I:%M %p")%>
-			<% end_d = ed.strftime("%m/%d/%Y") %>
-			<% end_t = ed.strftime("%I:%M %p")%>
+			<% sd = s.start %>
+			<% ed = s.end %>
+			<% start_d = sd.localtime.strftime("%m/%d/%Y") %>
+			<% start_t = sd.localtime.strftime("%I:%M %p")%>
+			<% end_d = ed.localtime.strftime("%m/%d/%Y") %>
+			<% end_t = ed.localtime.strftime("%I:%M %p")%>
 		<% else %>
 			<% start_d = Time.now.strftime("%m/%d/%Y") %>
 			<% start_t = Time.now.strftime("%I:%M %p") %>
