@@ -32,6 +32,8 @@ gem 'zurb-foundation'
 gem 'jquery-ui-rails'
 gem 'jquery-timepicker-rails'
 gem 'ice_cube'
+gem 'recurring_select'
+gem 'recurrence'
 #gem 'fullcalendar-rails'
 gem 'twitter-typeahead-rails'
 

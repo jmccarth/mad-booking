@@ -115,8 +115,9 @@ class BookingsController < ApplicationController
     #Stitch together the strings and parse them
     event_start_dt = Time.strptime(event_start_d + event_start_t, "%m/%d/%Y%I:%M %p");
     event_end_dt = Time.strptime(event_end_d + event_end_t, "%m/%d/%Y%I:%M %p");
-    @booking.events.build(:start=>event_start_dt,:end=>event_end_dt)    
     
+    @booking.schedule = build_recurrence(event_start_dt,event_end_dt)
+
     respond_to do |format|
       if @booking.save
         format.html { redirect_to root_path, notice: 'Booking was successfully created.' }
@@ -197,6 +198,8 @@ class BookingsController < ApplicationController
 
     @booking.events.first.update(:start=>event_start_dt,:end=>event_end_dt)
 
+    @booking.schedule = build_recurrence(event_start_dt,event_end_dt)
+
     respond_to do |format|
       if @booking.update_attributes(booking_params)
         format.html { redirect_to root_path, notice: 'Booking was successfully updated.' }
@@ -238,5 +241,25 @@ private
     end
   end
 
-  
+  def build_recurrence(event_start_dt,event_end_dt)
+    weekly_rep = params[:weekly_repeat]
+    num_weeks = params[:num_weeks]
+    @booking.events.delete_all
+    if weekly_rep == "1"
+      #TODO: This probably isn't smart, but it'll work for now
+      #This will be a problem for history tracking
+      
+      r = Recurrence.new(:every => :week, :on => event_start_dt.strftime("%A").parameterize.underscore.to_sym, :repeat => num_weeks.to_i)
+      
+      #r = Recurrence.new(:every => :week, :on => :friday, :repeat => 4)
+      r.events.each{ |date|
+        @booking.events.build(:start=>date,:end=>(date + 1.day))
+      }
+    else
+      #a single event, no recurrence pattern specified
+      @booking.events.build(:start=>event_start_dt,:end=>event_end_dt)
+      r = nil
+    end
+    r
+  end
 end

@@ -1,7 +1,7 @@
 Equip::Application.routes.draw do
 
   resources :events
-  resources :equipment
+  
 
   get '/logout', to: "bookings#logout"
   get '/invaliduser', to: "pages#invaliduser"
@@ -13,7 +13,7 @@ Equip::Application.routes.draw do
   get '/equipment', to: "equipment#index"
 
   resources :categories
-
+  resources :equipment
   resources :users
 
   

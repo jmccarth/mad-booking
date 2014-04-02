@@ -74,7 +74,7 @@
 									<% if !@booking.sign_out_times.key?(equip.id) %>
 										<a class="label radius alert right remove"><i class="icon-remove"></i></a>
 									<% end %>
-									
+									 
 									<% if equip.contents.nil? %>
 										<%= equip.name %>	
 									<% else %>
@@ -142,6 +142,12 @@
 			<% start_t = sd.localtime.strftime("%I:%M %p")%>
 			<% end_d = ed.localtime.strftime("%m/%d/%Y") %>
 			<% end_t = ed.localtime.strftime("%I:%M %p")%>
+			<% has_weekly_recur = !@booking.schedule.nil? %>
+			<% if !@booking.schedule.nil? %>
+				<% weekly_rep = @booking.schedule.options[:repeat] %>
+			<% else %>
+				<% weekly_rep = 2 %>
+			<% end %>
 		<% else %>
 			<% start_d = Time.now.strftime("%m/%d/%Y") %>
 			<% start_t = Time.now.strftime("%I:%M %p") %>
@@ -208,6 +214,16 @@
 				</div>
 			</div>
 		</div>
+			
+			
+			<a href="#" data-dropdown="recurDrop" class="button dropdown">Recurrence</a><br />
+			<div id="recurDrop" data-dropdown-content class="f-dropdown">
+					
+				<%= check_box_tag :weekly_repeat, 1, has_weekly_recur %>
+				<label for="weekly_repeat">Repeat weekly for <%= number_field_tag :num_weeks, weekly_rep, in:1..12 %> weeks?</label>
+			</div>
+			
+		
 		<div class="row collapse">
 			<label>Booked by:</label>
 			<% if @booking.creator.nil? %>

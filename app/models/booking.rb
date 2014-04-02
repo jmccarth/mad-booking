@@ -7,13 +7,13 @@ class Booking < ActiveRecord::Base
   has_and_belongs_to_many :equipments
   serialize :sign_in_times, Hash
   serialize :sign_out_times, Hash
+  serialize :schedule
   validate :real_user
   validate :allowed_user
   validate :correct_times
   validate :has_no_conflicts
   validates_presence_of :equipments
-  
-  
+
   private
   def real_user
     #Check to see if the user already exists. If not fail the validation.
