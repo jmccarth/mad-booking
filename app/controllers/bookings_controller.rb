@@ -254,7 +254,7 @@ private
       #r = Recurrence.new(:every => :week, :on => :friday, :repeat => 4)
       r.events.each{ |date|
         new_start = Time.new(date.year, date.month, date.day, event_start_dt.hour, event_start_dt.min, event_start_dt.sec, event_start_dt.utc_offset)
-        new_end = Time.new(date.year, date.month, date.day, event_end_dt.hour, event_end_dt.min, event_end_dt.sec, event_end_dt.utc_offset)
+        new_end = new_start + (event_end_dt - event_start_dt)
         @booking.events.build(:start=>new_start,:end=>new_end)
       }
     else
