@@ -145,8 +145,10 @@
 			<% has_weekly_recur = !@booking.schedule.nil? %>
 			<% if !@booking.schedule.nil? %>
 				<% weekly_rep = @booking.schedule.options[:repeat] %>
+                <% show_rep_details = 'display: inline' %>
 			<% else %>
-				<% weekly_rep = 2 %>
+				<% weekly_rep = nil %>
+                <% show_rep_details = 'display: none' %>
 			<% end %>
 		<% else %>
 			<% start_d = Time.now.strftime("%m/%d/%Y") %>
@@ -216,11 +218,9 @@
 		</div>
 			
 			
-			<a href="#" data-dropdown="recurDrop" class="button dropdown">Recurrence</a><br />
-			<div id="recurDrop" data-dropdown-content class="f-dropdown">
-					
+			<div class="row collapse">
 				<%= check_box_tag :weekly_repeat, 1, has_weekly_recur %>
-				<label for="weekly_repeat">Repeat weekly for <%= number_field_tag :num_weeks, weekly_rep, in:1..12 %> weeks?</label>
+				Repeat <span id="repeat_details">weekly for <%= number_field_tag :num_weeks, weekly_rep, in:1..12 %> weeks?</span>
 			</div>
 			
 		
