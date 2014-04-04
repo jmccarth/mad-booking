@@ -253,8 +253,12 @@
 	</div>
     <div class="row collapse">
         <% if @booking.creator.nil? %>
-            <span class="label secondary right">Booked by: <%= session[:cas_user] %></span>
-            <% @booking.creator = session[:cas_user] %>
+            <% if @booking.new_record? %>
+                <span class="label secondary right">Booked by: <%= session[:cas_user] %></span>
+                <% @booking.creator = session[:cas_user] %>
+            <% else %>
+                <span class="label secondary right">Booked by: unknown</span>
+            <% end %>
         <% else %>
             <span class="label secondary right">Booked by: <%= @booking.creator %></span>
         <% end %>
