@@ -254,17 +254,10 @@
     <div class="row collapse">
         <% if @booking.creator.nil? %>
             <span class="label secondary right">Booked by: <%= session[:cas_user] %></span>
+            <% @booking.creator = session[:cas_user] %>
         <% else %>
-            <% if @booking.creator == session[:cas_user] %>
-                <span class="label secondary right">Booked by: <%= @booking.creator %></span>
-            <% else %>
-                <span class="label secondary right">Booked by: <%= @booking.creator %>
-                        <span data-tooltip title="<%= 'Will be changed to ' + session[:cas_user] + ' on update' %>" class="alert label has-tip">*</span>
-                </span>
-            <% end %>
+            <span class="label secondary right">Booked by: <%= @booking.creator %></span>
         <% end %>
-            
-        <% @booking.creator = session[:cas_user] %>
         <%= f.hidden_field :creator %>
     </div>
 </div>
