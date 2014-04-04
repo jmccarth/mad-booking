@@ -222,27 +222,28 @@ $(function() {
 	});
 	
 	/* Barcodes */
-	
 	var chars = [];
 	var barcode = "";
 	$(window).keypress(function(e) {
-		barcode += String.fromCharCode(e.which);
-		if (e.which === 13) {
-			if ($("#bc_out_" + barcode).length > 0) {
-				$("#bc_out_" + barcode)[0].value = $("#bc_out_" + barcode).attr('data');
-				$("#status_" + barcode).attr('class','right round label')
-				$("#status_" + barcode)[0].innerHTML = "Signing Out"
-			} 
-			else if ($("#bc_in_" + barcode).length > 0) {
-				$("#bc_in_" + barcode)[0].value = $("#bc_in_" + barcode).attr('data');
-				$("#status_" + barcode).attr('class','right round success label')
-				$("#status_" + barcode)[0].innerHTML = "Signing In"
-			} else {
-				alert("Item with barcode " + barcode + " not found for sign in/out.");
-			}
+        if ($modalContainer.is('.open')){
+            barcode += String.fromCharCode(e.which);
+            if (e.which === 13) {
+                if ($("#bc_out_" + barcode).length > 0) {
+                    $("#bc_out_" + barcode)[0].value = $("#bc_out_" + barcode).attr('data');
+                    $("#status_" + barcode).attr('class','right round label')
+                    $("#status_" + barcode)[0].innerHTML = "Signing Out"
+                } 
+                else if ($("#bc_in_" + barcode).length > 0) {
+                    $("#bc_in_" + barcode)[0].value = $("#bc_in_" + barcode).attr('data');
+                    $("#status_" + barcode).attr('class','right round success label')
+                    $("#status_" + barcode)[0].innerHTML = "Signing In"
+                } else {
+                    alert("Item with barcode " + barcode + " not found for sign in/out.");
+                }
 
-			barcode = "";
-		}
+                barcode = "";
+            }
+        }
 	});
 	
 	/* Expand
