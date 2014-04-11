@@ -19,21 +19,20 @@ class BookingsController < ApplicationController
     eTime = Time.at(params[:end].to_i)
     @events = find_by_date_range(sTime,eTime)
     b = []
-    
     if(params.has_key?(:equip_ids))
         #Filter all in date range by equipment ids
-      found_ids = []
-      equips = params[:equip_ids]
-      @events.each do |ev|
-        for equip in equips do
-          if ev.booking.equipments.include?(Equipment.find(equip))
-            if !found_ids.include?(ev.id)
-              b.push(convert_booking_to_fcevent(ev))  
-              found_ids.push(ev.id)
-            end
-          end    
+        found_ids = []
+        #List of equipment being searched for
+        equips = params[:equip_ids]
+        equips = equips.map{|e| e.to_i}
+        @events.each do |ev|
+            #List of equipment ids for this event
+            e_ids = ev.booking.equipments
+            e_ids = e_ids.map{|e| e.id}
+            if ((equips & e_ids).count > 0)
+                b.push(convert_booking_to_fcevent(ev))
+            end      
         end
-      end
     else
       @events.each do |ev|
          b.push(convert_booking_to_fcevent(ev))
