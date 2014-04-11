@@ -224,6 +224,7 @@ $(function() {
 	/* Barcodes */
 	var chars = [];
 	var barcode = "";
+    $booking_user = $("#booking_user");
 	$(window).keypress(function(e) {
         if ($modalContainer.is('.open')){
             barcode += String.fromCharCode(e.which);
