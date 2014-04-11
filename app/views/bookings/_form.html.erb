@@ -14,17 +14,7 @@
 
 <%= form_for(@booking) do |f| %>
 <% if @booking.errors.any? %>
-	<div id="error_explanation">
-		<h2><%= pluralize(@booking.errors.count, "error") %> prohibited this booking from being saved:</h2>
-	
-		<ul>
-			<% @booking.errors.full_messages.each do |msg| %>
-			<li>
-				<%= msg %>
-			</li>
-			<% end %>
-		</ul>
-	</div>
+	report_errors(@booking)
 <% end %>
 
 <% flash.each do |name, msg| %>
@@ -217,18 +207,28 @@
 			</div>
 		</div>
 			
-			
+		<hr />
+			<label>Recurrence</label>
 			<div class="row collapse">
-				<%= check_box_tag :weekly_repeat, 1, has_weekly_recur %>
-				Repeat <span id="repeat_details">weekly for <%= number_field_tag :num_weeks, weekly_rep, in:1..12 %> weeks?</span>
+				<div class="small-5 columns">
+					<span class="prefix">
+						<%= check_box_tag :weekly_repeat, 1, has_weekly_recur %> Repeat for
+					</span>
+				</div>
+				<div class="small-2 columns">
+					<%= number_field_tag :num_weeks, weekly_rep, in:1..12 %>
+				</div>
+				<div class="small-5 columns">
+					<span class="postfix">
+						weeks
+					</span>
+				</div>
 			</div>
 			
-		
+	</div>
+	<hr />
 
-		
-		<hr />
-
-		<div class="row collapse">
+	<div class="row collapse">
 			<div class="small-1 columns">
 				<span class="prefix">
 					<i class="icon-comments"></i>
@@ -238,10 +238,6 @@
 				<%= f.text_area :comments, :disabled => disable_ui, :placeholder => 'Enter comments related to this booking' %>
 			</div>
 		</div>
-
-		<br />
-	</div>
-	<hr />
 	
 	<div class="actions">
 		<% if !disable_ui %>

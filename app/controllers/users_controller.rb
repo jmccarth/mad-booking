@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-  layout false
 
   before_filter RubyCAS::Filter do |controller|
       controller.valid_user()
@@ -94,4 +93,5 @@ class UsersController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
 end

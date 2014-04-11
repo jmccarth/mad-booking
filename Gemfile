@@ -26,7 +26,7 @@ gem 'compass-rails' # you need this or you get an err
 
 #gem 'zurb-foundation', '~> 4.3.1'
 gem 'zurb-foundation'
-
+#gem 'foundation-rails'
 
 
 gem 'jquery-ui-rails'

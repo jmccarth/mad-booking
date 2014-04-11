@@ -24,12 +24,18 @@
   <body id="mad">
 
 	<%= render 'shared/navigation' %>
-
 	<% if notice %>
-		<div class="alert-box" id="notice"><%= notice %></div>
+		<div data-alert class="alert-box" id="notice">
+			<%= notice %>
+			<a href="#" class="close">&times;</a>
+		</div>
 	<% end %>
+
+	<br />
 	
-	<%= yield %>
+	<div class="content">
+		<%= yield %>
+	</div>
 	
 	<hr />
 	<footer>

@@ -1,6 +1,12 @@
-<h1>Editing equipment</h1>
+<div class="row">
+	<div class="small-12 columns">
 
-<%= render 'form' %>
+		<h1>
+			Editing
+			<%= @equipment.name %>
+		</h1>
 
-<%= link_to 'Show', @equipment %> |
-<%= link_to 'Back', equipment_index_path %>
+		<%= render 'form' %>
+
+	</div>
+</div>
