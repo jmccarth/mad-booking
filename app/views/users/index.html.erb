@@ -1,27 +1,26 @@
-<h3>User list</h3>
+<div class="row">
+  <div class="small-12 columns">
+    <h1>Users <%= link_to "Add", new_user_path, :class => "button" %></h1>
 
-<table>
-  <tr>
-    <th>Username</th>
-    <th>Admin</th>
-    <th>Status</th>
-	<th>Comments</th>
-    <th>Actions</th>
-  </tr>
+    <table>
+      <tr>
+        <th>Username</th>
+        <th>Admin</th>
+        <th>Status</th>
+        <th>Comments</th>
+        <th>Updated</th>
+      </tr>
 
-<% @users.each do |user| %>
-  <tr>
-    <td><%= user.username %></td>
-    <td><%= user.admin %></td>
-    <td><%= user.status %></td>
-	<td><%= user.comments %></td>
-    <td class="actions">
-		<ul class="inline-list">
-			<li><%= link_to 'Show', user %></li>
-			<li><%= link_to 'Edit', edit_user_path(user) %></li>
-    		<li><%= link_to 'Destroy', user, confirm: 'Are you sure?', method: :delete %></li>
-		</ul>
-	</td>
-  </tr>
-<% end %>
-</table>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= link_to user.username, edit_user_path(user) %></td>
+        <td><%= user.admin %></td>
+        <td><%= user.status %></td>
+        <td><%= user.comments %></td>
+        <td><%= user.updated_at.to_date if user.updated_at? %></td>
+      </tr>
+    <% end %>
+
+    </table>
+  </div>
+</div>

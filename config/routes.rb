@@ -11,13 +11,11 @@ Equip::Application.routes.draw do
   get '/bookings/daterange', to: "bookings#daterange", defaults: {format: :json}
 
   get '/equipment', to: "equipment#index"
+  #patch '/equipment', to: "equipment#index"
 
   resources :categories
   resources :equipment
   resources :users
-
-  
-
   resources :bookings
 
   # The priority is based upon order of creation:

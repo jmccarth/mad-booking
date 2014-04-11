@@ -1,29 +1,34 @@
-<h1>Equipment list</h1>
+<div class="row">
+  <div class="small-12 columns">
+    <h1>
+      Equipment
+      <%= link_to 'Add', new_equipment_path, :class => 'button' %>
+    </h1>
 
-<p><%= link_to 'Add equipment', new_equipment_path %></p>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Barcode</th>
+        <th>Updated</th>
+      </tr>
 
-<table>
-  <tr>
-    <th>Barcode</th>
-    <th>Name</th>
-    <th>Actions</th>
-  </tr>
-
-<% @equipment.each do |equipment| %>
-  <tr>
-    <td width="30%"><%= equipment.barcode %></td>
-    <td width="35%"><%= equipment.name %></td>
-    <td width="30%" class="actions">
-		<ul class="inline-list">
-			<li><%= link_to 'Show', equipment %></li>
-			<li><%= link_to 'Edit', edit_equipment_path(equipment) %></li>
-			<li><%= link_to 'Destroy', equipment, confirm: 'Are you sure?', method: :delete %></li>
-		</ul>
-	</td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<p><%= link_to 'Add equipment', new_equipment_path %></p>
+    <% @equipment.each do |equipment| %>
+      <tr>
+        <td>
+          <%= link_to equipment.name, edit_equipment_path(equipment) %>
+        </td>
+        <td>
+          <%= equipment.category.name if equipment.category %>
+        </td>
+        <td>
+          <%= equipment.barcode %>
+        </td>
+        <td>
+          <%= equipment.updated_at.to_date if equipment.updated_at %>
+        </td>
+      </tr>
+    <% end %>
+    </table>
+  </div>
+</div>

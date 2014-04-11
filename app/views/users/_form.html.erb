@@ -12,20 +12,44 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :username %><br />
-    <%= f.text_field :username %>
+    <div class="row collapse">
+      <div class="small-4 columns">
+        <span class="prefix">Username</span>
+      </div>
+      <div class="small-8 columns">
+        <%= f.text_field :username %>
+      </div>
+    </div>
   </div>
   <div class="field">
-    <%= f.label :admin %><br />
-    <%= f.check_box :admin %>
+    <div class="row collapse">
+      <div class="small-4 columns">
+        <span class="prefix">Admin?</span>
+      </div>
+      <div class="small-8 columns">
+        <%= f.select :admin, {"No" => false, "Yes" => true} %>
+      </div>
+    </div>
   </div>
   <div class="field">
-    <%= f.label :status %><br />
-    <%= f.number_field :status %>
+    <div class="row collapse">
+      <div class="small-4 columns">
+        <span class="prefix">Status</span>
+      </div>
+      <div class="small-8 columns">
+        <%= f.number_field :status %>
+      </div>
+    </div>
   </div>
   <div class="field">
-    <%= f.label :comments %><br />
-    <%= f.text_area :comments %>
+    <div class="row collapse">
+      <div class="small-4 columns">
+        <span class="prefix">Comments</span>
+      </div>
+      <div class="small-8 columns">
+        <%= f.text_area :comments %>
+      </div>
+    </div>
   </div>
 
   <div class="actions">

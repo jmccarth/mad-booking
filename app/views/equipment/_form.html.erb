@@ -1,35 +1,65 @@
 <%= form_for(@equipment) do |f| %>
-  <% if @equipment.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@equipment.errors.count, "error") %> prohibited this equipment from being saved:</h2>
 
-      <ul>
-      <% @equipment.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
+  <% if @equipment.errors.any? %>
+    <%= report_errors(@equipment) %>
   <% end %>
-	<div class="field">
-		<%= f.collection_select(:category_id, Category.all, :id, :name)%>
-	</div>
-  <div class="field">
-    <%= f.label :barcode %><br />
-    <%= f.text_field :barcode %>
-  </div>
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :stored %><br />
-    <%= f.text_field :stored %>
-  </div>
-  <div class="field">
-    <%= f.label :contents %><br />
-    <%= f.text_area :contents %>
-  </div>
+
+    <div class="field">
+      <div class="row collapse">
+        <div class="small-4 columns">
+          <span class="prefix">Category</span>
+        </div>
+        <div class="small-8 columns">
+          <%= f.collection_select(:category_id, Category.all, :id, :name)%>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="row collapse">
+        <div class="small-4 columns">
+          <span class="prefix">Name</span>
+        </div>
+        <div class="small-8 columns">
+          <%= f.text_field :name %>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="row collapse">
+        <div class="small-4 columns">
+          <span class="prefix">Barcode</span>
+        </div>
+        <div class="small-8 columns">
+          <%= f.text_field :barcode %>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="row collapse">
+        <div class="small-4 columns">
+          <span class="prefix">Stored</span>
+        </div>
+        <div class="small-8 columns">
+          <%= f.text_field :stored %>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="row collapse">
+        <div class="small-4 columns">
+          <span class="prefix">Contents</span>
+        </div>
+        <div class="small-8 columns">
+          <%= f.text_area :contents %>
+        </div>
+      </div>
+    </div>
+
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit :class => 'button' %>
   </div>
 <% end %>
