@@ -17,26 +17,26 @@ class BookingsController < ApplicationController
   def daterange
     sTime = Time.at(params[:start].to_i)
     eTime = Time.at(params[:end].to_i)
-    @bookings = find_by_date_range(sTime,eTime)
+    @events = find_by_date_range(sTime,eTime)
     b = []
     
     if(params.has_key?(:equip_ids))
         #Filter all in date range by equipment ids
       found_ids = []
       equips = params[:equip_ids]
-      @bookings.each do |booking|
+      @events.each do |ev|
         for equip in equips do
-          if booking.equipments.include?(Equipment.find(equip))
-            if !found_ids.include?(booking.id)
-              b.push(convert_booking_to_fcevent(booking))  
-              found_ids.push(booking.id)
+          if ev.booking.equipments.include?(Equipment.find(equip))
+            if !found_ids.include?(ev.id)
+              b.push(convert_booking_to_fcevent(ev))  
+              found_ids.push(ev.id)
             end
           end    
         end
       end
     else
-      @bookings.each do |booking|
-         b.push(convert_booking_to_fcevent(booking))
+      @events.each do |ev|
+         b.push(convert_booking_to_fcevent(ev))
       end
     end
 

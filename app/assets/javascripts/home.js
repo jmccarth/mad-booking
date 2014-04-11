@@ -16,19 +16,12 @@ function reloadCalendar(items) {
 
 		var params = {};
 
-		if (items == 0) {
+		if (items != 0) {
 			params = {
-				start_date : startDate,
-				end_date : endDate
+                equip_ids : items
 			}
 		}
-		else {
-			params = {
-				start_date : startDate,
-				end_date : endDate,
-				equip_ids : items
-			}	
-		}
+		
 
 		$calendar.fullCalendar('destroy');
 
