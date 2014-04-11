@@ -15,12 +15,13 @@ class BookingsController < ApplicationController
   end
 
   def daterange
-    sTime = Time.at(params[:start_date].to_i)
-    eTime = Time.at(params[:end_date].to_i)
+    sTime = Time.at(params[:start].to_i)
+    eTime = Time.at(params[:end].to_i)
     @bookings = find_by_date_range(sTime,eTime)
     b = []
-
+    
     if(params.has_key?(:equip_ids))
+        #Filter all in date range by equipment ids
       found_ids = []
       equips = params[:equip_ids]
       @bookings.each do |booking|
