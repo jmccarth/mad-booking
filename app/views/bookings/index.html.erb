@@ -1,29 +1,25 @@
-<h1>Listing bookings</h1>
+<div class="row">
+  <div class="small-12 columns">
+    <h1>
+      Bookings
+    </h1>
 
-<table>
-  <tr>
-    <th>User</th>
-    <th>Schedule</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>User</th>
+        <th>Booked by</th>
+        <th>Updated</th>
+      </tr>
 
-<% @bookings.each do |booking| %>
-  <tr>
-    <td><%= booking.user %></td>
-    <td><%= booking.schedule %></td>
-    <td><%= link_to 'Show', booking %></td>
-    <td><%= link_to 'Edit', edit_booking_path(booking) %></td>
-    <td>
-      <% if booking.sign_out_times.length == 0 %>
-        <%= link_to 'Destroy', booking, confirm: 'Are you sure?', method: :delete %>
-      <% end %>
-    </td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Booking', new_booking_path %>
+    <% @bookings.each do |booking| %>
+      <tr>
+        <td><%= link_to booking.id, edit_booking_path(booking), :class => 'modal' %></td>
+        <td><%= User.find_by_id(booking.user_id).username %></td>
+        <td><%= booking.creator %></td>
+        <td><%= booking.updated_at.to_date %>
+      </tr>
+    <% end %>
+    </table>
+  </div>
+</div>

@@ -4,12 +4,14 @@ class BookingsController < ApplicationController
 
   helper :all
   helper_method :find_by_date_range
-  layout false
+
   before_filter RubyCAS::Filter do |controller|
       controller.valid_user()
   end
   #before_filter :format_schedule_write, :only => [:create,:update]
   
+  layout :booking_layout
+
   def logout
     RubyCAS::Filter.logout(self,root_path)
   end
@@ -226,6 +228,10 @@ class BookingsController < ApplicationController
   end
   
 private
+
+  def booking_layout
+    params[:action] == 'edit' || params[:action] == 'new' ? false : 'application'
+  end
 
   def booking_params
     params.require(:booking).permit!
