@@ -73,8 +73,8 @@ class EquipmentController < ApplicationController
     @equipment = Equipment.find(params[:id])
 
     respond_to do |format|
-      if @equipment.update_attributes(params[:equipment])
-        format.html { redirect_to equipment_path, notice: 'Equipment was successfully updated.' }
+      if @equipment.update_attributes(equipment_params)
+        format.html { redirect_to equipment_path(@equipment), notice: 'Equipment was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
