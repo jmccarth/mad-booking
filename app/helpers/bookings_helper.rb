@@ -25,7 +25,7 @@ module BookingsHelper
     
       ev_booking = event.booking
       evb_user = ev_booking.user
-      evb_equip = ev_booking.equipments
+      evb_equip = ev_booking.equipment
       evb_sit = ev_booking.sign_in_times
       evb_sot = ev_booking.sign_out_times
       startDate = event.start

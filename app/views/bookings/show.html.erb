@@ -11,7 +11,7 @@
 		<!-- TODO: This seems like it would be slow. Better to find info on each piece of equipment. Same on _form -->
   	<% for equip in Equipment.find(:all) %>
   		<div>
-  			<% if (@booking.equipments.include?(equip)) %>
+  			<% if (@booking.equipment.include?(equip)) %>
   				<%= content_tag :li, equip.name %>
   			<% end %>
   		</div>

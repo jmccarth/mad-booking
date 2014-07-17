@@ -29,7 +29,7 @@ class BookingsController < ApplicationController
         equips = equips.map{|e| e.to_i}
         @events.each do |ev|
             #List of equipment ids for this event
-            e_ids = ev.booking.equipments
+            e_ids = ev.booking.equipment
             e_ids = e_ids.map{|e| e.id}
             if ((equips & e_ids).count > 0)
                 b.push(convert_booking_to_fcevent(ev))

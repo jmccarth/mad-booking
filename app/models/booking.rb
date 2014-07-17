@@ -4,7 +4,7 @@ class Booking < ActiveRecord::Base
   
   belongs_to :user
   has_many :events, :dependent => :destroy
-  has_and_belongs_to_many :equipments
+  has_and_belongs_to_many :equipment
   serialize :sign_in_times, Hash
   serialize :sign_out_times, Hash
   serialize :schedule
@@ -12,7 +12,7 @@ class Booking < ActiveRecord::Base
   validate :allowed_user
   validate :correct_times
   validate :has_no_conflicts
-  validates_presence_of :equipments
+  validates_presence_of :equipment
 
   private
   def real_user
@@ -54,7 +54,7 @@ class Booking < ActiveRecord::Base
     conflict_ids=[]
     #given an array of equipment ids, check to see if there are conflicting events
     equip_ids = self.equipment_ids
-    @equip_conflicts = Booking.find(:all, :include=>:equipments, :conditions=>['equipment.id in (?)',equip_ids])
+    @equip_conflicts = Booking.find(:all, :include=>:equipment, :conditions=>['equipment.id in (?)',equip_ids])
     @equip_conflicts.each do |booking_test|
       @e = booking_test.events.first
       @e1 = self.events.first

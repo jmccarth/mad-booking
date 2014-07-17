@@ -58,7 +58,7 @@ class EquipmentController < ApplicationController
 
     respond_to do |format|
       if @equipment.save
-        format.html { redirect_to equipment_path, notice: 'Equipment was successfully created.' }
+        format.html { redirect_to equipment_index_path, notice: 'Equipment was successfully created.' }
         format.json { render json: @equipment, status: :created, location: @equipment }
       else
         format.html { render action: "new" }
@@ -74,7 +74,7 @@ class EquipmentController < ApplicationController
 
     respond_to do |format|
       if @equipment.update_attributes(equipment_params)
-        format.html { redirect_to equipment_path, notice: 'Equipment was successfully updated.' }
+        format.html { redirect_to equipment_index_path, notice: 'Equipment was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -98,6 +98,6 @@ class EquipmentController < ApplicationController
   private
 
   def equipment_params
-    params.require(:equipment).permit(:name,:barcode,:category,:stored,:contents)
+    params.require(:equipment).permit(:name,:barcode,:category_id,:stored,:contents)
   end
 end

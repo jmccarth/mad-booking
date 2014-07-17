@@ -21,7 +21,7 @@
 	<%= content_tag :div, msg, class: "alert-box" %>
 <% end %>
 
-<% if (@booking.equipments.count == @booking.sign_in_times.count) and @booking.equipments.count > 0 %>
+<% if (@booking.equipment.count == @booking.sign_in_times.count) and @booking.equipment.count > 0 %>
 	<% disable_ui = true %>
 <% else %>
 	<% disable_ui = false %>
@@ -54,8 +54,8 @@
 								</li>
 							<% end %>
 						<% end %>
-						<% if @booking.equipments.count > 0 %>
-							<% for equip in @booking.equipments %>
+						<% if @booking.equipment.count > 0 %>
+							<% for equip in @booking.equipment %>
 								<li>
 									<span class="muted">
 										<%= equip.category.name %>

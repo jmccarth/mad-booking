@@ -92,7 +92,7 @@ function initializeComponents($container) {
 		<% Category.all.each_with_index do |category, index| %>
 			{
 				name: "<%= category.name %>",
-				local: JSON.parse('<%= category.equipments.collect { |equip| equip.name }.to_json.gsub("'", %q(\\\')) %>'),
+				local: JSON.parse('<%= category.equipment.collect { |equip| equip.name }.to_json.gsub("'", %q(\\\')) %>'),
 
 				header: "<h5><%= category.name %></h5>"
 			}<% if index < Category.all.size - 1 %>, <% end %>

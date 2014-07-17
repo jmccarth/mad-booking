@@ -1,3 +1,3 @@
 class Category < ActiveRecord::Base
-  has_many :equipments
+  has_many :equipment
 end

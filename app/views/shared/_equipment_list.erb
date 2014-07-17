@@ -11,7 +11,7 @@
 			</p>
 			<div class="content" data-section-content>
 				<ul class="side-nav">
-				<% for equip in cat.equipments.order('name ASC') %>
+				<% for equip in cat.equipment.order('name ASC') %>
 					<li class="item" data-id="<%= equip.id %>">
 						<% if equip.status == 0 %>
 							<span class="right label radius error inactive">out</span>
