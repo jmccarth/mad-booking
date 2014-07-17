@@ -68,7 +68,7 @@
 									<% if equip.contents.nil? %>
 										<%= equip.name %>	
 									<% else %>
-										<span data-tooltip class="has-tip" title=<%= equip.contents %>><%= equip.name %></span>
+										<span data-tooltip class="has-tip" title="<%= equip.contents %>"><%= equip.name %></span>
 									<% end %>
 									<%= hidden_field_tag "booking[equipment_ids][]", equip.id %>
 									<% if @booking.sign_in_times.key?(equip.id) %>
