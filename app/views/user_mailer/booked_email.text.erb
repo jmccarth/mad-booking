@@ -1,0 +1,19 @@
+Hi <%= @user.username %>,
+
+You're receiving this email because you reserved the following equipment at the MAD Service Desk:
+
+<% @booking.equipment.each do |e| %>
+	-<%= e.name %>
+<% end %>
+
+For the following dates and times:
+ 
+<% @booking.events.each do |e| %>
+	<%= e.start.localtime.strftime("%B %d, %Y at %I:%M %p") %> to <%= e.end.localtime.strftime("%B %d, %Y at %I:%M %p") %>
+<% end %>
+
+Please arrive on time to pick up your equipment at the dates/times indicated. You are responsible for returning the equipment on time and in the same conidition that you picked it up in. You will be held responsible for any damages to the equipment while it is in your possession.
+
+If there are mistakes in the booking, or if you did not book this equipment, please let us know by replying to this email. Thank you.
+
+MAD
