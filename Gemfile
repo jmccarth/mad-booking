@@ -55,3 +55,4 @@ gem 'rubycas-client-rails',  :git => "git://github.com/rubycas/rubycas-client-ra
 #gem 'ruby-debug19', :require => 'ruby-debug'
 #gem 'debugger'
 gem 'mysql2'
+gem 'rails_config'

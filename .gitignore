@@ -16,3 +16,7 @@
 
 # Ignore the database config file
 /config/database.yml
+
+config/settings.local.yml
+config/settings/*.local.yml
+config/environments/*.local.yml

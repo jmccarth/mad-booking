@@ -84,6 +84,8 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 4.0.0)
       sprockets-rails (~> 2.0.0)
+    rails_config (0.4.2)
+      activesupport (>= 3.0)
     railties (4.0.0)
       actionpack (= 4.0.0)
       activesupport (= 4.0.0)
@@ -149,6 +151,7 @@ DEPENDENCIES
   jquery-ui-rails
   mysql2
   rails (= 4.0.0)
+  rails_config
   recurrence
   recurring_select
   rubycas-client-rails!
