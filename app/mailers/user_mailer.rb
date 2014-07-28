@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: "env-help@uwaterloo.ca"
+  default from: Setting.find_by_key("email_from_address").value
 
   def booked_email(user,booking)
   	@user = user
