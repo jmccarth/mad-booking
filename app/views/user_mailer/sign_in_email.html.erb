@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    Hi <%= @user.username %>,
+    <p>
+      You're receiving this email to confirm that you returned the following equipment at the MAD Service Desk:
+      <ul>
+        <% @eq_ids.each do |e| %>
+          <li><%= Equipment.find(e).name %></li>
+        <% end %>
+      </ul>
+      <p>Thank you,</p>
+      <p>MAD</p>
+  </body>
+</html>

@@ -9,7 +9,7 @@ class BookingsController < ApplicationController
       controller.valid_user()
   end
   #before_filter :format_schedule_write, :only => [:create,:update]
-  
+
   layout :booking_layout
 
   def logout
@@ -33,7 +33,7 @@ class BookingsController < ApplicationController
             e_ids = e_ids.map{|e| e.id}
             if ((equips & e_ids).count > 0)
                 b.push(convert_booking_to_fcevent(ev))
-            end      
+            end
         end
     else
       @events.each do |ev|
@@ -101,11 +101,11 @@ class BookingsController < ApplicationController
       User.create(:username => username)
       user = User.find_by_username(username)
     end
-    
+
     @booking = Booking.new(booking_params)
     @booking.user = user
-    
-    
+
+
     #Schedule start and end dates and times
     #Dates ("07/29/2013")
     event_start_d = params[:schedule_start]
@@ -117,13 +117,15 @@ class BookingsController < ApplicationController
     #Stitch together the strings and parse them
     event_start_dt = Time.strptime(event_start_d + event_start_t, "%m/%d/%Y%I:%M %p");
     event_end_dt = Time.strptime(event_end_d + event_end_t, "%m/%d/%Y%I:%M %p");
-    
+
     @booking.schedule = build_recurrence(event_start_dt,event_end_dt)
 
     respond_to do |format|
       if @booking.save
         #Send an email to the user informing them of the details of the booking
-        UserMailer.booked_email(@booking.user,@booking).deliver
+        if Settings.email.on_booking
+          UserMailer.booked_email(@booking.user,@booking).deliver
+        end
         #Go back to main page
         format.html { redirect_to root_path, notice: 'Booking was successfully created.' }
         format.json { render json: @booking, status: :created, location: @booking }
@@ -141,7 +143,7 @@ class BookingsController < ApplicationController
     params[:booking][:sign_out_ids] ||= []
     params[:booking][:sign_in_ids] ||= []
     @booking = Booking.find(params[:id])
-    
+
     username = params[:booking].delete :user
     user = User.find_by_username(username)
     if (user.nil? and params[:create_if_new])
@@ -149,7 +151,7 @@ class BookingsController < ApplicationController
       user = User.find_by_username(username)
     end
     @booking.user = user
-    
+
     #Grab ids of items being signed out and do some hash magic
     so_ids = params[:booking].delete :sign_out_ids
     out = {}
@@ -169,9 +171,9 @@ class BookingsController < ApplicationController
         Equipment.update(si_id.to_i, :status => 1)
       end
     end
-    
+
     b = Booking.find(params[:id])
-    
+
     #Get any existing sign out times from event object
     sot = b.sign_out_times
     #Merge those sign out times with new values from out_times hash we created
@@ -179,7 +181,7 @@ class BookingsController < ApplicationController
     #Merge those results into params hash
     out_times = {:sign_out_times=>sot}
     params[:booking].merge!(out_times)
-    
+
     #Get any existing sign in times from event object
     sit = b.sign_in_times
     #Merge those sign in times with new values from in_times hash we created
@@ -188,7 +190,7 @@ class BookingsController < ApplicationController
     in_times = {:sign_in_times=>sit}
     params[:booking].merge!(in_times)
 
-    
+
     #Schedule start and end dates and times
     #Dates ("07/29/2013")
     event_start_d = params[:schedule_start]
@@ -208,7 +210,15 @@ class BookingsController < ApplicationController
     respond_to do |format|
       if @booking.update_attributes(booking_params)
         if so_ids != []
-          UserMailer.sign_out_email(@booking.user,@booking,so_ids).deliver
+          if Settings.email.on_sign_out
+            UserMailer.sign_out_email(@booking.user,@booking,so_ids).deliver
+          end
+        end
+
+        if si_ids != []
+          if Settings.email.on_sign_in
+            UserMailer.sign_in_email(@booking.user,@booking,si_ids).deliver
+          end
         end
         format.html { redirect_to root_path, notice: 'Booking was successfully updated.' }
         format.json { head :no_content }
@@ -232,7 +242,7 @@ class BookingsController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
+
 private
 
   def booking_layout
@@ -242,12 +252,12 @@ private
   def booking_params
     params.require(:booking).permit!
   end
-  
+
   def check_user_exists
     uname = params[:booking][:user]
     if User.where(username: uname).length == 0
       respond_to do |format|
-        format.html { flash[:notice] = "User does not exist: " + uname 
+        format.html { flash[:notice] = "User does not exist: " + uname
           render action: "new" }
       end
     end
@@ -260,9 +270,9 @@ private
     if weekly_rep == "1"
       #TODO: This probably isn't smart, but it'll work for now
       #This will be a problem for history tracking
-      
+
       r = Recurrence.new(:every => :week, :on => event_start_dt.strftime("%A").parameterize.underscore.to_sym, :repeat => num_weeks.to_i)
-      
+
       #r = Recurrence.new(:every => :week, :on => :friday, :repeat => 4)
       r.events.each{ |date|
         new_start = Time.new(date.year, date.month, date.day, event_start_dt.hour, event_start_dt.min, event_start_dt.sec, event_start_dt.utc_offset)

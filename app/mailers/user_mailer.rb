@@ -16,4 +16,12 @@ class UserMailer < ActionMailer::Base
   	mail(to:email, subject: 'Equipment Signed Out at MAD Service Desk')
   end
 
+  def sign_in_email(user,booking,eq_ids)
+    @user = user
+    @booking = booking
+    @eq_ids = eq_ids
+    email = user.username + "@uwaterloo.ca"
+    mail(to:email, subject: 'Equipment Signed In at MAD Service Desk')
+  end
+
 end
