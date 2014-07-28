@@ -53,11 +53,11 @@ class ApplicationController < ActionController::Base
       end
 
       if key_notice != ""
-        flash[:notice] = "The following settings are missing. You must fix this before using the application: " + key_notice
+        flash[:alert] = "The following settings are missing. You must fix this before using the application: " + key_notice
       end
 
       if val_notice != ""
-        flash[:notice] = "The following settings are missing values. You must fix this before using the application: " + val_notice
+        flash[:alert] = "The following settings are missing values. You must fix this before using the application: " + val_notice
       end
 
       if key_notice != "" || val_notice != ""
