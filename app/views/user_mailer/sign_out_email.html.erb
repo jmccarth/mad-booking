@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    Hi <%= @user.username %>,
+    <p>
+      You're receiving this email because you signed out the following equipment at the MAD Service Desk:
+      <ul>
+        <% @eq_ids.each do |e| %>
+          <li><%= Equipment.find(e).name %></li>
+        <% end %>
+      </ul>
+      This equipment is due back no later than:
+      <ul>
+        <% @booking.events.each do |e| %>
+          <% if Time.now < e.end %>
+            <li><%= e.end.localtime.strftime("%B %d, %Y at %I:%M %p") %></li>
+            <% break %>
+          <% end %>
+        <% end %>
+      </ul>
+    </p>
+    <p>
+      You are responsible for returning the equipment on time and in the same conidition that you picked it up in. You will be held responsible for any damages to the equipment while it is in your possession.
+    </p>
+
+    <p>If there are mistakes in the booking, or if you did not book this equipment, please let us know by replying to this email. Thank you.</p>
+    <p>MAD</p>
+  </body>
+</html>

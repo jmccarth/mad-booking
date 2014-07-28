@@ -122,6 +122,9 @@ class BookingsController < ApplicationController
 
     respond_to do |format|
       if @booking.save
+        #Send an email to the user informing them of the details of the booking
+        UserMailer.booked_email(@booking.user,@booking).deliver
+        #Go back to main page
         format.html { redirect_to root_path, notice: 'Booking was successfully created.' }
         format.json { render json: @booking, status: :created, location: @booking }
       else
@@ -204,6 +207,9 @@ class BookingsController < ApplicationController
 
     respond_to do |format|
       if @booking.update_attributes(booking_params)
+        if so_ids != []
+          UserMailer.sign_out_email(@booking.user,@booking,so_ids).deliver
+        end
         format.html { redirect_to root_path, notice: 'Booking was successfully updated.' }
         format.json { head :no_content }
       else
