@@ -123,7 +123,7 @@ class BookingsController < ApplicationController
     respond_to do |format|
       if @booking.save
         #Send an email to the user informing them of the details of the booking
-        if Settings.email.on_booking
+        if Setting.find_by_key("email_on_booking").value == "true"
           UserMailer.booked_email(@booking.user,@booking).deliver
         end
         #Go back to main page
@@ -210,13 +210,13 @@ class BookingsController < ApplicationController
     respond_to do |format|
       if @booking.update_attributes(booking_params)
         if so_ids != []
-          if Settings.email.on_sign_out
+          if Setting.find_by_key("email_on_sign_out").value == "true"
             UserMailer.sign_out_email(@booking.user,@booking,so_ids).deliver
           end
         end
 
         if si_ids != []
-          if Settings.email.on_sign_in
+          if Setting.find_by_key("email_on_sign_in").value == "true"
             UserMailer.sign_in_email(@booking.user,@booking,si_ids).deliver
           end
         end

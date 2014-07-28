@@ -1,6 +1,6 @@
 <nav class="top-bar">
 	<ul class="left title-area">
-    	<li class="name"><h1><%= link_to Settings.site_name, root_path %></h1></li>
+    	<li class="name"><h1><%= link_to Setting.find_by_key("site_name").value, root_path %></h1></li>
 		<li class="toggle-topbar menu-icon"><a href="#"><span></span></a></li>
   	</ul>
 	<section class="top-bar-section">
@@ -13,6 +13,7 @@
 		</ul>
 		<ul class="right">
 			<li class="divider"></li>
+			<li><%= link_to 'Settings', settings_path %></li>
 			<li class="has-dropdown">
 				<a href="#">View</a>
 				<ul id="views" class="dropdown">
