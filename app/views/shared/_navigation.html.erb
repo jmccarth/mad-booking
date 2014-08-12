@@ -1,6 +1,7 @@
 <nav class="top-bar">
 	<ul class="left title-area">
-    	<li class="name"><h1><%= link_to Setting.find_by_key("site_name").value, root_path %></h1></li>
+		<% Setting.find_by_key("site_name").nil? ? site_name = "Booking System" : site_name = Setting.find_by_key("site_name").value %>
+    	<li class="name"><h1><%= link_to site_name, root_path %></h1></li>
 		<li class="toggle-topbar menu-icon"><a href="#"><span></span></a></li>
   	</ul>
 	<section class="top-bar-section">

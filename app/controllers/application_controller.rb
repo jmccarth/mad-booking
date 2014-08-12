@@ -13,51 +13,54 @@ class ApplicationController < ActionController::Base
       val_notice = ""
 
       if Setting.find_by_key("email_on_booking").nil?
-        key_notice += "email_on_booking"
+        key_notice += "<li>email_on_booking</li>"
       else
         if Setting.find_by_key("email_on_booking").value.nil? || Setting.find_by_key("email_on_booking").value.empty?
-          val_notice += "email_on_booking"
+          val_notice += "<li>email_on_booking</li>"
         end
       end
 
       if Setting.find_by_key("email_on_sign_out").nil?
-        key_notice += "email_on_sign_out"
+        key_notice += "<li>email_on_sign_out</li>"
       else
         if Setting.find_by_key("email_on_sign_out").value.nil? || Setting.find_by_key("email_on_sign_out").value.empty?
-          val_notice += "email_on_sign_out"
+          val_notice += "<li>email_on_sign_out</li>"
         end
       end
 
       if Setting.find_by_key("email_on_sign_in").nil?
-        key_notice += "email_on_sign_in"
+        key_notice += "<li>email_on_sign_in</li>"
       else
         if Setting.find_by_key("email_on_sign_in").value.nil? || Setting.find_by_key("email_on_sign_in").value.empty?
-          val_notice += "email_on_sign_in"
+          val_notice += "<li>email_on_sign_in</li>"
         end
       end
 
       if Setting.find_by_key("site_name").nil?
-        key_notice += "site_name"
+        key_notice += "<li>site_name</li>"
       else
         if Setting.find_by_key("site_name").value.nil? || Setting.find_by_key("site_name").value.empty?
-          val_notice += "site_name"
+          val_notice += "<li>site_name</li>"
         end
       end
 
       if Setting.find_by_key("email_from_address").nil?
-        key_notice += "email_from_address"
+        key_notice += "<li>email_from_address</li>"
       else
         if Setting.find_by_key("email_from_address").value.nil? || Setting.find_by_key("email_from_address").value.empty?
-          val_notice += "email_from_address"
+          val_notice += "<li>email_from_address</li>"
         end
       end
 
       if key_notice != ""
-        flash[:alert] = "The following settings are missing. You must fix this before using the application: " + key_notice
+		message = "The following settings are missing. You must fix this before using the application: <ul>" + key_notice + "</ul>"
+        flash[:alert] = message.html_safe
+		
       end
 
       if val_notice != ""
-        flash[:alert] = "The following settings are missing values. You must fix this before using the application: " + val_notice
+		message = "The following settings are missing values. You must fix this before using the application: <ul>" + val_notice + "</ul>"
+        flash[:alert] = message.html_safe
       end
 
       if key_notice != "" || val_notice != ""
