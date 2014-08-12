@@ -1,5 +1,7 @@
 class UserMailer < ActionMailer::Base
-  default from: Setting.find_by_key("email_from_address").value
+  if !Setting.find_by_key("email_from_address").nil?
+    default from: Setting.find_by_key("email_from_address").value
+  end
 
   def booked_email(user,booking)
   	@user = user

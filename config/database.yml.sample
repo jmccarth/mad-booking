@@ -1,0 +1,40 @@
+# This is a sample database.yml file
+# To configure the application to talk to the DB, you need to fill in the parameters in the various sections below
+# and copy this file to config/database.yml
+
+development:
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  database: ADD_DB_NAME_HERE
+  pool: 5
+  username: ADD_DB_USER_HERE
+  password: ADD_DB_PASS_HERE
+  host: ADD_DB_HOST_HERE
+
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+
+test:
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  database: ADD_DB_NAME_HERE
+  pool: 5
+  username: ADD_DB_USER_HERE
+  password: ADD_DB_PASS_HERE
+  host: ADD_DB_HOST_HERE
+
+
+production:
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  database: ADD_DB_NAME_HERE
+  pool: 5
+  username: ADD_DB_USER_HERE
+  password: ADD_DB_PASS_HERE
+  host: ADD_DB_HOST_HERE
+

@@ -1,4 +1,7 @@
 Equip::Application.configure do
+  # Load mailer config variables
+  APP_CONFIG = YAML.load_file("config/mail_secrets.yml")
+
   # Settings specified here will take precedence over those in config/application.rb
 
   # Code is not reloaded between requests
@@ -7,6 +10,20 @@ Equip::Application.configure do
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
+
+  # Action mailer settings
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: 'mailservices.uwaterloo.ca',
+    port: 587,
+    domain: 'uwaterloo.ca',
+    user_name: APP_CONFIG['mail_username'],
+    password: APP_CONFIG['mail_password'],
+    authentication: 'login',
+    enable_starttls_auto: 'true'
+  }
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
   config.serve_static_assets = false
@@ -19,7 +36,7 @@ Equip::Application.configure do
 
   # Generate digests for assets URLs
   config.assets.digest = true
-  
+
   # Add the fonts path
   config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
 
