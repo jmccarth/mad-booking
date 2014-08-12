@@ -11,8 +11,8 @@ role :app, "env-rails.uwaterloo.ca"                          # This may be the s
 role :db,  "env-rails.uwaterloo.ca", :primary => true # This is where Rails migrations will run
 # role :db,  "your slave db-server here"
 
-set :user, 'cmcintyr'
-set :deploy_to, '/home/Sites/mad-booking/'
+set :user, 'jmccarth'
+set :deploy_to, '/home/Sites/ecology-booking/'
 ssh_options[:forward_agent] = true
 default_run_options[:pty] = true
 set :use_sudo, false

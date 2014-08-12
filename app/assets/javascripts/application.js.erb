@@ -87,17 +87,12 @@ function initializeComponents($container) {
 	});
 	
 	var $equip_input = $('.equipsearch');
-
-	$equip_input.typeahead([
-		<% Category.all.each_with_index do |category, index| %>
-			{
-				name: "<%= category.name %>",
-				local: JSON.parse('<%= category.equipment.collect { |equip| equip.name }.to_json.gsub("'", %q(\\\')) %>'),
-
-				header: "<h5><%= category.name %></h5>"
-			}<% if index < Category.all.size - 1 %>, <% end %>
-		<% end %>
-	]);
+	
+	$equip_input.typeahead({
+		name: 'equipment',
+		prefetch: {url: '/equipment.json'},
+		valueKey: 'name'
+	});
 	
 	var $main_equip_search = $('#equipment');
 	$main_equip_search.on('typeahead:selected',function(e){
