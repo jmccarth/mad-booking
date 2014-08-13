@@ -20,6 +20,7 @@ set :use_sudo, false
 
 # if you want to clean up old releases on each deploy uncomment this:
 # after "deploy:restart", "deploy:cleanup"
+after "deploy:update_code", "deploy:symlink_mail_config"
 after "deploy:finalize_update", "deploy:symlink_config_files"
 
 # if you're still using the script/reaper helper you will need
@@ -33,10 +34,13 @@ namespace :deploy do
      run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
    end
 
+	desc "Symlink mail config"
+	task :symlink_mail_config do
+		run "#{try_sudo} ln -fs #{ deploy_to }shared/config/mail_secrets.yml #{release_path}/config/mail_secrets.yml"
+	end
 
     desc "Symlink shared config files"
 	task :symlink_config_files do
 		run "#{try_sudo} ln -fs #{ deploy_to }shared/config/database.yml #{release_path}/config/database.yml"
-		run "#{try_sudo} ln -fs #{ deploy_to }shared/config/mail_secrets.yml #{release_path}/config/mail_secrets.yml"
 	end
 end
