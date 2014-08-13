@@ -20,7 +20,7 @@ Equip::Application.configure do
     address: 'mailservices.uwaterloo.ca',
     port: 587,
     domain: 'uwaterloo.ca',
-    user_name: MAIL_CONFIG_CONFIG['mail_username'],
+    user_name: MAIL_CONFIG['mail_username'],
     password: MAIL_CONFIG['mail_password'],
     authentication: 'login',
     enable_starttls_auto: 'true'
