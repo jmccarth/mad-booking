@@ -33,10 +33,10 @@ namespace :deploy do
      run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
    end
 
-
     desc "Symlink shared config files"
 	task :symlink_config_files do
 		run "#{try_sudo} ln -fs #{ deploy_to }shared/config/database.yml #{release_path}/config/database.yml"
 		run "#{try_sudo} ln -fs #{ deploy_to }shared/config/mail_secrets.yml #{release_path}/config/mail_secrets.yml"
+		run "#{try_sudo} ln -fs #{ deploy_to }shared/config/app_config.yml #{release_path}/config/app_config.yml"
 	end
 end

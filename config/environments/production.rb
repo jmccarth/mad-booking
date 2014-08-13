@@ -1,6 +1,7 @@
 Equip::Application.configure do
   # Load mailer config variables
-  APP_CONFIG = YAML.load_file("config/mail_secrets.yml")
+  MAIL_CONFIG = YAML.load_file("config/mail_secrets.yml")
+  APP_CONFIG = YAML.load_file("config/app_config.yml")
 
   # Settings specified here will take precedence over those in config/application.rb
 
@@ -19,8 +20,8 @@ Equip::Application.configure do
     address: 'mailservices.uwaterloo.ca',
     port: 587,
     domain: 'uwaterloo.ca',
-    user_name: APP_CONFIG['mail_username'],
-    password: APP_CONFIG['mail_password'],
+    user_name: MAIL_CONFIG_CONFIG['mail_username'],
+    password: MAIL_CONFIG['mail_password'],
     authentication: 'login',
     enable_starttls_auto: 'true'
   }
@@ -43,7 +44,7 @@ Equip::Application.configure do
   # Precompile additional assets
   config.assets.precompile += %w( .svg .eot .woff .ttf )
 
-  config.relative_url_root = "/mad-booking"
+  config.relative_url_root = APP_CONFIG['site_root']
 
   # Defaults to Rails.root.join("public/assets")
   # config.assets.manifest = YOUR_PATH
