@@ -17,7 +17,7 @@
 # Ignore the database config file
 /config/database.yml
 /config/mail_secrets.yml
-
+/config/app_config.yml
 config/settings.local.yml
 config/settings/*.local.yml
 config/environments/*.local.yml
