@@ -14,7 +14,7 @@ role :db,  "env-rails.uwaterloo.ca", :primary => true # This is where Rails migr
 
 set :user, 'jmccarth'
 #set :deploy_to, '/home/Sites/ecology-booking/'
-set (:deploy_to, Capistrano::CLI.ui.ask("Deploy path:"))
+set :deploy_to, Capistrano::CLI.ui.ask("Deploy path:")
 ssh_options[:forward_agent] = true
 default_run_options[:pty] = true
 set :use_sudo, false
