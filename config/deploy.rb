@@ -1,6 +1,8 @@
 require 'bundler/capistrano'
 require 'pathname'
 
+APP_CONFIG = YAML.load_file("config/app_config.yml")
+
 set :application, "MAD Booking"
 set :repository,  "ssh://git@github.com/jmccarth/mad-booking.git"
 
