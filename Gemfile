@@ -49,7 +49,7 @@ gem 'rubycas-client-rails',  :git => "git://github.com/rubycas/rubycas-client-ra
 # gem 'unicorn'
 
 # Deploy with Capistrano
-gem 'capistrano'
+gem 'capistrano', "2.15.5"
 
 # To use debugger
 #gem 'ruby-debug19', :require => 'ruby-debug'
