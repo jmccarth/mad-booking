@@ -202,7 +202,7 @@ class BookingsController < ApplicationController
     #Stitch together the strings and parse them
     event_start_dt = Time.strptime(event_start_d + event_start_t, "%m/%d/%Y%I:%M %p");
     event_end_dt = Time.strptime(event_end_d + event_end_t, "%m/%d/%Y%I:%M %p");
-
+	
     @booking.events.first.update(:start=>event_start_dt,:end=>event_end_dt)
 
     @booking.schedule = build_recurrence(event_start_dt,event_end_dt)
@@ -267,13 +267,15 @@ private
     weekly_rep = params[:weekly_repeat]
     num_weeks = params[:num_weeks]
     @booking.events.delete_all
+	
     if weekly_rep == "1"
       #TODO: This probably isn't smart, but it'll work for now
       #This will be a problem for history tracking
 
-      r = Recurrence.new(:every => :week, :on => event_start_dt.strftime("%A").parameterize.underscore.to_sym, :repeat => num_weeks.to_i)
+      r = Recurrence.new(:every => :week, :on => event_start_dt.strftime("%A").parameterize.underscore.to_sym, :repeat => num_weeks.to_i, :starts => event_start_dt.to_date)
 
       #r = Recurrence.new(:every => :week, :on => :friday, :repeat => 4)
+	  debugger
       r.events.each{ |date|
         new_start = Time.new(date.year, date.month, date.day, event_start_dt.hour, event_start_dt.min, event_start_dt.sec, event_start_dt.utc_offset)
         new_end = new_start + (event_end_dt - event_start_dt)
