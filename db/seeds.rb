@@ -5,3 +5,9 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+Setting.create(key: 'email_on_booking', value: false)
+Setting.create(key: 'email_on_sign_out', value: false)
+Setting.create(key: 'email_on_sign_in', value: false)
+Setting.create(key: 'email_from_address', value: 'ADDRESS@GOES.HERE')
+Setting.create(key: 'site_name', value: 'Bookings')
