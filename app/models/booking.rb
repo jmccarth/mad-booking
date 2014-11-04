@@ -62,12 +62,18 @@ class Booking < ActiveRecord::Base
         #Still using icecube gem to find conflicts
         s = IceCube::Schedule.new(start = @e.start, :end_time => @e.end)
         s1 = IceCube::Schedule.new(start = @e1.start, :end_time => @e1.end)
-        
+       
         if s.conflicts_with?(s1) and booking_test.id != self.id
+		
           equip_ids.each do |eid|
             if !booking_test.sign_in_times.has_key?(eid) and booking_test.equipment_ids.include?(eid)
               conflicts = true
               conflict_ids.push(booking_test.id)
+			elsif booking_test.sign_in_times.has_key?(eid) and booking_test.equipment_ids.include?(eid)
+				if @e.start > Time.now
+					conflicts = true
+					conflict_ids.push(booking_test.id)
+				end
             end
           end
         end

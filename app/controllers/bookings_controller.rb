@@ -275,7 +275,6 @@ private
       r = Recurrence.new(:every => :week, :on => event_start_dt.strftime("%A").parameterize.underscore.to_sym, :repeat => num_weeks.to_i, :starts => event_start_dt.to_date)
 
       #r = Recurrence.new(:every => :week, :on => :friday, :repeat => 4)
-	  debugger
       r.events.each{ |date|
         new_start = Time.new(date.year, date.month, date.day, event_start_dt.hour, event_start_dt.min, event_start_dt.sec, event_start_dt.utc_offset)
         new_end = new_start + (event_end_dt - event_start_dt)

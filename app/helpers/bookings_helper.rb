@@ -92,6 +92,7 @@ module BookingsHelper
         start: eventStartStr,
         end: eventEndStr,
         id: ev_booking.id,
+		#id: event.id,
         allDay: isAllDay,
         status: b_status,
         color: b_color,

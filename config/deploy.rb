@@ -9,17 +9,17 @@ set :repository,  "ssh://git@github.com/jmccarth/mad-booking.git"
 set :scm, :git # You can set :scm explicitly or Capistrano will make an intelligent guess based on known version control directory names
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
 
-role :web, "env-rails.uwaterloo.ca"                          # Your HTTP server, Apache/etc
-role :app, "env-rails.uwaterloo.ca"                          # This may be the same as your `Web` server
-role :db,  "env-rails.uwaterloo.ca", :primary => true # This is where Rails migrations will run
-# role :db,  "your slave db-server here"
+role :web, "env-tracker.uwaterloo.ca"                          # Your HTTP server, Apache/etc
+role :app, "env-tracker.uwaterloo.ca"                          # This may be the same as your `Web` server
+role :db,  "env-tracker.uwaterloo.ca", :primary => true # This is where Rails migrations will run
+# role :db,  "your slave db-server hee"
 
 set :user, 'jmccarth'
 #set :deploy_to, '/home/Sites/ecology-booking/'
 set :deploy_to, Capistrano::CLI.ui.ask("Deploy path:")
 ssh_options[:forward_agent] = true
 default_run_options[:pty] = true
-set :use_sudo, true
+#set :use_sudo, true
 
 # if you want to clean up old releases on each deploy uncomment this:
 # after "deploy:restart", "deploy:cleanup"

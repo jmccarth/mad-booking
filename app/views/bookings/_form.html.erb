@@ -224,6 +224,15 @@
 					</span>
 				</div>
 			</div>
+			<% if @booking.events.count > 1 %>
+				<label>Events</label>
+				<div class="panel">
+					<% @booking.events.each do |ev| %>
+						<% ev.end > Time.now ? opacity = 1 : opacity = 0.3 %>
+						<div style=<%= "opacity:" + opacity.to_s %>><%= ev.start.to_s(:long) %> to <%= ev.end.to_s(:long) %></div>
+					<% end %>
+				</div>
+			<% end %>
 			
 	</div>
 	<hr />
