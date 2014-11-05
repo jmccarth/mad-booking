@@ -67,9 +67,22 @@ module BookingsHelper
     
       #Equipment status
       if evb_equip.count == evb_sit.count
-        #Everything is signed in, booking is done
-        b_status = 2
-        b_color = "#00aa22"
+        #Everything is signed in
+		# If booking is non recurring, it is done
+		if ev_booking.schedule? == nil
+			b_status = 2
+			b_color = "#00aa22"
+		else
+			if ev_booking.events.last.end > Time.now
+				# If booking is recurring and the last event hasn't happened yet, it is pending
+				b_status = 0
+				b_color = "#9933cc"
+			else
+				# If booking is recurring and the last event has happened, it is finished
+				b_status = 2
+				b_color = "#00aa22"
+			end
+		end
       elsif evb_sot.count > 0
         #At least 1 item is signed out, booking is active
         if endDate < Time.now and evb_sot.count > evb_sit.count
