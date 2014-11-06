@@ -14,6 +14,78 @@ class Booking < ActiveRecord::Base
   validate :has_no_conflicts
   validates_presence_of :equipment
 
+  #Function to determine the status of a piece of a equipment attached to the booking
+  def get_item_status(item_id)
+	status = ""
+	overdue = true
+	# Is the booking recurring?
+	if self.schedule.nil?
+		# Not recurring
+		
+		# Is item in signed out list?
+		
+		if self.sign_out_times.key?(item_id)
+			# Item signed out. 
+			if self.sign_in_times.key?(item_id)
+				#If it is also signed in, it is "In"
+				status = "In"
+			else
+				# If it is not signed in, it is "Out" or "Overdue" depending on time
+				self.events.each do |ev|
+					if (ev.start <= Time.now) & (ev.end >= Time.now)
+						#Item is out for a current event, so status is "Out" not "Overdue"
+						overdue = false
+					end
+					#If item is not found to be out for a current event it will be "Overdue"
+				end
+				if overdue
+					status = "Overdue"
+				else
+					status = "Out"
+				end
+			end
+		else
+			# Item not signed out, it is "Booked"
+			status = "Booked"
+		end
+	else
+		# Recurring
+		
+		# Is item in signed out list?
+		if self.sign_out_times.key?(item_id)
+			#Item signed out
+			if self.sign_in_times.key?(item_id)
+				#Item is signed in
+				if self.events.last.end <= Time.now
+					#End of last event has passed (is before Now), item is permanently "In"
+					status = "In"
+				else
+					#End of last event has not passed (so there are events in the future), item is "Booked"
+					status = "Booked"
+				end
+			else
+				# If it is not signed in, it is "Out" or "Overdue" depending on time
+				self.events.each do |ev|
+					if (ev.start <= Time.now) & (ev.end >= Time.now)
+						#Item is out for a current event, so status is "Out" not "Overdue"
+						overdue = false
+					end
+					#If item is not found to be out for a current event it will be "Overdue"
+				end
+				if overdue
+					status = "Overdue"
+				else
+					status = "Out"
+				end
+			end
+		else
+			#Item not signed out
+			status = "Booked"
+		end
+	end
+	status
+  end
+  
   private
   def real_user
     #Check to see if the user already exists. If not fail the validation.
@@ -39,6 +111,8 @@ class Booking < ActiveRecord::Base
       self.errors.add(:user, "has been greylisted and is not allowed to book equipment.")
     end
   end
+  
+  
   
   def correct_times
     #Check to see that the times for the booking are sensible

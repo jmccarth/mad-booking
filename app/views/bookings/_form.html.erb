@@ -61,43 +61,40 @@
 										<%= equip.category.name %>
 										<span class="gt"><i class="icon-angle-right"></i></span>
 									</span>
-									<% if !@booking.sign_out_times.key?(equip.id) %>
-										<a class="label radius alert right remove"><i class="icon-remove"></i></a>
-									<% end %>
-									 
 									<% if equip.contents.nil? %>
 										<%= equip.name %>	
 									<% else %>
 										<span data-tooltip class="has-tip" title="<%= equip.contents %>"><%= equip.name %></span>
 									<% end %>
 									<%= hidden_field_tag "booking[equipment_ids][]", equip.id %>
-									<% if @booking.sign_in_times.key?(equip.id) %>
-										<% if !@booking.schedule.nil? %>
-											<%= hidden_field_tag "booking[sign_out_ids][]", nil, {:data => equip.id, :class => "scannable", :id => "bc_out_#{equip.barcode}"}%>
-											<span id="status_<%= equip.barcode %>" class="right secondary label">Booked</span>
-											<br />
-											Last in at <%= @booking.sign_in_times[equip.id].strftime("%b %-d, %Y %I:%M %p") %>
-										<% else %>
-											<span id="status_<%= equip.barcode %>" class="right success label">In</span>
-											<br />
-											In at <%= @booking.sign_in_times[equip.id].strftime("%b %-d, %Y %I:%M %p") %>
-										<% end %>
-										
-									<% elsif @booking.sign_out_times.key?(equip.id) %>
-										<%= hidden_field_tag "booking[sign_in_ids][]", nil, {:data => equip.id, :class => "scannable", :id => "bc_in_#{equip.barcode}"}%>
-										<% if @booking.events.first.end < DateTime.now %>
-											<span id="status_<%= equip.barcode %>" class="right alert label">Overdue</span>
-											<br />
-											Out at <%= @booking.sign_out_times[equip.id].strftime("%b %-d, %Y %I:%M %p") %>
-										<% else %>
-											<span id="status_<%= equip.barcode %>" class="right label">Out</span>
-											<br />
-											Out at <%= @booking.sign_out_times[equip.id].strftime("%b %-d, %Y %I:%M %p") %>
-										<% end %>
-									<% else %>
+									
+									<% item_status = @booking.get_item_status(equip.id) %>
+									<% if item_status == "Booked" %>
 										<%= hidden_field_tag "booking[sign_out_ids][]", nil, {:data => equip.id, :class => "scannable", :id => "bc_out_#{equip.barcode}"}%>
-										<span id="status_<%= equip.barcode %>" class="right secondary label">Booked</span>
+										<span id="status_<%= equip.barcode %>" class="right secondary label"><%= item_status %></span>
+										<br />
+									<% elsif item_status == "Out" %>
+										<%= hidden_field_tag "booking[sign_in_ids][]", nil, {:data => equip.id, :class => "scannable", :id => "bc_in_#{equip.barcode}"}%>
+										<span id="status_<%= equip.barcode %>" class="right label"><%= item_status %></span>
+										<br />
+										Out at <%= @booking.sign_out_times[equip.id].strftime("%b %-d, %Y %I:%M %p") %>
+									<% elsif item_status == "In" %>
+										<span id="status_<%= equip.barcode %>" class="right success label"><%= item_status %></span>
+										<br />
+										In at <%= @booking.sign_in_times[equip.id].strftime("%b %-d, %Y %I:%M %p") %>
+									<% elsif item_status == "Overdue" %>
+										<%= hidden_field_tag "booking[sign_in_ids][]", nil, {:data => equip.id, :class => "scannable", :id => "bc_in_#{equip.barcode}"}%>
+										<span id="status_<%= equip.barcode %>" class="right alert label">Overdue</span>
+										<br />
+										Out at <%= @booking.sign_out_times[equip.id].strftime("%b %-d, %Y %I:%M %p") %>
 									<% end %>
+									
+									<% if !@booking.sign_out_times.key?(equip.id) %>
+										<a class="label radius alert right remove"><i class="icon-remove"></i></a>
+									<% end %>
+									 
+									
+									
 									<br />
 								</li>
 							<% end %>	
