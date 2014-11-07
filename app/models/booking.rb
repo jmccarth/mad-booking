@@ -56,12 +56,31 @@ class Booking < ActiveRecord::Base
 			#Item signed out
 			if self.sign_in_times.key?(item_id)
 				#Item is signed in
-				if self.events.last.end <= Time.now
-					#End of last event has passed (is before Now), item is permanently "In"
-					status = "In"
+				if self.sign_out_times[item_id] >= self.sign_in_times[item_id]
+					#Item is signed in and out, but the out time is after the in time
+					#This means that the "In" was from a previous event in the recurrence, while the
+					#"Out" is from a more recent event. Therefore the "Out"/"Overdue" takes precedence.
+					# If it is not signed in, it is "Out" or "Overdue" depending on time
+					self.events.each do |ev|
+						if (ev.start <= Time.now) & (ev.end >= Time.now)
+							#Item is out for a current event, so status is "Out" not "Overdue"
+							overdue = false
+						end
+						#If item is not found to be out for a current event it will be "Overdue"
+					end
+					if overdue
+						status = "Overdue"
+					else
+						status = "Out"
+					end
 				else
-					#End of last event has not passed (so there are events in the future), item is "Booked"
-					status = "Booked"
+					if self.events.last.end <= Time.now
+						#End of last event has passed (is before Now), item is permanently "In"
+						status = "In"
+					else
+						#End of last event has not passed (so there are events in the future), item is "Booked"
+						status = "Booked"
+					end
 				end
 			else
 				# If it is not signed in, it is "Out" or "Overdue" depending on time
