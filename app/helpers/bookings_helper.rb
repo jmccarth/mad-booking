@@ -48,6 +48,10 @@ module BookingsHelper
 			user = evb_user.username
 		end
 		
+		if !ev_booking.schedule.nil?
+			 user += '<span class="right"><i class="icon-repeat"></i></span>'
+		end
+		
 		equip_list = "<ul>"
 		if evb_equip.count <= 5
 			for e in evb_equip do
