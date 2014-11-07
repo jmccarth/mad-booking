@@ -91,7 +91,8 @@ module BookingsHelper
 		
 		#If b_status is still 0, then all items are "In" or "Booked"
 		#If number of items In matches number of items in the booking, it is finished if non-recurring
-		if (num_items_in == evb_equip.count) && (ev_booking.schedule.nil?)
+		#Or if it is recurring and the last event has ended
+		if (num_items_in == evb_equip.count) && (ev_booking.schedule.nil? || ev_booking.events.last.end <= Time.now)
 			b_status = 2
 			b_color = "#00aa22"
 		end

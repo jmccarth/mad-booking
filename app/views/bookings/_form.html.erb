@@ -23,6 +23,8 @@
 
 <% if (@booking.equipment.count == @booking.sign_in_times.count) and @booking.equipment.count > 0 and @booking.schedule.nil? %>
 	<% disable_ui = true %>
+<% elsif @booking.events.last.end <= Time.now %>
+	<% disable_ui = true %>
 <% else %>
 	<% disable_ui = false %>
 <% end %>
