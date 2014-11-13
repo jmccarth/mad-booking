@@ -21,14 +21,16 @@
 	<%= content_tag :div, msg, class: "alert-box" %>
 <% end %>
 
-<% if (@booking.equipment.count == @booking.sign_in_times.count) and @booking.equipment.count > 0 and @booking.schedule.nil? %>
-	<% disable_ui = true %>
-<% elsif !@booking.schedule.nil? %>
-	<% if @booking.events.last.end <= Time.now %>
+<% if !@booking.new_record? %>
+	<% if (@booking.equipment.count == @booking.sign_in_times.count) and @booking.equipment.count > 0 and @booking.schedule.nil? %>
 		<% disable_ui = true %>
+	<% elsif !@booking.schedule.nil? %>
+		<% if @booking.events.last.end <= Time.now %>
+			<% disable_ui = true %>
+		<% end %>
+	<% else %>
+		<% disable_ui = false %>
 	<% end %>
-<% else %>
-	<% disable_ui = false %>
 <% end %>
 
 <%= hidden_field_tag "booking_id", @booking.id %>
