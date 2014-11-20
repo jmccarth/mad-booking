@@ -98,6 +98,6 @@ class EquipmentController < ApplicationController
   private
 
   def equipment_params
-    params.require(:equipment).permit(:name,:barcode,:category_id,:stored,:contents)
+    params.require(:equipment).permit(:name,:barcode,:category_id,:stored,:contents,:serial_number)
   end
 end
