@@ -4,9 +4,9 @@
 # is considered to be the first unless any hosts have the primary
 # property set.  Don't declare `role :all`, it's a meta role.
 
-role :app, %w{deploy@env-tracker.uwaterloo.ca}
-role :web, %w{deploy@env-tracker.uwaterloo.ca}
-role :db,  %w{deploy@env-tracker.uwaterloo.ca}
+role :app, %w{deploy@env-rails.uwaterloo.ca}
+role :web, %w{deploy@env-rails.uwaterloo.ca}
+role :db,  %w{deploy@env-rails.uwaterloo.ca}
 
 
 # Extended Server Syntax
@@ -15,9 +15,10 @@ role :db,  %w{deploy@env-tracker.uwaterloo.ca}
 # server list. The second argument is a, or duck-types, Hash and is
 # used to set extended properties on the server.
 
-server 'env-tracker.uwaterloo.ca', user: 'deploy', roles: %w{web app db}
-set :deploy_to, '/home/Sites/ecology-booking/'
+server 'env-rails.uwaterloo.ca', user: 'deploy', roles: %w{web app db}
+set :deploy_to, '/home/Sites/mad-booking/'
 set :rails_env, 'production'
+
 
 # Custom SSH Options
 # ==================
@@ -26,11 +27,11 @@ set :rails_env, 'production'
 #
 # Global options
 # --------------
- set :ssh_options, {
-    #%keys: %w(/home/rlisowski/.ssh/id_rsa),
+set :ssh_options, {
+#    keys: %w(/home/rlisowski/.ssh/id_rsa),
     forward_agent: true
-    #auth_methods: %w(password)
-}
+#    auth_methods: %w(password)
+  }
 #
 # And/or per server (overrides global)
 # ------------------------------------
