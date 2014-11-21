@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141120152113) do
+ActiveRecord::Schema.define(version: 20141121140612) do
 
   create_table "bookings", force: true do |t|
     t.text     "schedule"
@@ -69,6 +69,8 @@ ActiveRecord::Schema.define(version: 20141120152113) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "comments"
+    t.string   "firstname"
+    t.string   "lastname"
   end
 
 end
