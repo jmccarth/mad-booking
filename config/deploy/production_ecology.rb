@@ -45,3 +45,5 @@ set :ssh_options, {
 #     auth_methods: %w(publickey password)
 #     # password: 'please use keys'
 #   }
+
+after :deploy, "deploy:copy_fontawesome"
