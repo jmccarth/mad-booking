@@ -72,5 +72,8 @@
 
   <div class="actions">
     <%= f.submit :class => 'button' %>
+    <% if !@equipment.new_record? %>
+      <%= link_to 'Delete Equipment', @equipment, confirm: 'Are you sure? This will delete all past, present, and future bookings related to this equipment from the database. This action cannot be undone.', method: :delete, :class => 'button alert' %>
+    <% end %>
   </div>
 <% end %>
