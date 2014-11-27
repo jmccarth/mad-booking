@@ -18,6 +18,16 @@ class Booking < ActiveRecord::Base
   def get_item_status(item_id)
 	status = ""
 	overdue = true
+
+	equipment = Equipment.find_by_id(item_id)
+
+	# if a equipment is not in or signed out return the status
+	if equipment.status > 1
+		status = Equipment.get_status(equipment.status)
+		puts status
+		return status
+	end
+
 	# Is the booking recurring?
 	if self.schedule.nil?
 		# Not recurring
@@ -29,6 +39,8 @@ class Booking < ActiveRecord::Base
 			if self.sign_in_times.key?(item_id)
 				#If it is also signed in, it is "In"
 				status = "In"
+
+				equipment.status = 1
 			else
 				# If it is not signed in, it is "Out" or "Overdue" depending on time
 				self.events.each do |ev|
@@ -43,10 +55,13 @@ class Booking < ActiveRecord::Base
 				else
 					status = "Out"
 				end
+
+				equipment.status = 0
 			end
 		else
 			# Item not signed out, it is "Booked"
 			status = "Booked"
+			equipment.status = 1
 		end
 	else
 		# Recurring
@@ -73,6 +88,8 @@ class Booking < ActiveRecord::Base
 					else
 						status = "Out"
 					end
+
+					equipment.status = 0
 				else
 					if self.events.last.end <= Time.now
 						#End of last event has passed (is before Now), item is permanently "In"
@@ -81,6 +98,8 @@ class Booking < ActiveRecord::Base
 						#End of last event has not passed (so there are events in the future), item is "Booked"
 						status = "Booked"
 					end
+
+					equipment.status = 1
 				end
 			else
 				# If it is not signed in, it is "Out" or "Overdue" depending on time
@@ -96,12 +115,16 @@ class Booking < ActiveRecord::Base
 				else
 					status = "Out"
 				end
+
+				equipment.status = 0
 			end
 		else
 			#Item not signed out
 			status = "Booked"
+			equipment.status = 1
 		end
 	end
+	equipment.save!
 	status
   end
   

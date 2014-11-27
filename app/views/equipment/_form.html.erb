@@ -51,6 +51,17 @@
     <div class="field">
       <div class="row collapse">
         <div class="small-4 columns">
+          <span class="prefix">Status</span>
+        </div>
+        <div class="small-8 columns">
+          <%= f.select :status, options_for_select(Equipment.valid_statuses, @equipment.status) %>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="row collapse">
+        <div class="small-4 columns">
           <span class="prefix">Contents</span>
         </div>
         <div class="small-8 columns">

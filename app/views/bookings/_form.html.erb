@@ -280,5 +280,29 @@
         <% end %>
         <%= f.hidden_field :creator %>
     </div>
+
+    <script>
+	// Datetime picker cleanup
+	$('#schedule_start').change(function () {
+		var start_time = new Date($('#schedule_start').val());
+		var end_time = new Date($('#schedule_end').val());
+
+		if(start_time > end_time)
+		{
+			$('#schedule_end').val($('#schedule_start').val());
+		}
+	});
+
+	$('#schedule_end').change(function () {
+		var start_time = new Date($('#schedule_start').val());
+		var end_time = new Date($('#schedule_end').val());
+
+		if(start_time > end_time)
+		{
+			$('#schedule_start').val($('#schedule_end').val());
+		}
+	    
+	});
+    </script>
 </div>
 <% end %>

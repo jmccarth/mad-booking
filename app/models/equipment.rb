@@ -4,10 +4,28 @@ class Equipment < ActiveRecord::Base
   belongs_to :category
   validates_presence_of :name
   validates_uniqueness_of :barcode
-  
+
+  @@valid_statuses = [['Out', 0], ['In', 1], ['Out for Repair', 2]]
+
   def default_values
     if self.status.nil?
       self.status = 1
     end
+  end
+
+  # getter for the valid_statuses array
+  def self.valid_statuses
+    @@valid_statuses 
+  end
+
+  #returns the status string by the status number
+  def self.get_status(status_id)
+    @@valid_statuses.each do |status|
+      if status[1] == status_id
+        return  status[0]
+      end 
+    end
+
+    return "Invalid Status"
   end
 end

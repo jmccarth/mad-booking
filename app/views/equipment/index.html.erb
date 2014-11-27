@@ -10,6 +10,7 @@
         <th>Name</th>
         <th>Category</th>
         <th>Barcode</th>
+        <th>Status</th>
         <th>Updated</th>
       </tr>
 
@@ -23,6 +24,9 @@
         </td>
         <td>
           <%= equipment.barcode %>
+        </td>
+        <td>
+          <%= Equipment.get_status(equipment.status) %>
         </td>
         <td>
           <%= equipment.updated_at.to_date if equipment.updated_at %>
