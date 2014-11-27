@@ -1,5 +1,7 @@
 Equip::Application.routes.draw do
 
+  resources :tags
+
   resources :settings
 
   resources :events

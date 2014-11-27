@@ -40,6 +40,17 @@
     <div class="field">
       <div class="row collapse">
         <div class="small-4 columns">
+          <span class="prefix">Serial Number</span>
+        </div>
+        <div class="small-8 columns">
+          <%= f.text_field :serial_number %>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="row collapse">
+        <div class="small-4 columns">
           <span class="prefix">Stored</span>
         </div>
         <div class="small-8 columns">
@@ -72,5 +83,8 @@
 
   <div class="actions">
     <%= f.submit :class => 'button' %>
+    <% if !@equipment.new_record? %>
+      <%= link_to 'Delete Equipment', @equipment, confirm: 'Are you sure? This will delete all past, present, and future bookings related to this equipment from the database. This action cannot be undone.', method: :delete, :class => 'button alert' %>
+    <% end %>
   </div>
 <% end %>

@@ -1,12 +1,16 @@
 class Equipment < ActiveRecord::Base
   before_save :default_values
   has_and_belongs_to_many :bookings
+  has_and_belongs_to_many :tags
   belongs_to :category
   validates_presence_of :name
   validates_uniqueness_of :barcode
 
+<<<<<<< HEAD
   @@valid_statuses = [['Out', 0], ['In', 1], ['Out for Repair', 2]]
 
+=======
+>>>>>>> ffe0dd52a80bad9dbf0191237343c6414b17a176
   def default_values
     if self.status.nil?
       self.status = 1

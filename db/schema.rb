@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140728174925) do
+ActiveRecord::Schema.define(version: 20141127192958) do
 
   create_table "bookings", force: true do |t|
     t.text     "schedule"
@@ -44,6 +44,12 @@ ActiveRecord::Schema.define(version: 20140728174925) do
     t.integer  "category_id"
     t.integer  "status"
     t.string   "contents"
+    t.string   "serial_number"
+  end
+
+  create_table "equipment_tags", id: false, force: true do |t|
+    t.integer "equipment_id"
+    t.integer "tag_id"
   end
 
   create_table "events", force: true do |t|
@@ -61,6 +67,12 @@ ActiveRecord::Schema.define(version: 20140728174925) do
     t.datetime "updated_at"
   end
 
+  create_table "tags", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", force: true do |t|
     t.string   "username"
     t.boolean  "admin"
@@ -68,6 +80,8 @@ ActiveRecord::Schema.define(version: 20140728174925) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "comments"
+    t.string   "firstname"
+    t.string   "lastname"
   end
 
 end
