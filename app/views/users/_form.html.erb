@@ -49,7 +49,7 @@
         <span class="prefix">Status</span>
       </div>
       <div class="small-8 columns">
-        <%= f.number_field :status %>
+        <%= f.select :status, options_for_select(User.valid_statuses, @user.status) %>
       </div>
     </div>
   </div>
