@@ -51,7 +51,7 @@
 												<%= Equipment.find(id).category.name %>
 												<span class="gt"><i class="icon-angle-right"></i></span>
 											</span>
-											
+
 											<%= Equipment.find(id).name %>
 
 											<a class="label radius alert right remove"><i class="icon-remove"></i></a>
@@ -68,12 +68,12 @@
 										<span class="gt"><i class="icon-angle-right"></i></span>
 									</span>
 									<% if equip.contents.nil? %>
-										<%= equip.name %>	
+										<%= equip.name %>
 									<% else %>
 										<span data-tooltip class="has-tip" title="<%= equip.contents %>"><%= equip.name %></span>
 									<% end %>
 									<%= hidden_field_tag "booking[equipment_ids][]", equip.id %>
-									
+
 									<% item_status = @booking.get_item_status(equip.id) %>
 									<% if item_status == "Booked" %>
 										<%= hidden_field_tag "booking[sign_out_ids][]", nil, {:data => equip.id, :class => "scannable", :id => "bc_out_#{equip.barcode}"}%>
@@ -94,22 +94,22 @@
 										<br />
 										Out at <%= @booking.sign_out_times[equip.id].strftime("%b %-d, %Y %I:%M %p") %>
 									<% end %>
-									
+
 									<% if !@booking.sign_out_times.key?(equip.id) %>
 										<a class="label radius alert right remove"><i class="icon-remove"></i></a>
 									<% end %>
-									 
-									
-									
+
+
+
 									<br />
 								</li>
-							<% end %>	
+							<% end %>
 						<% end %>
 					</ul>
 					<%= render 'shared/search_form' %>
 				</div>
 			</section>
-			
+
 		</div>
 	</div>
 
@@ -159,7 +159,7 @@
 		<% end %>
 
 		<hr />
-		
+
 		<div class="row">
 			<div class="small-6 columns">
 				<label>Booking date:</label>
@@ -188,7 +188,7 @@
 				</div>
 			</div>
 		</div>
-	
+
 		<div class="row">
 			<div class="small-6 columns">
 				<label>Return date:</label>
@@ -217,7 +217,7 @@
 				</div>
 			</div>
 		</div>
-			
+
 		<hr />
 			<label>Recurrence</label>
 			<div class="row collapse">
@@ -244,7 +244,7 @@
 					<% end %>
 				</div>
 			<% end %>
-			
+
 	</div>
 	<hr />
 
@@ -258,7 +258,7 @@
 				<%= f.text_area :comments, :disabled => disable_ui, :placeholder => 'Enter comments related to this booking' %>
 			</div>
 		</div>
-	
+
 	<div class="actions">
 		<% if !disable_ui %>
 			<%= f.submit @booking.new_record? ? 'Create booking' : 'Update booking', :class => 'button success right', :id => "submitBooking" %>
@@ -282,27 +282,7 @@
     </div>
 
     <script>
-	// Datetime picker cleanup
-	$('#schedule_start').change(function () {
-		var start_time = new Date($('#schedule_start').val());
-		var end_time = new Date($('#schedule_end').val());
 
-		if(start_time > end_time)
-		{
-			$('#schedule_end').val($('#schedule_start').val());
-		}
-	});
-
-	$('#schedule_end').change(function () {
-		var start_time = new Date($('#schedule_start').val());
-		var end_time = new Date($('#schedule_end').val());
-
-		if(start_time > end_time)
-		{
-			$('#schedule_start').val($('#schedule_end').val());
-		}
-	    
-	});
     </script>
 </div>
 <% end %>
