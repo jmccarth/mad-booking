@@ -1,7 +1,7 @@
 class Booking < ActiveRecord::Base
   include IceCube
   include ActiveModel::Validations
-  
+
   belongs_to :user
   has_many :events, :dependent => :destroy
   has_and_belongs_to_many :equipment
@@ -31,11 +31,11 @@ class Booking < ActiveRecord::Base
 	# Is the booking recurring?
 	if self.schedule.nil?
 		# Not recurring
-		
+
 		# Is item in signed out list?
-		
+
 		if self.sign_out_times.key?(item_id)
-			# Item signed out. 
+			# Item signed out.
 			if self.sign_in_times.key?(item_id)
 				#If it is also signed in, it is "In"
 				status = "In"
@@ -44,7 +44,7 @@ class Booking < ActiveRecord::Base
 			else
 				# If it is not signed in, it is "Out" or "Overdue" depending on time
 				self.events.each do |ev|
-					if (ev.start <= Time.now) & (ev.end >= Time.now)
+					if ev.end >= Time.now
 						#Item is out for a current event, so status is "Out" not "Overdue"
 						overdue = false
 					end
@@ -65,7 +65,7 @@ class Booking < ActiveRecord::Base
 		end
 	else
 		# Recurring
-		
+
 		# Is item in signed out list?
 		if self.sign_out_times.key?(item_id)
 			#Item signed out
@@ -127,44 +127,44 @@ class Booking < ActiveRecord::Base
 	equipment.save!
 	status
   end
-  
+
   private
   def real_user
     #Check to see if the user already exists. If not fail the validation.
     valid = User.exists?(self.user_id)
     self.errors.add(:user, "doesn't exist. Please create the user first.") unless valid
   end
-  
+
   def allowed_user
     #Check to see that the user is allowed to book equipment.
     #status = 0 - user is in good standing
     #status = 1 - user is greylisted
     #status = 2 - user is blacklisted
-    
+
     if !self.user_id.nil?
       status = User.find(self.user_id).status
     else
       self.errors.add(:user, "does not exist.")
     end
-    
+
     if status == 2
       self.errors.add(:user, "has been blacklisted and is not allowed to book equipment.")
     elsif status == 1
       self.errors.add(:user, "has been greylisted and is not allowed to book equipment.")
     end
   end
-  
-  
-  
+
+
+
   def correct_times
     #Check to see that the times for the booking are sensible
-    
+
     #Is the start date/time before the end date/time?
     @e = self.events.first
     valid = @e.start < @e.end
     self.errors.add(:booking, "cannot be saved: Start time must come before end time") unless valid
   end
-  
+
   def has_no_conflicts
     conflicts = false
     conflict_ids=[]
@@ -178,9 +178,9 @@ class Booking < ActiveRecord::Base
         #Still using icecube gem to find conflicts
         s = IceCube::Schedule.new(start = @e.start, :end_time => @e.end)
         s1 = IceCube::Schedule.new(start = @e1.start, :end_time => @e1.end)
-       
+
         if s.conflicts_with?(s1) and booking_test.id != self.id
-		
+
           equip_ids.each do |eid|
             if !booking_test.sign_in_times.has_key?(eid) and booking_test.equipment_ids.include?(eid)
               conflicts = true
