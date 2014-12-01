@@ -54,7 +54,28 @@ class EquipmentController < ApplicationController
   # POST /equipment
   # POST /equipment.json
   def create
-    @equipment = Equipment.new(equipment_params)
+    #tags are sent to the controller as a string array
+    #we'll create our own way to find the Tag objects
+    tags = equipment_params[:tags]
+
+    tags_object_collection = []
+
+    tags.each do |tag|
+      if tag == ''
+        next
+      end
+
+      tag_obj = Tag.find(tag)
+
+      if tag_obj != nil
+        tags_object_collection.push(tag_obj)
+      end
+    end
+
+    new_equipment_params = equipment_params.except(:tags)
+
+    @equipment = Equipment.new(new_equipment_params)
+    @equipment.tags = tags_object_collection
 
     respond_to do |format|
       if @equipment.save
@@ -70,10 +91,29 @@ class EquipmentController < ApplicationController
   # PUT /equipment/1
   # PUT /equipment/1.json
   def update
+    tags = equipment_params[:tags]
+
+    tags_object_collection = []
+
+    tags.each do |tag|
+      if tag == ''
+        next
+      end
+
+      tag_obj = Tag.find(tag)
+
+      if tag_obj != nil
+        tags_object_collection.push(tag_obj)
+      end
+    end
+
+    new_equipment_params = equipment_params.except(:tags)
+
     @equipment = Equipment.find(params[:id])
+    @equipment.tags = tags_object_collection
 
     respond_to do |format|
-      if @equipment.update_attributes(equipment_params)
+      if @equipment.update_attributes(new_equipment_params)
         format.html { redirect_to equipment_index_path, notice: 'Equipment was successfully updated.' }
         format.json { head :no_content }
       else
@@ -98,6 +138,6 @@ class EquipmentController < ApplicationController
   private
 
   def equipment_params
-    params.require(:equipment).permit(:name,:barcode,:category_id,:stored,:contents,:serial_number,:status)
+    params.require(:equipment).permit(:name,:barcode,:category_id,:stored,:contents,:serial_number,:status,:tags => [])
   end
 end

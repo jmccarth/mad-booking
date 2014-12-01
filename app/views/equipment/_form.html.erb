@@ -40,6 +40,23 @@
     <div class="field">
       <div class="row collapse">
         <div class="small-4 columns">
+          <span class="prefix">Tags</span>
+        </div>
+        <div class="small-8 columns">
+          <div id="tag-checkboxes" class="hide">
+            <%= f.collection_check_boxes :tags, Tag.all, :id, :name, checked: @equipment.tags.map(&:id) %>
+          </div>
+          <input id="equipment_tags_search" type="text" class="tagsearch">
+          <br/>
+          <div id="tag-list">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="row collapse">
+        <div class="small-4 columns">
           <span class="prefix">Serial Number</span>
         </div>
         <div class="small-8 columns">
@@ -80,6 +97,86 @@
         </div>
       </div>
     </div>
+
+    <script>
+   
+    //bypass for appilciation,js functions being called in this form
+    window.onload = function () {
+
+      $('#tag-checkboxes').children('input[type="checkbox"]').each(function()
+      {
+        var element = $(this);
+
+        if(!element.attr('checked'))
+        {
+          return;
+        }
+
+        var element_id = element.attr('id');
+        var element_name = $('label[for='+ element_id + ']').text();
+
+        var id = element_id.split('_');
+        id = id[id.length - 1];
+
+        var tag_name = 'tag-id-' + id;
+
+        $('#tag-list').append('<a id="' + tag_name + '" class="button tiny" href="#">' + element_name + '</a>&nbsp;');
+        $('#' + tag_name).click(function()
+        {
+          element.prop('checked', false);
+          $('#' + tag_name).remove();
+        });    
+      });
+
+      var $tag_input = $('.tagsearch');
+
+      $tag_input.typeahead({
+        name: 'tags',
+        prefetch: { url: '/tags.json' },
+        valueKey: 'name'
+      });
+
+      $tag_input.on('typeahead:selected', function (event, suggestion) {
+          if(suggestion.added == true)
+          {
+            return;
+          }
+
+          var should_return = false;
+          //check if it is loaded already ticked from a previous edit session
+          $('#tag-list').children().each(function ()
+          {
+            var element = $(this);
+            if(element.attr('id').indexOf(suggestion.id) > -1)
+            {
+              should_return = true;
+              return;
+            }
+          });
+
+          if(should_return)
+          {
+            return;
+          }
+
+          //check the appropriate checkbox
+          $('#equipment_tags_' + suggestion.id).prop('checked', true);
+          suggestion.added = true;
+
+          //add a visual tag to the ui and logic to untick it
+          var tag_name = 'tag-id-' + suggestion.id;
+          $('#tag-list').append('<a id="' + tag_name + '" class="button tiny" href="#">' + suggestion.name + '</a>&nbsp;');
+          $('#' + tag_name).click(function()
+          {
+            $('#equipment_tags_' + suggestion.id).prop('checked', false);
+            $('#' + tag_name).remove();
+            suggestion.added = false;
+          });
+      });
+
+    };
+
+    </script>
 
   <div class="actions">
     <%= f.submit :class => 'button' %>

@@ -80,12 +80,11 @@ function initializeComponents($container) {
 		name: "name", 
 		prefetch: "users/username.json"
 	});
-	
 
 	$search_input.on('usersearch:selected', function() {
 		$(this).closest('form').submit();
 	});
-	
+
 	var $equip_input = $('.equipsearch');
 	
 	$equip_input.typeahead({

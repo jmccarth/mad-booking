@@ -2,8 +2,14 @@ class TagsController < ApplicationController
   before_action :set_tag, only: [:show, :edit, :update, :destroy]
 
   # GET /tags
+  # GET /tags.json
   def index
     @tags = Tag.all
+
+  respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @tags }
+    end
   end
 
   # GET /tags/1
