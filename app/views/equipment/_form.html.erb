@@ -100,9 +100,10 @@
 
     <script>
    
-    //bypass for appilciation,js functions being called in this form
+    //bypass for appilciation,js functions not being called in this form
     window.onload = function () {
 
+      //tick the checkbox and genrate the UI for updating equipment
       $('#tag-checkboxes').children('input[type="checkbox"]').each(function()
       {
         var element = $(this);
@@ -120,7 +121,7 @@
 
         var tag_name = 'tag-id-' + id;
 
-        $('#tag-list').append('<a id="' + tag_name + '" class="button tiny" href="#">' + element_name + '</a>&nbsp;');
+        $('#tag-list').append('<a id="' + tag_name + '" class="secondary label" href="#">' + element_name + ' &times;</a>&nbsp;');
         $('#' + tag_name).click(function()
         {
           element.prop('checked', false);
@@ -137,6 +138,9 @@
       });
 
       $tag_input.on('typeahead:selected', function (event, suggestion) {
+          //reset the textbox
+          $tag_input.val('');
+
           if(suggestion.added == true)
           {
             return;
@@ -165,7 +169,7 @@
 
           //add a visual tag to the ui and logic to untick it
           var tag_name = 'tag-id-' + suggestion.id;
-          $('#tag-list').append('<a id="' + tag_name + '" class="button tiny" href="#">' + suggestion.name + '</a>&nbsp;');
+          $('#tag-list').append('<a id="' + tag_name + '" class="secondary label" href="#">' + suggestion.name + ' &times;</a>&nbsp;');
           $('#' + tag_name).click(function()
           {
             $('#equipment_tags_' + suggestion.id).prop('checked', false);

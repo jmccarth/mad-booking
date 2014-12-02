@@ -87,11 +87,20 @@ function initializeComponents($container) {
 
 	var $equip_input = $('.equipsearch');
 
-	$equip_input.typeahead({
+	$equip_input.typeahead([{
 		name: 'equipment',
 		prefetch: {url: 'equipment.json'},
-		valueKey: 'name'
-	});
+		valueKey: 'name',
+		header: '<h5 class="section-title">Equipment</h5>',
+  		template: '<p>{{ value }}</p>'
+	},
+	{
+        name: 'tags',
+        prefetch: { url: '/tags.json' },
+        valueKey: 'name',
+		header: '<h5 class="section-title">Tags</h5>',
+  		template: '<p>{{ value }}</p>'
+    }]);
 
 	var $main_equip_search = $('#equipment');
 	$main_equip_search.on('typeahead:selected',function(e){
