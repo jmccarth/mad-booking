@@ -14,7 +14,6 @@
 //= require jquery.ui.all
 //= require jquery.timepicker.js
 //= require jquery_ujs
-//= require foundation
 //= require fullcalendar
 //= require home
 //= require barcode_listener
@@ -497,4 +496,54 @@ function validateBookingForm(){
 	
 }
 
-$(document).foundation();
+//$(document).foundation();
+
+/* NEW STUFF */
+
+$(function() {
+
+	$('.card input[type="checkbox"]').change(function() {
+		var $card = $(this).closest('.card');
+		if ($(this).is(':checked')) {
+			$card.addClass('active');
+		}
+		else  {
+			$card.removeClass('active');
+		}
+	});
+
+	var $tags = $('.tags li');
+	var $filters = $('.filters');
+	var $filtersMessage = $('.filtersMessage')
+
+	$tags.on('click', function() {
+		//var $filter = $("<li>" + $(this).html().trim() + "<span class='remove'>&times;</span></li>");
+		$(this).toggleClass('active');
+		updateFilters();
+	});
+
+	$('.filters li').on('click', function() {
+		$(this).remove();
+		console.log('yo');
+	});
+
+	var updateFilters = function() {
+		var $active = $tags.filter('.active').clone();
+
+		if ($active.length == 0) $filtersMessage.show();
+		else $filtersMessage.hide();
+
+		$filters.html($active);
+	};
+
+	$('.tag-search').keyup(function() {
+		var query = $(this).val().toLowerCase();
+		$tags.each(function() {
+			if ($(this).html().toLowerCase().indexOf(query) < 0) $(this).hide();
+			else $(this).show();
+		});
+		if (query != '') $(this).addClass('active');
+		else $(this).removeClass('active');
+	});
+
+});

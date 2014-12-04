@@ -15,8 +15,8 @@ ActiveRecord::Schema.define(version: 20141121140612) do
 
   create_table "bookings", force: true do |t|
     t.text     "schedule"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.text     "sign_in_times"
     t.text     "sign_out_times"
     t.integer  "user_id"
@@ -31,16 +31,16 @@ ActiveRecord::Schema.define(version: 20141121140612) do
 
   create_table "categories", force: true do |t|
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "equipment", force: true do |t|
     t.string   "barcode"
     t.string   "name"
     t.string   "stored"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.integer  "category_id"
     t.integer  "status"
     t.string   "contents"
@@ -66,8 +66,8 @@ ActiveRecord::Schema.define(version: 20141121140612) do
     t.string   "username"
     t.boolean  "admin"
     t.integer  "status"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.text     "comments"
     t.string   "firstname"
     t.string   "lastname"
