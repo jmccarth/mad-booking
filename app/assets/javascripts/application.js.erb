@@ -76,21 +76,57 @@ function initializeComponents($container) {
 
 	window.localStorage.clear();
 
-	$search_input.typeahead({
+	var user_engine = new Bloodhound({
+		datumTokenizer: function (user) {
+			return Bloodhound.tokenizers.whitespace(user.username);
+		},
+		queryTokenizer: Bloodhound.tokenizers.whitespace,
+		prefetch: {
+			url: "users/username.json",
+			filter: function(list) {
+				return $.map(list, function(user) 
+					{
+						return { username: user }; 
+					});
+			}
+		}
+	});
+
+	user_engine.clearPrefetchCache();
+	user_engine.initialize();
+
+	$search_input.typeahead(null, {
 		name: "name",
-		prefetch: "users/username.json"
+		displayKey: 'username',
+		source: user_engine.ttAdapter()
 	});
 
 	$search_input.on('usersearch:selected', function() {
 		$(this).closest('form').submit();
 	});
 
+	var equipment_engine =  new Bloodhound({
+		datumTokenizer: function (obj) {
+			var name_token = Bloodhound.tokenizers.whitespace(obj.name);
+			var barcode_token = Bloodhound.tokenizers.whitespace(obj.barcode);
+
+			return name_token.concat(barcode_token);
+		},
+		queryTokenizer: Bloodhound.tokenizers.whitespace,	
+		prefetch: {
+			url: 'equipment.json'
+		}
+	});
+
+	equipment_engine.clearPrefetchCache();
+	equipment_engine.initialize();
+
 	var $equip_input = $('.equipsearch');
 
-	$equip_input.typeahead({
+	$equip_input.typeahead(null, {
 		name: 'equipment',
-		prefetch: {url: 'equipment.json'},
-		valueKey: 'name'
+		displayKey: 'name',
+		source: equipment_engine.ttAdapter()
 	});
 
 	var $main_equip_search = $('#equipment');

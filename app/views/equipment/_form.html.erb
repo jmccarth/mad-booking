@@ -131,11 +131,31 @@
 
       var $tag_input = $('.tagsearch');
 
+      var tag_engine = new Bloodhound({
+        datumTokenizer: function(obj) { 
+          return Bloodhound.tokenizers.whitespace(obj.name); 
+        },
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        prefetch: { 
+          url: '/tags.json'
+        }
+      });
+      tag_engine.clearPrefetchCache();
+      tag_engine.initialize();
+
+
+      $tag_input.typeahead(null, {
+        name: 'tags',
+        displayKey: 'name',
+        source: tag_engine.ttAdapter()
+      });
+
+      /*
       $tag_input.typeahead({
         name: 'tags',
         prefetch: { url: '/tags.json' },
         valueKey: 'name'
-      });
+      });*/
 
       $tag_input.on('typeahead:selected', function (event, suggestion) {
           //reset the textbox
