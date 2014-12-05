@@ -121,19 +121,77 @@ function initializeComponents($container) {
 	equipment_engine.clearPrefetchCache();
 	equipment_engine.initialize();
 
+	var tag_engine = new Bloodhound({
+        datumTokenizer: function(obj) { 
+          return Bloodhound.tokenizers.whitespace(obj.name); 
+        },
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        prefetch: { 
+          url: '/tags.json'
+        }
+      });
+      tag_engine.clearPrefetchCache();
+      tag_engine.initialize();
+
 	var $equip_input = $('.equipsearch');
 
 	$equip_input.typeahead(null, {
 		name: 'equipment',
 		displayKey: 'name',
+		templates: { header: "<h4>Equipment</h4>"},
 		source: equipment_engine.ttAdapter()
-	});
+	},
+	{
+        name: 'tags',
+        displayKey: 'name',
+        templates: { header: "<h4>Tags</h4>"},
+        source: tag_engine.ttAdapter()
+    });
 
 	var $main_equip_search = $('#equipment');
-	$main_equip_search.on('typeahead:selected',function(e){
-		var $chkbox = $("[name*='" + e.target.value + "']").eq(0);
-		$chkbox.click();
-		//$chkbox.closest('p').remove();
+	$main_equip_search.on('typeahead:selected',function(e, suggestion_obj) {
+		//equipment was selected
+		if(suggestion_obj.barcode)
+		{
+			var $chkbox = $("[name*='" + e.target.value + "']").eq(0);
+			$chkbox.click();
+			//$chkbox.closest('p').remove();
+		}
+		
+
+		//tag was selected
+
+		//remove notification style counters
+		var found_items = $('#equipmentList').find('.found-items');
+		found_items.each(function (index)
+		{
+			var found_item = $(found_items[index]);
+			found_item.remove();
+		});
+
+		suggestion_obj.equipment.forEach(function (element)
+		{
+			var category = $("[name*='" + element.name + "']").closest('section');
+			
+			var notificaton = category.find('.found-items');
+
+			//notificcation of items already exist
+			if(notificaton.length > 0)
+			{
+				//get the text, convert it into an int, add 1, then display the updated counter
+				notificaton = $(notificaton[0]);
+				var count = parseInt(notificaton.text());
+				count += 1;
+
+				notificaton.text(count);
+				return;	
+			}
+
+			//change the find parameters to define where this goes
+			var eye_icon = $(category.find('.icon-eye-open')[0]);
+			$('<div class="found-items secondary">1</div>').insertAfter(eye_icon);
+		});
+		
 	});
 
 	var $add_equip = $('#equipment_details .equipsearch');
