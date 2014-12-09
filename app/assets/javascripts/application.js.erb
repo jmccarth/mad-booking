@@ -133,7 +133,9 @@ function initializeComponents($container) {
       tag_engine.clearPrefetchCache();
       tag_engine.initialize();
 
-	var $equip_input = $('.equipsearch');
+	var $equip_input = $container.find('.equipsearch')[0]; //only find the loaded .equipsearch textbox in the current $container
+
+	$equip_input = $($equip_input);
 
 	$equip_input.typeahead(null, {
 		name: 'equipment',
