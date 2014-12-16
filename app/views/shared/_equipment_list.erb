@@ -19,7 +19,7 @@
 							<span class="right label radius error inactive"><%= Equipment.get_status(equip.status) %></span> 
 						<% end %>
 						<span class="left">
-							<%= check_box_tag equip.name, equip.id, false, :class => "equipCheck" %>
+							<%= check_box_tag equip.name, equip.id, false, :class => "equipCheck", :disabled => (equip.status > 1) %>
 						</span>
 						<%= link_to equip.name, "#", :onclick => "reloadCalendar([#{equip.id}])" %>
 					</li>

@@ -93,6 +93,10 @@
 										<span id="status_<%= equip.barcode %>" class="right alert label">Overdue</span>
 										<br />
 										Out at <%= @booking.sign_out_times[equip.id].strftime("%b %-d, %Y %I:%M %p") %>
+									<% else %>
+										<%= hidden_field_tag "booking[sign_in_ids][]", nil, {:data => equip.id, :class => "scannable", :id => "bc_in_#{equip.barcode}"}%>
+										<span id="status_<%= equip.barcode %>" class="right label"><%= item_status %></span>
+										<br />
 									<% end %>
 
 									<% if !@booking.sign_out_times.key?(equip.id) %>

@@ -114,11 +114,13 @@ function initializeComponents($container) {
 		},
 		queryTokenizer: Bloodhound.tokenizers.whitespace,	
 		prefetch: {
-			url: 'equipment.json'
+			url: 'equipment.json',
+            filter: function(list) {
+				return list.filter(function(equip) { return equip.status < 2; });
+		    } 
 		}
 	});
 
-	equipment_engine.clearPrefetchCache();
 	equipment_engine.initialize();
 
 	var tag_engine = new Bloodhound({
@@ -130,7 +132,7 @@ function initializeComponents($container) {
           url: '/tags.json'
         }
       });
-      tag_engine.clearPrefetchCache();
+
       tag_engine.initialize();
 
 	var $equip_input = $container.find('.equipsearch')[0]; //only find the loaded .equipsearch textbox in the current $container
