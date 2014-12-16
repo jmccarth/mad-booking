@@ -13,10 +13,10 @@
 				<ul class="side-nav">
 				<% for equip in cat.equipment.order('name ASC') %>
 					<li class="item" data-id="<%= equip.id %>">
-						<% if equip.status == 0 %>
-							<span class="right label radius error inactive">out</span>
+						<% if equip.status == 1 %>
+							<span class="right label radius success inactive">In</span>
 						<% else %>
-							<span class="right label radius success inactive">in</span>
+							<span class="right label radius error inactive"><%= Equipment.get_status(equip.status) %></span> 
 						<% end %>
 						<span class="left">
 							<%= check_box_tag equip.name, equip.id, false, :class => "equipCheck" %>

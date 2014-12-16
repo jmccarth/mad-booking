@@ -24,7 +24,6 @@ class Booking < ActiveRecord::Base
 	# if a equipment is not in or signed out return the status
 	if equipment.status > 1
 		status = Equipment.get_status(equipment.status)
-		puts status
 		return status
 	end
 

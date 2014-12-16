@@ -6,7 +6,7 @@ class Equipment < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :barcode
 
-  @@valid_statuses = [['Out', 0], ['In', 1], ['Out for Repair', 2]]
+  @@valid_statuses = [['In', 1], ['Out', 0], ['Out for Repair', 2]] #the way the items in the array of arrays is listed is the way it appears on the dropdown
 
   def default_values
     if self.status.nil?
