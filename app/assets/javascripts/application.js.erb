@@ -57,8 +57,6 @@ function initializeComponents($container) {
 			});
 		});
 
-		//console.log(ids);
-
 		reloadCalendar(ids);
 
 		return false;
@@ -502,19 +500,9 @@ function validateBookingForm(){
 
 $(function() {
 
-	$('.card input[type="checkbox"]').change(function() {
-		var $card = $(this).closest('.card');
-		if ($(this).is(':checked')) {
-			$card.addClass('active');
-		}
-		else  {
-			$card.removeClass('active');
-		}
-	});
-
 	var $tags = $('.tags li');
 	var $filters = $('.filters');
-	var $filtersMessage = $('.filtersMessage')
+	var $filtersContainer = $('.filters-container');
 
 	$tags.on('click', function() {
 		//var $filter = $("<li>" + $(this).html().trim() + "<span class='remove'>&times;</span></li>");
@@ -524,14 +512,13 @@ $(function() {
 
 	$('.filters li').on('click', function() {
 		$(this).remove();
-		console.log('yo');
 	});
 
 	var updateFilters = function() {
-		var $active = $tags.filter('.active').clone();
+		var $active = $tags.filter('.active').clone().attr('style', '').show();
 
-		if ($active.length == 0) $filtersMessage.show();
-		else $filtersMessage.hide();
+		if ($active.length == 0) $filtersContainer.hide();
+		else $filtersContainer.show();
 
 		$filters.html($active);
 	};
@@ -539,11 +526,40 @@ $(function() {
 	$('.tag-search').keyup(function() {
 		var query = $(this).val().toLowerCase();
 		$tags.each(function() {
-			if ($(this).html().toLowerCase().indexOf(query) < 0) $(this).hide();
+			if ($(this).find('.name').html().toLowerCase().indexOf(query) == -1) $(this).hide();
 			else $(this).show();
 		});
 		if (query != '') $(this).addClass('active');
 		else $(this).removeClass('active');
+	});
+
+	var $bookingSelects = $('.booking-select');
+	var $bookingCount = $('.booking-count');
+	var $bookingBar = $('.booking.bar');
+
+	$bookingSelects.change(function() {
+		var count = $bookingSelects.filter(':checked').length;
+		if (count) {
+			$bookingBar.show();
+		}
+		else {
+			$bookingBar.hide();
+		}
+		$bookingCount.html(count);
+
+		var $card = $(this).closest('.card');
+		if ($(this).is(':checked')) {
+			$card.addClass('active');
+		}
+		else  {
+			$card.removeClass('active');
+		}
+	});
+
+	$('.booking-clear').click(function() {
+		$bookingSelects.filter(':checked').closest('.card').removeClass('active');
+		$bookingSelects.attr('checked', false);
+		$bookingBar.hide();
 	});
 
 });
