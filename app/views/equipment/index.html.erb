@@ -1,38 +1,42 @@
-<div class="row">
-  <div class="small-12 columns">
-    <h1>
-      Equipment
-      <%= link_to 'Add', new_equipment_path, :class => 'button' %>
-    </h1>
+<div class="sidebar cell">
+	<div class="bar">
+		<div class="title">
+			<i class="icon-tags"></i>
+			<input class="search tag-search" type="text" placeholder="Search tags"></input>
+		</div>
+	</div>
 
-    <table>
-      <tr>
-        <th>Name</th>
-        <th>Category</th>
-        <th>Barcode</th>
-        <th>Status</th>
-        <th>Updated</th>
-      </tr>
+	<div class="scroll-y">
+		<ul class="tags">
+			<% Category.all.sort{|a,b| a.name <=> b.name}.each do |category| %>
+				<li><span class="right radius secondary label">10</span><span class="name"><%= category.name %></span></li>
+			<% end %>
+		</ul>
+	</div>
+</div>
 
-    <% @equipment.each do |equipment| %>
-      <tr>
-        <td>
-          <%= link_to equipment.name, edit_equipment_path(equipment) %>
-        </td>
-        <td>
-          <%= equipment.category.name if equipment.category %>
-        </td>
-        <td>
-          <%= equipment.barcode %>
-        </td>
-        <td>
-          <%= Equipment.get_status(equipment.status) %>
-        </td>
-        <td>
-          <%= equipment.updated_at.to_date if equipment.updated_at %>
-        </td>
-      </tr>
-    <% end %>
-    </table>
-  </div>
+<div class="main cell">
+	<div class="bar">
+		<div class="title">
+			<i class="icon-calendar"></i>
+			<input class="date" type="date"></input>
+		</div>
+		<div class="subtitle filters-container">
+			<ul class="filters">
+			</ul>
+		</div>
+	</div>
+
+	<div class="scroll-y">
+		<div class="cards">
+			<% @equipment.each do |equipment| %>
+				<%=render 'equipment/card', :equipment => equipment %>
+			<% end %>
+		</div>
+	</div>
+
+	<div class="booking bar">
+		<a class="button">Book <span class="booking-count">1</span> items</a>
+		<a class="button booking-clear right">Cancel</a>
+	</div>
 </div>

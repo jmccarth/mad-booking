@@ -17,7 +17,7 @@
 
   	<%= stylesheet_link_tag    "application" %>
 
-  	<%= javascript_include_tag "vendor/custom.modernizr" %>
+  	<!--<%= javascript_include_tag "vendor/custom.modernizr" %>-->
     <%= csrf_meta_tags %>
   </head>
 
@@ -37,13 +37,11 @@
     </div>
   <% end %>
 
-	<br />
-
 	<div class="content">
 		<%= yield %>
 	</div>
 
-	<hr />
+	<!--
 	<footer>
 		<div class="row">
 			<div class="small-6 columns">
@@ -55,6 +53,7 @@
 				</ul>
 			</div>
 	</footer>
+	-->
 
 	<div id="modalContainer" class="reveal-modal"></div>
 

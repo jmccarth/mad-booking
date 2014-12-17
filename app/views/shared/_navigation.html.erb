@@ -15,51 +15,6 @@
 		<ul class="right">
 			<li class="divider"></li>
 			<li><%= link_to 'Settings', settings_path %></li>
-			<li class="has-dropdown">
-				<a href="#">View</a>
-				<ul id="views" class="dropdown">
-					<li>
-						<div class="row">
-							<div class="small-4 columns">
-								<label>Equipment</label>
-								<div class="switch">
-									<input id="leftOff" name="switch-left" type="radio">
-									<label for="leftOff" onclick="">Hide</label>
-
-									<input id="leftOn" name="switch-left" type="radio" checked>
-									<label for="leftOn" onclick="">Show</label>
-
-									<span></span>
-								</div>
-							</div>
-							<div class="small-4 columns">
-								<label>Calendar</label>
-								<div class="switch">
-									<input id="middleOff" name="switch-middle" type="radio">
-									<label for="middleOff" onclick="">Hide</label>
-
-									<input id="middleOn" name="switch-middle" type="radio" checked>
-									<label for="middleOn" onclick="">Show</label>
-
-									<span></span>
-								</div>
-							</div>
-							<div class="small-4 columns">
-								<label>Bookings</label>
-								<div class="switch">
-									<input id="rightOff" name="switch-right" type="radio">
-									<label for="rightOff" onclick="">Hide</label>
-
-									<input id="rightOn" name="switch-right" type="radio" checked>
-									<label for="rightOn" onclick="">Show</label>
-
-									<span></span>
-								</div>
-							</div>
-						</div>
-					</li>
-				</ul>
-			</li>
 			<% logout_path = root_path + 'logout' %>
 			<li><%= link_to 'Logout ' + session[:cas_user], logout_path %></li>
 

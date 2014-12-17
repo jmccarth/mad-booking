@@ -12,7 +12,8 @@ function reloadCalendar(items) {
 		var $calendar = $("#calendar");
 		var $calendarLoading = $("#calendar-loading");
 
-		var calHeight = $(window).height() - $calendar.offset().top - $('footer').height() - $("#legend").height() - 50;
+		//var calHeight = $(window).height() - $calendar.offset().top - $('footer').height() - $("#legend").height() - 50;
+		var calHeight = 1000;
 
 		var params = {};
 

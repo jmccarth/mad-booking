@@ -31,10 +31,9 @@ test:
 production:
   adapter: mysql2
   encoding: utf8
-  reconnect: false
+  reconnect: ADD_DB_USER_HERE
   database: ADD_DB_NAME_HERE
   pool: 5
-  username: ADD_DB_USER_HERE
+  username: root
   password: ADD_DB_PASS_HERE
   host: ADD_DB_HOST_HERE
-
