@@ -81,9 +81,9 @@ function initializeComponents($container) {
 		prefetch: {
 			url: "users/username.json",
 			filter: function(list) {
-				return $.map(list, function(user) 
+				return $.map(list, function(user)
 					{
-						return { username: user }; 
+						return { username: user };
 					});
 			}
 		}
@@ -109,23 +109,23 @@ function initializeComponents($container) {
 
 			return name_token.concat(barcode_token);
 		},
-		queryTokenizer: Bloodhound.tokenizers.whitespace,	
+		queryTokenizer: Bloodhound.tokenizers.whitespace,
 		prefetch: {
 			url: 'equipment.json',
             filter: function(list) {
 				return list.filter(function(equip) { return equip.status < 2; });
-		    } 
+		    }
 		}
 	});
 
 	equipment_engine.initialize();
 
 	var tag_engine = new Bloodhound({
-        datumTokenizer: function(obj) { 
-          return Bloodhound.tokenizers.whitespace(obj.name); 
+        datumTokenizer: function(obj) {
+          return Bloodhound.tokenizers.whitespace(obj.name);
         },
         queryTokenizer: Bloodhound.tokenizers.whitespace,
-        prefetch: { 
+        prefetch: {
           url: '/tags.json'
         }
       });
@@ -158,7 +158,7 @@ function initializeComponents($container) {
 			$chkbox.click();
 			//$chkbox.closest('p').remove();
 		}
-		
+
 
 		//tag was selected
 
@@ -173,7 +173,7 @@ function initializeComponents($container) {
 		suggestion_obj.equipment.forEach(function (element)
 		{
 			var category = $("[name*='" + element.name + "']").closest('section');
-			
+
 			var notificaton = category.find('.found-items');
 
 			//notificcation of items already exist
@@ -185,14 +185,14 @@ function initializeComponents($container) {
 				count += 1;
 
 				notificaton.text(count);
-				return;	
+				return;
 			}
 
 			//change the find parameters to define where this goes
 			var eye_icon = $(category.find('.icon-eye-open')[0]);
 			$('<div class="found-items secondary">1</div>').insertAfter(eye_icon);
 		});
-		
+
 	});
 
 	var $add_equip = $('#equipment_details .equipsearch');
@@ -626,11 +626,13 @@ $(function() {
 	var $tags = $('.tags li');
 	var $filters = $('.filters');
 	var $filtersContainer = $('.filters-container');
+	var $cards = $('.cards');
 
 	$tags.on('click', function() {
 		//var $filter = $("<li>" + $(this).html().trim() + "<span class='remove'>&times;</span></li>");
 		$(this).toggleClass('active');
 		updateFilters();
+		updateCardList();
 	});
 
 	$('.filters li').on('click', function() {
@@ -644,6 +646,24 @@ $(function() {
 		else $filtersContainer.show();
 
 		$filters.html($active);
+	};
+
+	var updateCardList = function() {
+		$('.card').hide();
+		var tag_conditions = [];
+
+		$('.filters > .active > .name').each(function(){
+			var tagname = this.innerText;
+			tag_conditions.push(':contains("'+tagname+'")')
+		});
+
+		var condition_string = tag_conditions.join(",");
+		console.log(condition_string);
+		$items = $('.card > .card-body > .cardtaglist').filter(condition_string);
+		$items.each(function(){
+			$(this).parent().parent().show();
+		});
+
 	};
 
 	$('.tag-search').keyup(function() {

@@ -8,8 +8,8 @@
 
 	<div class="scroll-y">
 		<ul class="tags">
-			<% Category.all.sort{|a,b| a.name <=> b.name}.each do |category| %>
-				<li><span class="right radius secondary label">10</span><span class="name"><%= category.name %></span></li>
+			<% Tag.all.sort{|a,b| a.name <=> b.name}.each do |tag| %>
+				<li><span class="right radius secondary label"><%= tag.equipment.count %></span><span class="name"><%= tag.name %></span></li>
 			<% end %>
 		</ul>
 	</div>

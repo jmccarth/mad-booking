@@ -3,7 +3,11 @@
     <div class="title oneline"><%= link_to equipment.name, edit_equipment_path(equipment) %></div>
   </div>
   <div class="card-body">
-    <div class="oneline"><i class="icon-tags icon-label"></i><%= equipment.category.name if equipment.category %></div>
+    <% taglist = [] %>
+    <% equipment.tags.each do |tag| %>
+      <% taglist.push(tag.name) %>
+    <% end %>
+    <div class="oneline cardtaglist"><i class="icon-tags icon-label"></i><%= taglist.join(", ") %></div>
     <div class="oneline"><i class="icon-barcode icon-label"></i><%= equipment.barcode %></div>
     <div class="oneline"><i class="icon-pencil icon-label"></i><%= equipment.updated_at %></div>
   </div>
