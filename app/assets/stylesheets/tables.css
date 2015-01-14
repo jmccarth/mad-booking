@@ -15,7 +15,7 @@ table th, table td {
 }
 
 table.equipment-list {
-	table-layout:fixed;
+	/*table-layout:fixed;*/
 }
 
 table.equipment-list tr:hover {
@@ -26,6 +26,10 @@ table.equipment-list tr:hover .oneline {
 	white-space:normal;
 	overflow:visible;
 	text-overflow:normal;
+}
+
+table th.status, table td.status {
+	text-align:right;
 }
 
 td.book {

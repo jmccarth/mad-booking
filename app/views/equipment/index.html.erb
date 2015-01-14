@@ -1,12 +1,82 @@
 <div class="sidebar cell">
-	<%= render 'shared/tag_list' %>
+	<div class="bar">
+		<div class="tabs">
+			<a data-target=".tag-list, .tag-search" class="tab active" href="#">
+				<i class="icon-tags"></i>
+				<span>Tags</span>
+			</a>
+			<a data-target=".user-list, .user-search" class="tab" href="#">
+				<i class="icon-group"></i>
+				<span>Users</span>
+			</a>
+		</div>
+
+		<div class="search tag-search">
+			<i class="icon-search"></i>
+			<input class="search" type="text" placeholder="Search tags"></input>
+		</div>
+		<div class="search user-search" style="display:none">
+			<i class="icon-search"></i>
+			<input class="search" type="text" placeholder="Search users"></input>
+		</div>
+	</div>
+	<div class="filters-container">
+		<ul class="filters">
+		</ul>
+	</div>
+
+	<div class="scroll-y tag-list">
+		<%= render 'shared/tag_list' %>
+	</div>
+	<div class="scroll-y user-list" style="display:none">
+		<%= render 'users/list' %>
+	</div>
 </div>
 
 <div class="main cell">
-	<%= render 'equipment/list' %>
+	<div class="bar">
+		<div class="tabs">
+			<a data-target=".equipment-list, .equipment-search" class="tab active" href="#">
+				<i class="icon-wrench"></i>
+				<span>Equipment</span>
+			</a>
+			<a data-target=".calendar, .calendar-search" class="tab" href="#">
+				<i class="icon-calendar"></i>
+				<span>Calendar</span>
+			</a>
+		</div>
+
+		<div class="search equipment-search">
+			<i class="icon-search"></i>
+			<input class="search" type="text" placeholder="Search equipment"></input>
+		</div>
+		<div class="search calendar-search" style="display:none">
+			<i class="icon-search"></i>
+			<input class="search" type="text" placeholder="Search calendar"></input>
+		</div>
+	</div>
+
+	<div class="scroll-y equipment-list">
+		<%= render 'equipment/list' %>
+	</div>
+	<div class="scroll-y calendar" style="display:none">
+		Calendar
+	</div>
 </div>
 
 <div class="booking cell">
+	<div class="bar">
+		<div class="tabs">
+			<a class="tab tags active" href="#">
+				<i class="icon-book"></i>
+				<span>Booking</span>
+			</a>
+		</div>
+		<div class="search booking-search">
+			<i class="icon-search"></i>
+			<input class="search" type="text" placeholder="Search booking"></input>
+		</div>
+	</div>
 	<%= render 'bookings/form' %>
 	<a class="button">Book <span class="booking-count">1</span> items</a>
 	<a class="button booking-clear right">Cancel</a>

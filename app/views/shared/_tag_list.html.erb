@@ -1,24 +1,5 @@
-<div class="bar">
-	<div class="tabs">
-		<a class="tab tags active" href="#">
-			<i class="icon-tags"></i>
-			<span>Tags</span>
-		</a>
-		<a class="tab users" href="#">
-			<i class="icon-group"></i>
-			<span>Users</span>
-		</a>
-	</div>
-	<div class="search">
-		<i class="icon-search"></i>
-		<input class="search tag-search" type="text" placeholder="Search tags"></input>
-	</div>
-</div>
-
-<div class="scroll-y">
-	<ul class="tags">
-		<% Category.all.sort{|a,b| a.name <=> b.name}.each do |category| %>
-			<li><span class="right radius secondary label">10</span><span class="name"><%= category.name %></span></li>
-		<% end %>
-	</ul>
-</div>
+<ul class="list tags">
+	<% Category.all.sort{|a,b| a.name <=> b.name}.each do |category| %>
+		<li><span class="right radius secondary label">10</span><span class="name"><%= category.name %></span></li>
+	<% end %>
+</ul>

@@ -535,7 +535,7 @@ $(function() {
 
 	var $bookingSelects = $('.booking-select');
 	var $bookingCount = $('.booking-count');
-	var $bookingBar = $('.booking.bar');
+	var $bookingBar = $('.booking.cell');
 
 	$bookingSelects.change(function() {
 		var count = $bookingSelects.filter(':checked').length;
@@ -547,12 +547,12 @@ $(function() {
 		}
 		$bookingCount.html(count);
 
-		var $card = $(this).closest('.card');
+		var $row = $(this).closest('tr');
 		if ($(this).is(':checked')) {
-			$card.addClass('active');
+			$row.addClass('active');
 		}
 		else  {
-			$card.removeClass('active');
+			$row.removeClass('active');
 		}
 	});
 
@@ -564,11 +564,29 @@ $(function() {
 
 	/* TABLE APPROACH */
 
-	$equipment = $('table.equipment-list tr');
+	var $equipment = $('table.equipment-list tr');
 
 	$equipment.click(function(e) {
 		if (!$(e.target).is('input'))
 			$(this).find('input').trigger('click');
+	});
+
+	/* TABS */
+
+	var $tabs = $('a.tab');
+
+	$tabs.click(function() {
+		var $others = $(this).siblings();
+		var $target = $($(this).attr('data-target'));
+
+		$others.each(function() {
+			$($(this).attr('data-target')).hide();
+		});
+
+		$target.show();
+
+		$(this).addClass('active');
+		$others.removeClass('active');
 	});
 
 });

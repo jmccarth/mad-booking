@@ -21,6 +21,18 @@ html, body {
 
 /* MISC */
 
+.active:not(.tab) {
+	background:#eef !important;
+}
+
+.good {
+	color:#62DB36;
+}
+
+.bad {
+	color:#c00;
+}
+
 li .label {
 	top:3px;
 	margin:0 0 0 7px;
@@ -60,30 +72,6 @@ li .label {
 
 .filters .remove {
 	padding-left:4px;
-}
-
-/* TAGS */
-
-.tags-container {
-	padding-right:15px !important;
-}
-
-ul.tags {
-	margin:0;
-	padding:0;
-	list-style-type:none;
-}
-
-ul.tags li {
-	padding:7px 15px;
-	opacity:0.8;
-	border-bottom:1px solid rgba(0,0,0,0.2);
-	cursor:pointer;
-}
-
-ul.tags li:hover {
-	opacity:1;
-	background:rgba(0,0,0,0.05);
 }
 
 /* BOOKING BAR */
