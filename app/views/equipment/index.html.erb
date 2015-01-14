@@ -13,16 +13,14 @@
 
 		<div class="search tag-search">
 			<i class="icon-search"></i>
-			<input class="search" type="text" placeholder="Search tags"></input>
+			<i class="icon-remove"></i>
+			<input data-target=".tag-list li" class="search" type="text" placeholder="Search tags"></input>
 		</div>
 		<div class="search user-search" style="display:none">
 			<i class="icon-search"></i>
-			<input class="search" type="text" placeholder="Search users"></input>
+			<i class="icon-remove"></i>
+			<input data-target=".user-list li" class="search" type="text" placeholder="Search users"></input>
 		</div>
-	</div>
-	<div class="filters-container">
-		<ul class="filters">
-		</ul>
 	</div>
 
 	<div class="scroll-y tag-list">
@@ -48,12 +46,19 @@
 
 		<div class="search equipment-search">
 			<i class="icon-search"></i>
-			<input class="search" type="text" placeholder="Search equipment"></input>
+			<i class="icon-remove"></i>
+			<input data-target=".equipment-list tr" class="search" type="text" placeholder="Search equipment"></input>
 		</div>
 		<div class="search calendar-search" style="display:none">
 			<i class="icon-search"></i>
+			<i class="icon-remove"></i>
 			<input class="search" type="text" placeholder="Search calendar"></input>
 		</div>
+	</div>
+
+	<div class="filters-container">
+		<ul class="filters">
+		</ul>
 	</div>
 
 	<div class="scroll-y equipment-list">
@@ -74,6 +79,7 @@
 		</div>
 		<div class="search booking-search">
 			<i class="icon-search"></i>
+			<i class="icon-remove"></i>
 			<input class="search" type="text" placeholder="Search booking"></input>
 		</div>
 	</div>

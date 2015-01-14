@@ -90,15 +90,24 @@
 	background:#eee;
 }
 
-.cell .bar .search i {
+.cell .bar .search i.icon-search {
 	position:absolute;
 	top:25px;
 	left:26px;
 	z-index:1000;
 }
 
+.cell .bar .search i.icon-remove {
+	position:absolute;
+	opacity:0.5;
+	top:25px;
+	right:26px;
+	z-index:1000;
+}
+
 .cell .bar .search input {
 	padding-left:35px;
+	padding-right:35px;
 	margin:0 !important;
 	background:#fff;
 }

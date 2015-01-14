@@ -1,6 +1,6 @@
 <% @equipment = Equipment.all %>
 
-<table class="equipment-list">
+<table class="equipment">
 	<thead>
 		<tr>
 			<th width="30"></th>
@@ -15,7 +15,7 @@
 				<td class="book">
 					<input type="checkbox" class="booking-select" name="book" id="<%= equipment.id %>"></input>
 				</td>
-				<td class="title">
+				<td class="name">
 					<%= link_to equipment.name, edit_equipment_path(equipment) %>
 				</td>
 				<td class="tags show-for-xlarge-up">

@@ -14,15 +14,15 @@ table th, table td {
 	vertical-align:top;
 }
 
-table.equipment-list {
+table.equipment {
 	/*table-layout:fixed;*/
 }
 
-table.equipment-list tr:hover {
+table.equipment tr:hover {
 	background:#dfd;
 }
 
-table.equipment-list tr:hover .oneline {
+table.equipment tr:hover .oneline {
 	white-space:normal;
 	overflow:visible;
 	text-overflow:normal;

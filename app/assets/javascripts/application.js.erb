@@ -16,6 +16,7 @@
 //= require jquery_ujs
 //= require fullcalendar
 //= require home
+//= require search
 //= require barcode_listener
 //= require twitter/typeahead
 //= require recurring_select
@@ -523,16 +524,6 @@ $(function() {
 		$filters.html($active);
 	};
 
-	$('.tag-search').keyup(function() {
-		var query = $(this).val().toLowerCase();
-		$tags.each(function() {
-			if ($(this).find('.name').html().toLowerCase().indexOf(query) == -1) $(this).hide();
-			else $(this).show();
-		});
-		if (query != '') $(this).addClass('active');
-		else $(this).removeClass('active');
-	});
-
 	var $bookingSelects = $('.booking-select');
 	var $bookingCount = $('.booking-count');
 	var $bookingBar = $('.booking.cell');
@@ -564,7 +555,7 @@ $(function() {
 
 	/* TABLE APPROACH */
 
-	var $equipment = $('table.equipment-list tr');
+	var $equipment = $('table.equipment tr');
 
 	$equipment.click(function(e) {
 		if (!$(e.target).is('input'))
