@@ -562,4 +562,13 @@ $(function() {
 		$bookingBar.hide();
 	});
 
+	/* TABLE APPROACH */
+
+	$equipment = $('table.equipment-list tr');
+
+	$equipment.click(function(e) {
+		if (!$(e.target).is('input'))
+			$(this).find('input').trigger('click');
+	});
+
 });

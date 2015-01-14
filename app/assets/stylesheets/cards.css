@@ -1,0 +1,134 @@
+/* CARDS */
+
+@media only screen and (max-width : 1199px) {
+	.card {
+		width:100%;
+		margin:0 0 15px 0;
+	}
+}
+
+@media only screen and (min-width : 1200px) {
+	.card {
+		margin:0 15px 15px 0;
+	}
+}
+
+
+@media only screen and (min-width : 1200px) and (max-width : 1599px) {
+	.card {
+		/* 15 / 2 = 7.5 */
+		width:calc(50% - 7.5px);
+	}
+
+	.card:nth-child(2n) {
+		margin-right:0;
+	}
+}
+
+@media only screen and (min-width : 1600px) and (max-width : 1999px) {
+	.card {
+		/* 30 / 3 = 10 */
+		width:calc(33.333% - 10px);
+	}
+
+	.card:nth-child(3n) {
+		margin-right:0;
+	}
+}
+
+@media only screen and (min-width : 2000px) and (max-width : 2399px) {
+	.card {
+		/* 45/4 = 11.25 */
+		width:calc(25% - 11.25px);
+	}
+
+	.card:nth-child(4n) {
+		margin-right:0;
+	}
+}
+
+@media only screen and (min-width : 2400px) and (max-width : 2799px) {
+	.card {
+		/* 60 / 5 = 12 */
+		width:calc(20% - 12px);
+	}
+
+	.card:nth-child(5n) {
+		margin-right:0;
+	}
+}
+
+@media only screen and (min-width : 2800px) {
+	.card {
+		/* 75 / 6 = 12.5 */
+		width:calc(16.6667% - 12.5px);
+	}
+
+	.card:nth-child(6n) {
+		margin-right:0;
+	}
+}
+
+.cards {
+	padding:15px;
+}
+
+
+.card {
+	border:1px solid rgba(0,0,0,0.3);
+	background:#fff;
+	/*box-shadow:0 3px 5px rgba(0,0,0,0.2);*/
+	opacity:0.8;
+	float:left;
+}
+
+
+
+.card:hover {
+	/*-webkit-transform:scale(1.05);*/
+	/*-webkit-transition:opacity 0.2s;*/
+	opacity:1;
+	/*box-shadow:0 3px 10px rgba(0,0,0,0.2);*/
+}
+
+.card > div {
+	/*padding:1rem;*/
+}
+
+.card-header {
+	padding:15px;
+	background:rgba(0,0,0,0.1);
+}
+
+.card-header {
+}
+
+.card-body {
+	border-top:1px solid rgba(0,0,0,0.3);
+	border-bottom:1px solid rgba(0,0,0,0.3);
+	padding:15px;
+}
+
+.card-footer {
+	padding:15px;
+}
+
+.card-footer input {
+	margin-bottom:0 !important;
+}
+
+i.icon-label, input[type='checkbox'] {
+	display:inline-block;
+	width:1.5em;
+	text-align:center;
+}
+
+.card i {
+	margin-right:0.5em;
+}
+
+.oneline {
+	white-space:nowrap;
+	text-overflow:ellipsis;
+	overflow:hidden;
+}

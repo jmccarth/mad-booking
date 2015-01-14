@@ -1,42 +1,13 @@
 <div class="sidebar cell">
-	<div class="bar">
-		<div class="title">
-			<i class="icon-tags"></i>
-			<input class="search tag-search" type="text" placeholder="Search tags"></input>
-		</div>
-	</div>
-
-	<div class="scroll-y">
-		<ul class="tags">
-			<% Category.all.sort{|a,b| a.name <=> b.name}.each do |category| %>
-				<li><span class="right radius secondary label">10</span><span class="name"><%= category.name %></span></li>
-			<% end %>
-		</ul>
-	</div>
+	<%= render 'shared/tag_list' %>
 </div>
 
 <div class="main cell">
-	<div class="bar">
-		<div class="title">
-			<i class="icon-calendar"></i>
-			<input class="date" type="date"></input>
-		</div>
-		<div class="subtitle filters-container">
-			<ul class="filters">
-			</ul>
-		</div>
-	</div>
+	<%= render 'equipment/list' %>
+</div>
 
-	<div class="scroll-y">
-		<div class="cards">
-			<% @equipment.each do |equipment| %>
-				<%=render 'equipment/card', :equipment => equipment %>
-			<% end %>
-		</div>
-	</div>
-
-	<div class="booking bar">
-		<a class="button">Book <span class="booking-count">1</span> items</a>
-		<a class="button booking-clear right">Cancel</a>
-	</div>
+<div class="booking cell">
+	<%= render 'bookings/form' %>
+	<a class="button">Book <span class="booking-count">1</span> items</a>
+	<a class="button booking-clear right">Cancel</a>
 </div>

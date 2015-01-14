@@ -1,0 +1,50 @@
+<% @equipment = Equipment.all %>
+
+<div class="bar">
+	<div class="tabs">
+		<a class="tab tags active" href="#">
+			<i class="icon-wrench"></i>
+			<span>Equipment</span>
+		</a>
+		<a class="tab users" href="#">
+			<i class="icon-calendar"></i>
+			<span>Calendar</span>
+		</a>
+	</div>
+	<div class="search">
+		<i class="icon-search"></i>
+		<input class="search equipment-search" type="text" placeholder="Search Equipment"></input>
+	</div>
+</div>
+
+<div class="filters-container">
+	<ul class="filters">
+	</ul>
+</div>
+
+<div class="scroll-y">
+	<table class="equipment-list">
+		<thead>
+			<tr>
+				<th width="30"></th>
+				<th>Name</th>
+				<th class="show-for-large-up">Tags</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @equipment.each do |equipment| %>
+				<tr>
+					<td class="book">
+						<input type="checkbox" class="booking-select" name="book" id="<%= equipment.id %>"></input>
+					</td>
+					<td class="title">
+						<%= link_to equipment.name, edit_equipment_path(equipment) %>
+					</td>
+					<td class="tags show-for-large-up">
+						<%= equipment.category.name if equipment.category %>
+					</td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>
