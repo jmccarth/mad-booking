@@ -14,6 +14,14 @@ class EquipmentController < ApplicationController
     end
   end
 
+  def tags
+    @equipment = Equipment.joins(:tags).where(tags:{name: request.params[:tag_name]})
+
+    respond_to do |format|
+      format.json { render json: @equipment }
+    end
+  end
+
   # GET /equipment.json
   def index
     @equipment = Equipment.all
