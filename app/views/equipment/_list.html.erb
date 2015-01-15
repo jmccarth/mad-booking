@@ -1,4 +1,6 @@
-<% @equipment = Equipment.all %>
+<!--<% @equipment = Equipment.joins(:tags).where(tags:{name: "Abney Level"}) %>-->
+<% @equipment = equipment_list %>
+
 
 <table class="equipment">
 	<thead>

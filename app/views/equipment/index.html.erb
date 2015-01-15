@@ -62,7 +62,7 @@
 	</div>
 
 	<div class="scroll-y equipment-list">
-		<%= render 'equipment/list' %>
+		<%= render partial: 'equipment/list', locals: {equipment_list: Equipment.all} %>
 	</div>
 	<div class="scroll-y calendar" style="display:none">
 		Calendar

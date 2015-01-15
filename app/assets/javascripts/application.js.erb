@@ -36,9 +36,9 @@ function initializeComponents($container) {
 	$container.find('input.time').timepicker({
 		"timeFormat" : "h:i A"
 	});
-	
+
 	//$container.foundation('section', 'reflow');
-	
+
 	$('li > a.remove').click(function() {
 		$(this).parent().remove();
 	});
@@ -67,38 +67,38 @@ function initializeComponents($container) {
 		$preview_links.addClass('inactive').removeClass('success');
 		reloadCalendar();
 	});
-	
+
 	/* Search */
-	
+
 	var $search_input = $container.find('.usersearch');
-	
+
 	window.localStorage.clear();
 
 	$search_input.typeahead({
-		name: "name", 
+		name: "name",
 		prefetch: "users/username.json"
 	});
-	
+
 
 	$search_input.on('usersearch:selected', function() {
 		$(this).closest('form').submit();
 	});
-	
+
 	var $equip_input = $('.equipsearch');
-	
+
 	$equip_input.typeahead({
 		name: 'equipment',
 		prefetch: {url: 'equipment.json'},
 		valueKey: 'name'
 	});
-	
+
 	var $main_equip_search = $('#equipment');
 	$main_equip_search.on('typeahead:selected',function(e){
 		var $chkbox = $("[name*='" + e.target.value + "']").eq(0);
 		$chkbox.click();
 		//$chkbox.closest('p').remove();
 	});
-	
+
 	var $add_equip = $('#equipment_details .equipsearch');
 	$add_equip.on('typeahead:selected',function(e){
 		$.ajax({
@@ -111,9 +111,9 @@ function initializeComponents($container) {
 				}
 			}
 		});
-		
+
 	});
-	
+
 	$submitBooking = $("#submitBooking");
 	$submitBooking.bind('click',function(e){
 		e.preventDefault();
@@ -125,7 +125,7 @@ function initializeComponents($container) {
 		e.preventDefault();
 		validateUserForm();
 	});
-    
+
     /*
     $weekly_repeat = $("#weekly_repeat");
     $repeat_details = $("#repeat_details");
@@ -138,36 +138,36 @@ function initializeComponents($container) {
         }
     });
     */
-	
+
 }
 
 $(function() {
 	initializeComponents($('body'));
 
 	/* Modals */
-	
+
 	var $modalContainer = $("#modalContainer");
-	
+
 	$modalContainer.on('opened', function () {
 	  $(this).foundation('section', 'reflow');
 	});
-	
+
 	$('.modal').each(function(){
 		$(this).attr('data-reveal-id', 'modalContainer').attr('data-reveal-ajax', $(this).attr('href'));
 	});
-	
+
 
 	$('#createBooking').click(function(){
-		
+
 		if ($(this).hasClass('disabled')) return;
-		
+
 		var $items = $('#equipmentList').find('.equipCheck:checked');
 		var equip_ids = [];
-		
+
 		$items.each(function(index) {
 			equip_ids.push(this.value);
 		});
-		
+
 		$modalContainer.foundation('reveal', 'open', {
 			url: "bookings/new",
 			data: {
@@ -176,27 +176,27 @@ $(function() {
 			complete: function() {
 				initializeComponents($modalContainer);
 				$modalContainer.find('p.title').trigger('click'); //force accordion open
-			}, 
+			},
 			error: function() {
 				alert('loading error');
 			}
-		}); 
+		});
 	});
-	
+
 	/* Equipment List */
-		
+
 	var $equipmentList = $("#equipmentList");
 	var $createBooking = $("#createBooking");
-	
+
 	$equipmentList.find('section.active').removeClass('active'); // force accordion closed
-	
+
 	$('.equipCheck').click(function(){
-	
+
 		var $parent = $(this).closest('section');
 
 		var count_all = $equipmentList.find('.equipCheck:checked').length;
 		var count_this = $parent.find('.equipCheck:checked').length;
-		
+
 		if (count_all > 0) {
 			$createBooking.removeClass('disabled');
 			$createBooking.html('Book ' + count_all + ' items');
@@ -205,7 +205,7 @@ $(function() {
 			$createBooking.addClass('disabled');
 			$createBooking.html('Select items to create a booking');
 		}
-		
+
 		if (count_this > 0) {
 			$parent.addClass('selected');
 		}
@@ -213,7 +213,7 @@ $(function() {
 			$parent.removeClass('selected');
 		}
 	});
-	
+
 	/* Barcodes */
 	var chars = [];
 	var barcode = "";
@@ -226,7 +226,7 @@ $(function() {
                     $("#bc_out_" + barcode)[0].value = $("#bc_out_" + barcode).attr('data');
                     $("#status_" + barcode).attr('class','right round label')
                     $("#status_" + barcode)[0].innerHTML = "Signing Out"
-                } 
+                }
                 else if ($("#bc_in_" + barcode).length > 0) {
                     $("#bc_in_" + barcode)[0].value = $("#bc_in_" + barcode).attr('data');
                     $("#status_" + barcode).attr('class','right round success label')
@@ -239,9 +239,9 @@ $(function() {
             }
         }
 	});
-	
+
 	/* Expand
-	
+
 	$(".expand").click(function() {
 		var $container = $('.middle-column');
 		var $others = $container.siblings('.columns');
@@ -249,32 +249,32 @@ $(function() {
 		$others.each(function() {
 			$(this).attr('class', 'columns large-1');
 		});
-		
+
 		$container.attr('class', 'columns middle-column large-' + (12-$others.length));
-		
+
 		setTimeout(function() {
 			$(window).trigger('resize');
 		}, 1000);
 	});
-	
+
 	*/
-	
+
 	/* Views */
-	
+
 	var $views = $('#views');
 	var $inputs = $views.find('input');
 	var $columns = $('#layout > .columns');
-	
+
 	var $leftColumn = $columns.eq(0);
 	var $middleColumn = $columns.eq(1);
 	var $rightColumn = $columns.eq(2);
-	
+
 	var sizeArray = [];
-	
+
 	$inputs.click(function() {
 		updateViews();
 	});
-	
+
 	function updateViews() {
 		var switchLeft = $views.find("#leftOn").is(':checked');
 		var switchMiddle = $views.find("#middleOn").is(':checked');
@@ -309,14 +309,14 @@ $(function() {
 		else if (!switchLeft && !switchMiddle && !switchRight) {
 			sizeArray = [0, 0, 0];
 		}
-		
+
 		sizeArray.forEach(function(size, index) {
 			$columns.eq(index).attr('class', 'columns large-' + size);
 		});
-		
+
 		$(window).trigger('resize');
 	}
-	
+
 });
 
 function validateUserForm(){
@@ -363,9 +363,9 @@ function validateUserForm(){
 		$.each(errors,function(i,v){
 			$modalContainer.find('.errors').append("<div data-alert class='alert-box alert'>" + v + "</div>");
 		});
-		
-	}	
-	
+
+	}
+
 
 }
 
@@ -379,47 +379,47 @@ function validateBookingForm(){
 			userList = data;
 		}
 	});
-	
-	
+
+
 	/* Get list of equipment IDs being booked */
 	var equip_ids = [];
 	$.each($('#equip_list li input'),function(i,input){
 		equip_ids.push(parseInt(input.value));
 	});
-	
+
 	/* Get ID of current event */
 	var booking_id = $('#booking_id')[0].value;
-	
+
 	var errors = [];
-	
+
 	/* Validate timestamps */
 	/* Start time must come before the end time */
 	var start_d = $('#schedule_start').datepicker('getDate').toDateString();
 	var end_d = $('#schedule_end').datepicker('getDate').toDateString();
 	var start_t = $('#schedule_start_time').timepicker('getTime').toTimeString();
 	var end_t = $('#schedule_end_time').timepicker('getTime').toTimeString();
-	
+
 	var sd = Date.parse(start_d + " " + start_t);
 	var ed = Date.parse(end_d + " " + end_t);
-	
+
 	if (sd >= ed){
 		errors.push("Start time must be before end time.");
 	}
-	
-	
+
+
 	/* Validate that at least one piece of equipment is being booked */
 	var $equip_list_li = $('#equip_list li');
 	if ($equip_list_li.length <= 0 ){
 		errors.push("You must book at least one piece of equipment.");
 	}
-	
+
 	var userName = $('#booking_user')[0].value;
-	
+
 	/* Validate that user name isn't blank */
 	if (userName == ""){
 		errors.push("User name cannot be blank.");
 	}
-	
+
 	/* Validate that the user is an existing user */
 	/* Only needs to be done if the "create?" box is unchecked */
 	if (!$('#create_if_new')[0].checked){
@@ -433,8 +433,8 @@ function validateBookingForm(){
 			errors.push("User " + userName + " does not exist.");
 		}
 	}
-	
-	
+
+
 	/* Validate that the user isn't blacklisted */
 	/* Only applies if the user exists */
 	if (userExists){
@@ -451,11 +451,11 @@ function validateBookingForm(){
 			errors.push("User " + userName + " is blacklisted. Do not loan them equipment.");
 		}
 	}
-	
+
 	/* Validate that we aren't double-booking equipment */
 	// Get events from calendar
 	var calEvents = $('#calendar').fullCalendar('clientEvents');
-	
+
 	$.each(calEvents,function(i,ev){
 		if(ev.id != booking_id && ev.status != 2){
 			//Event A is fullCalendar event
@@ -474,25 +474,25 @@ function validateBookingForm(){
 				});
 			}
 		}
-		
+
 	});
 
 
-	
+
 	/* Submit the form if there are no validation errors */
 	if (errors.length == 0){
 		$('#submitBooking').closest('form').submit();
 	}
 	else{
-		
+
 		var $modalContainer = $('#modalContainer');
 		$modalContainer.find('.alert-box').remove();
 		$.each(errors,function(i,v){
 			$modalContainer.find('.errors').append("<div data-alert class='alert-box alert'>" + v + "</div>");
 		});
-		
-	}	
-	
+
+	}
+
 }
 
 //$(document).foundation();
@@ -508,6 +508,7 @@ $(function() {
 	$tags.on('click', function() {
 		//var $filter = $("<li>" + $(this).html().trim() + "<span class='remove'>&times;</span></li>");
 		$(this).toggleClass('active');
+
 		updateFilters();
 	});
 

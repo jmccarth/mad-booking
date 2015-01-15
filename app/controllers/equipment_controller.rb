@@ -15,10 +15,10 @@ class EquipmentController < ApplicationController
   end
 
   def tags
-    @equipment = Equipment.joins(:tags).where(tags:{name: request.params[:tag_name]})
+    @tagged_equipment = Equipment.joins(:tags).where(tags:{id: request.params[:tag_id]})
 
     respond_to do |format|
-      format.json { render json: @equipment }
+      format.js
     end
   end
 
