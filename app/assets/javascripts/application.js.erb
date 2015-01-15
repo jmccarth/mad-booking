@@ -16,6 +16,7 @@
 //= require jquery_ujs
 //= require fullcalendar
 //= require home
+//= require search
 //= require barcode_listener
 //= require twitter/typeahead
 //= require recurring_select
@@ -35,9 +36,9 @@ function initializeComponents($container) {
 	$container.find('input.time').timepicker({
 		"timeFormat" : "h:i A"
 	});
-
+	
 	//$container.foundation('section', 'reflow');
-
+	
 	$('li > a.remove').click(function() {
 		$(this).parent().remove();
 	});
@@ -66,135 +67,38 @@ function initializeComponents($container) {
 		$preview_links.addClass('inactive').removeClass('success');
 		reloadCalendar();
 	});
-
+	
 	/* Search */
-
+	
 	var $search_input = $container.find('.usersearch');
-
+	
 	window.localStorage.clear();
 
-	var user_engine = new Bloodhound({
-		datumTokenizer: function (user) {
-			return Bloodhound.tokenizers.whitespace(user.username);
-		},
-		queryTokenizer: Bloodhound.tokenizers.whitespace,
-		prefetch: {
-			url: "users/username.json",
-			filter: function(list) {
-				return $.map(list, function(user)
-					{
-						return { username: user };
-					});
-			}
-		}
+	$search_input.typeahead({
+		name: "name", 
+		prefetch: "users/username.json"
 	});
-
-	user_engine.clearPrefetchCache();
-	user_engine.initialize();
-
-	$search_input.typeahead(null, {
-		name: "name",
-		displayKey: 'username',
-		source: user_engine.ttAdapter()
-	});
+	
 
 	$search_input.on('usersearch:selected', function() {
 		$(this).closest('form').submit();
 	});
-
-	var equipment_engine =  new Bloodhound({
-		datumTokenizer: function (obj) {
-			var name_token = Bloodhound.tokenizers.whitespace(obj.name);
-			var barcode_token = Bloodhound.tokenizers.whitespace(obj.barcode);
-
-			return name_token.concat(barcode_token);
-		},
-		queryTokenizer: Bloodhound.tokenizers.whitespace,
-		prefetch: {
-			url: 'equipment.json',
-            filter: function(list) {
-				return list.filter(function(equip) { return equip.status < 2; });
-		    }
-		}
-	});
-
-	equipment_engine.initialize();
-
-	var tag_engine = new Bloodhound({
-        datumTokenizer: function(obj) {
-          return Bloodhound.tokenizers.whitespace(obj.name);
-        },
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        prefetch: {
-          url: '/tags.json'
-        }
-      });
-
-      tag_engine.initialize();
-
-	var $equip_input = $container.find('.equipsearch')[0]; //only find the loaded .equipsearch textbox in the current $container
-
-	$equip_input = $($equip_input);
-
-	$equip_input.typeahead(null, {
+	
+	var $equip_input = $('.equipsearch');
+	
+	$equip_input.typeahead({
 		name: 'equipment',
-		displayKey: 'name',
-		templates: { header: "<h4>Equipment</h4>"},
-		source: equipment_engine.ttAdapter()
-	},
-	{
-        name: 'tags',
-        displayKey: 'name',
-        templates: { header: "<h4>Tags</h4>"},
-        source: tag_engine.ttAdapter()
-    });
-
-	var $main_equip_search = $('#equipment');
-	$main_equip_search.on('typeahead:selected',function(e, suggestion_obj) {
-		//equipment was selected
-		if(suggestion_obj.barcode)
-		{
-			var $chkbox = $("[name*='" + e.target.value + "']").eq(0);
-			$chkbox.click();
-			//$chkbox.closest('p').remove();
-		}
-
-
-		//tag was selected
-
-		//remove notification style counters
-		var found_items = $('#equipmentList').find('.found-items');
-		found_items.each(function (index)
-		{
-			var found_item = $(found_items[index]);
-			found_item.remove();
-		});
-
-		suggestion_obj.equipment.forEach(function (element)
-		{
-			var category = $("[name*='" + element.name + "']").closest('section');
-
-			var notificaton = category.find('.found-items');
-
-			//notificcation of items already exist
-			if(notificaton.length > 0)
-			{
-				//get the text, convert it into an int, add 1, then display the updated counter
-				notificaton = $(notificaton[0]);
-				var count = parseInt(notificaton.text());
-				count += 1;
-
-				notificaton.text(count);
-				return;
-			}
-
-			//change the find parameters to define where this goes
-			var eye_icon = $(category.find('.icon-eye-open')[0]);
-			$('<div class="found-items secondary">1</div>').insertAfter(eye_icon);
-		});
-
+		prefetch: {url: 'equipment.json'},
+		valueKey: 'name'
 	});
-
+	
+	var $main_equip_search = $('#equipment');
+	$main_equip_search.on('typeahead:selected',function(e){
+		var $chkbox = $("[name*='" + e.target.value + "']").eq(0);
+		$chkbox.click();
+		//$chkbox.closest('p').remove();
+	});
+	
 	var $add_equip = $('#equipment_details .equipsearch');
 	$add_equip.on('typeahead:selected',function(e){
 		$.ajax({
@@ -207,9 +111,9 @@ function initializeComponents($container) {
 				}
 			}
 		});
-
+		
 	});
-
+	
 	$submitBooking = $("#submitBooking");
 	$submitBooking.bind('click',function(e){
 		e.preventDefault();
@@ -221,29 +125,7 @@ function initializeComponents($container) {
 		e.preventDefault();
 		validateUserForm();
 	});
-
-	// Datetime picker cleanup
-	$('#schedule_start').change(function () {
-		var start_time = new Date($('#schedule_start').val());
-		var end_time = new Date($('#schedule_end').val());
-
-		if(start_time > end_time)
-			{
-				$('#schedule_end').val($('#schedule_start').val());
-			}
-		});
-
-		$('#schedule_end').change(function () {
-			var start_time = new Date($('#schedule_start').val());
-			var end_time = new Date($('#schedule_end').val());
-
-			if(start_time > end_time)
-				{
-					$('#schedule_start').val($('#schedule_end').val());
-				}
-
-			});
-
+    
     /*
     $weekly_repeat = $("#weekly_repeat");
     $repeat_details = $("#repeat_details");
@@ -256,38 +138,36 @@ function initializeComponents($container) {
         }
     });
     */
-
-
-
+	
 }
 
 $(function() {
 	initializeComponents($('body'));
 
 	/* Modals */
-
+	
 	var $modalContainer = $("#modalContainer");
-
+	
 	$modalContainer.on('opened', function () {
 	  $(this).foundation('section', 'reflow');
 	});
-
+	
 	$('.modal').each(function(){
 		$(this).attr('data-reveal-id', 'modalContainer').attr('data-reveal-ajax', $(this).attr('href'));
 	});
-
+	
 
 	$('#createBooking').click(function(){
-
+		
 		if ($(this).hasClass('disabled')) return;
-
+		
 		var $items = $('#equipmentList').find('.equipCheck:checked');
 		var equip_ids = [];
-
+		
 		$items.each(function(index) {
 			equip_ids.push(this.value);
 		});
-
+		
 		$modalContainer.foundation('reveal', 'open', {
 			url: "bookings/new",
 			data: {
@@ -296,29 +176,27 @@ $(function() {
 			complete: function() {
 				initializeComponents($modalContainer);
 				$modalContainer.find('p.title').trigger('click'); //force accordion open
-			},
+			}, 
 			error: function() {
 				alert('loading error');
 			}
-		});
+		}); 
 	});
-
-
-
+	
 	/* Equipment List */
-
+		
 	var $equipmentList = $("#equipmentList");
 	var $createBooking = $("#createBooking");
-
+	
 	$equipmentList.find('section.active').removeClass('active'); // force accordion closed
-
+	
 	$('.equipCheck').click(function(){
-
+	
 		var $parent = $(this).closest('section');
 
 		var count_all = $equipmentList.find('.equipCheck:checked').length;
 		var count_this = $parent.find('.equipCheck:checked').length;
-
+		
 		if (count_all > 0) {
 			$createBooking.removeClass('disabled');
 			$createBooking.html('Book ' + count_all + ' items');
@@ -327,7 +205,7 @@ $(function() {
 			$createBooking.addClass('disabled');
 			$createBooking.html('Select items to create a booking');
 		}
-
+		
 		if (count_this > 0) {
 			$parent.addClass('selected');
 		}
@@ -335,7 +213,7 @@ $(function() {
 			$parent.removeClass('selected');
 		}
 	});
-
+	
 	/* Barcodes */
 	var chars = [];
 	var barcode = "";
@@ -348,7 +226,7 @@ $(function() {
                     $("#bc_out_" + barcode)[0].value = $("#bc_out_" + barcode).attr('data');
                     $("#status_" + barcode).attr('class','right round label')
                     $("#status_" + barcode)[0].innerHTML = "Signing Out"
-                }
+                } 
                 else if ($("#bc_in_" + barcode).length > 0) {
                     $("#bc_in_" + barcode)[0].value = $("#bc_in_" + barcode).attr('data');
                     $("#status_" + barcode).attr('class','right round success label')
@@ -361,9 +239,9 @@ $(function() {
             }
         }
 	});
-
+	
 	/* Expand
-
+	
 	$(".expand").click(function() {
 		var $container = $('.middle-column');
 		var $others = $container.siblings('.columns');
@@ -371,32 +249,32 @@ $(function() {
 		$others.each(function() {
 			$(this).attr('class', 'columns large-1');
 		});
-
+		
 		$container.attr('class', 'columns middle-column large-' + (12-$others.length));
-
+		
 		setTimeout(function() {
 			$(window).trigger('resize');
 		}, 1000);
 	});
-
+	
 	*/
-
+	
 	/* Views */
-
+	
 	var $views = $('#views');
 	var $inputs = $views.find('input');
 	var $columns = $('#layout > .columns');
-
+	
 	var $leftColumn = $columns.eq(0);
 	var $middleColumn = $columns.eq(1);
 	var $rightColumn = $columns.eq(2);
-
+	
 	var sizeArray = [];
-
+	
 	$inputs.click(function() {
 		updateViews();
 	});
-
+	
 	function updateViews() {
 		var switchLeft = $views.find("#leftOn").is(':checked');
 		var switchMiddle = $views.find("#middleOn").is(':checked');
@@ -431,14 +309,14 @@ $(function() {
 		else if (!switchLeft && !switchMiddle && !switchRight) {
 			sizeArray = [0, 0, 0];
 		}
-
+		
 		sizeArray.forEach(function(size, index) {
 			$columns.eq(index).attr('class', 'columns large-' + size);
 		});
-
+		
 		$(window).trigger('resize');
 	}
-
+	
 });
 
 function validateUserForm(){
@@ -485,9 +363,9 @@ function validateUserForm(){
 		$.each(errors,function(i,v){
 			$modalContainer.find('.errors').append("<div data-alert class='alert-box alert'>" + v + "</div>");
 		});
-
-	}
-
+		
+	}	
+	
 
 }
 
@@ -501,47 +379,47 @@ function validateBookingForm(){
 			userList = data;
 		}
 	});
-
-
+	
+	
 	/* Get list of equipment IDs being booked */
 	var equip_ids = [];
 	$.each($('#equip_list li input'),function(i,input){
 		equip_ids.push(parseInt(input.value));
 	});
-
+	
 	/* Get ID of current event */
 	var booking_id = $('#booking_id')[0].value;
-
+	
 	var errors = [];
-
+	
 	/* Validate timestamps */
 	/* Start time must come before the end time */
 	var start_d = $('#schedule_start').datepicker('getDate').toDateString();
 	var end_d = $('#schedule_end').datepicker('getDate').toDateString();
 	var start_t = $('#schedule_start_time').timepicker('getTime').toTimeString();
 	var end_t = $('#schedule_end_time').timepicker('getTime').toTimeString();
-
+	
 	var sd = Date.parse(start_d + " " + start_t);
 	var ed = Date.parse(end_d + " " + end_t);
-
+	
 	if (sd >= ed){
 		errors.push("Start time must be before end time.");
 	}
-
-
+	
+	
 	/* Validate that at least one piece of equipment is being booked */
 	var $equip_list_li = $('#equip_list li');
 	if ($equip_list_li.length <= 0 ){
 		errors.push("You must book at least one piece of equipment.");
 	}
-
+	
 	var userName = $('#booking_user')[0].value;
-
+	
 	/* Validate that user name isn't blank */
 	if (userName == ""){
 		errors.push("User name cannot be blank.");
 	}
-
+	
 	/* Validate that the user is an existing user */
 	/* Only needs to be done if the "create?" box is unchecked */
 	if (!$('#create_if_new')[0].checked){
@@ -555,8 +433,8 @@ function validateBookingForm(){
 			errors.push("User " + userName + " does not exist.");
 		}
 	}
-
-
+	
+	
 	/* Validate that the user isn't blacklisted */
 	/* Only applies if the user exists */
 	if (userExists){
@@ -573,11 +451,11 @@ function validateBookingForm(){
 			errors.push("User " + userName + " is blacklisted. Do not loan them equipment.");
 		}
 	}
-
+	
 	/* Validate that we aren't double-booking equipment */
 	// Get events from calendar
 	var calEvents = $('#calendar').fullCalendar('clientEvents');
-
+	
 	$.each(calEvents,function(i,ev){
 		if(ev.id != booking_id && ev.status != 2){
 			//Event A is fullCalendar event
@@ -596,25 +474,25 @@ function validateBookingForm(){
 				});
 			}
 		}
-
+		
 	});
 
 
-
+	
 	/* Submit the form if there are no validation errors */
 	if (errors.length == 0){
 		$('#submitBooking').closest('form').submit();
 	}
 	else{
-
+		
 		var $modalContainer = $('#modalContainer');
 		$modalContainer.find('.alert-box').remove();
 		$.each(errors,function(i,v){
 			$modalContainer.find('.errors').append("<div data-alert class='alert-box alert'>" + v + "</div>");
 		});
-
-	}
-
+		
+	}	
+	
 }
 
 //$(document).foundation();
@@ -626,13 +504,11 @@ $(function() {
 	var $tags = $('.tags li');
 	var $filters = $('.filters');
 	var $filtersContainer = $('.filters-container');
-	var $cards = $('.cards');
 
 	$tags.on('click', function() {
 		//var $filter = $("<li>" + $(this).html().trim() + "<span class='remove'>&times;</span></li>");
 		$(this).toggleClass('active');
 		updateFilters();
-		updateCardList();
 	});
 
 	$('.filters li').on('click', function() {
@@ -648,37 +524,9 @@ $(function() {
 		$filters.html($active);
 	};
 
-	var updateCardList = function() {
-		$('.card').hide();
-		var tag_conditions = [];
-
-		$('.filters > .active > .name').each(function(){
-			var tagname = this.innerText;
-			tag_conditions.push(':contains("'+tagname+'")')
-		});
-
-		var condition_string = tag_conditions.join(",");
-		console.log(condition_string);
-		$items = $('.card > .card-body > .cardtaglist').filter(condition_string);
-		$items.each(function(){
-			$(this).parent().parent().show();
-		});
-
-	};
-
-	$('.tag-search').keyup(function() {
-		var query = $(this).val().toLowerCase();
-		$tags.each(function() {
-			if ($(this).find('.name').html().toLowerCase().indexOf(query) == -1) $(this).hide();
-			else $(this).show();
-		});
-		if (query != '') $(this).addClass('active');
-		else $(this).removeClass('active');
-	});
-
 	var $bookingSelects = $('.booking-select');
 	var $bookingCount = $('.booking-count');
-	var $bookingBar = $('.booking.bar');
+	var $bookingBar = $('.booking.cell');
 
 	$bookingSelects.change(function() {
 		var count = $bookingSelects.filter(':checked').length;
@@ -690,12 +538,12 @@ $(function() {
 		}
 		$bookingCount.html(count);
 
-		var $card = $(this).closest('.card');
+		var $row = $(this).closest('tr');
 		if ($(this).is(':checked')) {
-			$card.addClass('active');
+			$row.addClass('active');
 		}
 		else  {
-			$card.removeClass('active');
+			$row.removeClass('active');
 		}
 	});
 
@@ -703,6 +551,33 @@ $(function() {
 		$bookingSelects.filter(':checked').closest('.card').removeClass('active');
 		$bookingSelects.attr('checked', false);
 		$bookingBar.hide();
+	});
+
+	/* TABLE APPROACH */
+
+	var $equipment = $('table.equipment tr');
+
+	$equipment.click(function(e) {
+		if (!$(e.target).is('input'))
+			$(this).find('input').trigger('click');
+	});
+
+	/* TABS */
+
+	var $tabs = $('a.tab');
+
+	$tabs.click(function() {
+		var $others = $(this).siblings();
+		var $target = $($(this).attr('data-target'));
+
+		$others.each(function() {
+			$($(this).attr('data-target')).hide();
+		});
+
+		$target.show();
+
+		$(this).addClass('active');
+		$others.removeClass('active');
 	});
 
 });

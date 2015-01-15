@@ -1,0 +1,16 @@
+<% @equipment = Equipment.all %>
+
+<div class="bar">
+	<div class="title">
+		<i class="icon-calendar"></i>
+		<input class="date" type="date"></input>
+	</div>
+</div>
+
+<div class="scroll-y">
+	<div class="cards">
+		<% @equipment.each do |equipment| %>
+			<%=render 'equipment/card', :equipment => equipment %>
+		<% end %>
+	</div>
+</div>

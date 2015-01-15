@@ -1,0 +1,41 @@
+table {
+	margin:0 !important;
+	border:0 !important;
+}
+
+table input {
+	margin:0 !important;
+}
+
+table th, table td {
+	font-size:100% !important;
+	padding:7px 15px !important;
+	line-height:1.5 !important;
+	vertical-align:top;
+}
+
+table.equipment {
+	/*table-layout:fixed;*/
+}
+
+table.equipment tr:hover {
+	background:#dfd;
+}
+
+table.equipment tr:hover .oneline {
+	white-space:normal;
+	overflow:visible;
+	text-overflow:normal;
+}
+
+table th.status, table td.status {
+	text-align:right;
+}
+
+td.book {
+	width:30px;
+}
+
+td.title {
+	max-width:300px;
+}

@@ -1,0 +1,7 @@
+<ul class="list users">
+  <% User.all.sort{|a,b| a.username <=> b.username}.each do |user| %>
+    <li>
+      <span class="right"><%= user.status %></span><span class="name"><%= link_to user.username, edit_user_path(user) %></span>
+    </li>
+  <% end %>
+</ul>

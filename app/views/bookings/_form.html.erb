@@ -1,123 +1,90 @@
-<a class="close-reveal-modal"><i class="icon-remove"></i></a>
+<% @booking = Booking.new %>
 
-<div class="row row-fluid">
-	<div class="small-12 columns">
-		<h3>Booking details</h3>
-		<hr />
-	</div>
+<div class="errors">
 </div>
 
-<div class="row row-fluid">
-	<div class="small-12 columns errors">
-	</div>
-</div>
+<div class="booking-form scroll-y">
 
-<%= form_for(@booking) do |f| %>
-<% if @booking.errors.any? %>
-	report_errors(@booking)
-<% end %>
-
-<% flash.each do |name, msg| %>
-	<%= content_tag :div, msg, class: "alert-box" %>
-<% end %>
-
-<% if !@booking.new_record? %>
-	<% if (@booking.equipment.count == @booking.sign_in_times.count) and @booking.equipment.count > 0 and @booking.schedule.nil? %>
-		<% disable_ui = true %>
-	<% elsif !@booking.schedule.nil? %>
-		<% if @booking.events.last.end <= Time.now %>
-			<% disable_ui = true %>
+	<%= form_for(@booking) do |f| %>
+		<% if @booking.errors.any? %>
+			report_errors(@booking)
 		<% end %>
-	<% else %>
-		<% disable_ui = false %>
-	<% end %>
-<% end %>
 
-<%= hidden_field_tag "booking_id", @booking.id %>
+		<% flash.each do |name, msg| %>
+			<%= content_tag :div, msg, class: "alert-box" %>
+		<% end %>
 
-<div class="row row-fluid">
-	<div class="large-6 columns">
-		<div id="equipment_details" class="section-container accordion">
-			<section class="active">
-				<p class="title" data-section-title>
-					<a href="#">Equipment</a>
-				</p>
-				<div class="content" data-section-content>
-					<ul id="equip_list" class="side-nav">
-						<% if params[:ids] %>
-							<% params[:ids].each do |id| %>
-								<li>
-											<span class="muted">
-												<%= Equipment.find(id).category.name %>
-												<span class="gt"><i class="icon-angle-right"></i></span>
-											</span>
+		<% if !@booking.new_record? %>
+			<% if (@booking.equipment.count == @booking.sign_in_times.count) and @booking.equipment.count > 0 and @booking.schedule.nil? %>
+				<% disable_ui = true %>
+			<% elsif !@booking.schedule.nil? %>
+				<% if @booking.events.last.end <= Time.now %>
+					<% disable_ui = true %>
+				<% end %>
+			<% else %>
+				<% disable_ui = false %>
+			<% end %>
+		<% end %>
 
-											<%= Equipment.find(id).name %>
+		<%= hidden_field_tag "booking_id", @booking.id %>
 
-											<a class="label radius alert right remove"><i class="icon-remove"></i></a>
-											<span class="round secondary label right">Booking</span>
-									<%= hidden_field_tag "booking[equipment_ids][]", id %>
-								</li>
+		<div id="equipment_details">
+			<ul id="equip_list">
+				<% if params[:ids] %>
+					<% params[:ids].each do |id| %>
+						<li>
+							<%= Equipment.find(id).name %>
+							<a class="label radius alert right remove"><i class="icon-remove"></i></a>
+							<span class="round secondary label right">Booking</span>
+							<%= hidden_field_tag "booking[equipment_ids][]", id %>
+						</li>
+					<% end %>
+				<% end %>
+
+				<% if @booking.equipment.count > 0 %>
+					<% for equip in @booking.equipment %>
+						<li>
+							<span class="muted">
+								<%= equip.category.name %>
+								<span class="gt"><i class="icon-angle-right"></i></span>
+							</span>
+							<% if equip.contents.nil? %>
+								<%= equip.name %>	
+							<% else %>
+								<span data-tooltip class="has-tip" title="<%= equip.contents %>"><%= equip.name %></span>
 							<% end %>
-						<% end %>
-						<% if @booking.equipment.count > 0 %>
-							<% for equip in @booking.equipment %>
-								<li>
-									<span class="muted">
-										<%= equip.category.name %>
-										<span class="gt"><i class="icon-angle-right"></i></span>
-									</span>
-									<% if equip.contents.nil? %>
-										<%= equip.name %>
-									<% else %>
-										<span data-tooltip class="has-tip" title="<%= equip.contents %>"><%= equip.name %></span>
-									<% end %>
-									<%= hidden_field_tag "booking[equipment_ids][]", equip.id %>
-
-									<% item_status = @booking.get_item_status(equip.id) %>
-									<% if item_status == "Booked" %>
-										<%= hidden_field_tag "booking[sign_out_ids][]", nil, {:data => equip.id, :class => "scannable", :id => "bc_out_#{equip.barcode}"}%>
-										<span id="status_<%= equip.barcode %>" class="right secondary label"><%= item_status %></span>
-										<br />
-									<% elsif item_status == "Out" %>
-										<%= hidden_field_tag "booking[sign_in_ids][]", nil, {:data => equip.id, :class => "scannable", :id => "bc_in_#{equip.barcode}"}%>
-										<span id="status_<%= equip.barcode %>" class="right label"><%= item_status %></span>
-										<br />
-										Out at <%= @booking.sign_out_times[equip.id].strftime("%b %-d, %Y %I:%M %p") %>
-									<% elsif item_status == "In" %>
-										<span id="status_<%= equip.barcode %>" class="right success label"><%= item_status %></span>
-										<br />
-										In at <%= @booking.sign_in_times[equip.id].strftime("%b %-d, %Y %I:%M %p") %>
-									<% elsif item_status == "Overdue" %>
-										<%= hidden_field_tag "booking[sign_in_ids][]", nil, {:data => equip.id, :class => "scannable", :id => "bc_in_#{equip.barcode}"}%>
-										<span id="status_<%= equip.barcode %>" class="right alert label">Overdue</span>
-										<br />
-										Out at <%= @booking.sign_out_times[equip.id].strftime("%b %-d, %Y %I:%M %p") %>
-									<% else %>
-										<%= hidden_field_tag "booking[sign_in_ids][]", nil, {:data => equip.id, :class => "scannable", :id => "bc_in_#{equip.barcode}"}%>
-										<span id="status_<%= equip.barcode %>" class="right label"><%= item_status %></span>
-										<br />
-									<% end %>
-
-									<% if !@booking.sign_out_times.key?(equip.id) %>
-										<a class="label radius alert right remove"><i class="icon-remove"></i></a>
-									<% end %>
-
-
-
-									<br />
-								</li>
+							<%= hidden_field_tag "booking[equipment_ids][]", equip.id %>
+							
+							<% item_status = @booking.get_item_status(equip.id) %>
+							<% if item_status == "Booked" %>
+								<%= hidden_field_tag "booking[sign_out_ids][]", nil, {:data => equip.id, :class => "scannable", :id => "bc_out_#{equip.barcode}"}%>
+								<span id="status_<%= equip.barcode %>" class="right secondary label"><%= item_status %></span>
+								<br />
+							<% elsif item_status == "Out" %>
+								<%= hidden_field_tag "booking[sign_in_ids][]", nil, {:data => equip.id, :class => "scannable", :id => "bc_in_#{equip.barcode}"}%>
+								<span id="status_<%= equip.barcode %>" class="right label"><%= item_status %></span>
+								<br />
+								Out at <%= @booking.sign_out_times[equip.id].strftime("%b %-d, %Y %I:%M %p") %>
+							<% elsif item_status == "In" %>
+								<span id="status_<%= equip.barcode %>" class="right success label"><%= item_status %></span>
+								<br />
+								In at <%= @booking.sign_in_times[equip.id].strftime("%b %-d, %Y %I:%M %p") %>
+							<% elsif item_status == "Overdue" %>
+								<%= hidden_field_tag "booking[sign_in_ids][]", nil, {:data => equip.id, :class => "scannable", :id => "bc_in_#{equip.barcode}"}%>
+								<span id="status_<%= equip.barcode %>" class="right alert label">Overdue</span>
+								<br />
+								Out at <%= @booking.sign_out_times[equip.id].strftime("%b %-d, %Y %I:%M %p") %>
 							<% end %>
-						<% end %>
-					</ul>
-					<%= render 'shared/search_form' %>
-				</div>
-			</section>
+							
+							<% if !@booking.sign_out_times.key?(equip.id) %>
+								<a class="label radius alert right remove"><i class="icon-remove"></i></a>
+							<% end %>
+						</li>
+					<% end %>	
+				<% end %>
+			</ul>
+		</div>			
 
-		</div>
-	</div>
-
-	<div class="large-6 columns">
 		<div class="row collapse">
 			<div class="small-1 columns">
 				<span class="prefix">
@@ -136,7 +103,6 @@
 					</label>
 				</span>
 			</div>
-
 		</div>
 
 		<% if @booking.events.first != nil %>
@@ -150,10 +116,10 @@
 			<% has_weekly_recur = !@booking.schedule.nil? %>
 			<% if !@booking.schedule.nil? %>
 				<% weekly_rep = @booking.schedule.options[:repeat] %>
-                <% show_rep_details = 'display: inline' %>
+	            <% show_rep_details = 'display: inline' %>
 			<% else %>
 				<% weekly_rep = nil %>
-                <% show_rep_details = 'display: none' %>
+	            <% show_rep_details = 'display: none' %>
 			<% end %>
 		<% else %>
 			<% start_d = Time.now.strftime("%m/%d/%Y") %>
@@ -163,8 +129,8 @@
 		<% end %>
 
 		<hr />
-
-		<div class="row">
+		
+		<div class="row collapse">
 			<div class="small-6 columns">
 				<label>Booking date:</label>
 				<div class="row collapse">
@@ -193,7 +159,7 @@
 			</div>
 		</div>
 
-		<div class="row">
+		<div class="row collapse">
 			<div class="small-6 columns">
 				<label>Return date:</label>
 				<div class="row collapse">
@@ -221,38 +187,37 @@
 				</div>
 			</div>
 		</div>
-
+					
 		<hr />
-			<label>Recurrence</label>
-			<div class="row collapse">
-				<div class="small-5 columns">
-					<span class="prefix">
-						<%= check_box_tag :weekly_repeat, 1, has_weekly_recur %> Repeat for
-					</span>
-				</div>
-				<div class="small-2 columns">
-					<%= number_field_tag :num_weeks, weekly_rep, in:1..12 %>
-				</div>
-				<div class="small-5 columns">
-					<span class="postfix">
-						weeks
-					</span>
-				</div>
+		<label>Recurrence</label>
+		<div class="row collapse">
+			<div class="small-5 columns">
+				<span class="prefix">
+					<%= check_box_tag :weekly_repeat, 1, has_weekly_recur %> Repeat for
+				</span>
 			</div>
-			<% if @booking.events.count > 1 %>
-				<label>Events</label>
-				<div class="panel">
-					<% @booking.events.each do |ev| %>
-						<% ev.end > Time.now ? opacity = 1 : opacity = 0.3 %>
-						<div style=<%= "opacity:" + opacity.to_s %>><%= ev.start.localtime.strftime("%b %e, %I:%M %p") %> to <%= ev.end.localtime.strftime("%b %e, %I:%M %p") %></div>
-					<% end %>
-				</div>
-			<% end %>
+			<div class="small-2 columns">
+				<%= number_field_tag :num_weeks, weekly_rep, in:1..12 %>
+			</div>
+			<div class="small-5 columns">
+				<span class="postfix">
+					weeks
+				</span>
+			</div>
+		</div>
+		<% if @booking.events.count > 1 %>
+			<label>Events</label>
+			<div class="panel">
+				<% @booking.events.each do |ev| %>
+					<% ev.end > Time.now ? opacity = 1 : opacity = 0.3 %>
+					<div style=<%= "opacity:" + opacity.to_s %>><%= ev.start.localtime.strftime("%b %e, %I:%M %p") %> to <%= ev.end.localtime.strftime("%b %e, %I:%M %p") %></div>
+				<% end %>
+			</div>
+		<% end %>
+					
+		<hr />
 
-	</div>
-	<hr />
-
-	<div class="row collapse">
+		<div class="row collapse">
 			<div class="small-1 columns">
 				<span class="prefix">
 					<i class="icon-comments"></i>
@@ -262,31 +227,27 @@
 				<%= f.text_area :comments, :disabled => disable_ui, :placeholder => 'Enter comments related to this booking' %>
 			</div>
 		</div>
-
-	<div class="actions">
-		<% if !disable_ui %>
-			<%= f.submit @booking.new_record? ? 'Create booking' : 'Update booking', :class => 'button success right', :id => "submitBooking" %>
-			<% if !@booking.new_record?  && @booking.sign_out_times.length == 0 %>
-				<%= link_to 'Delete Booking', @booking, confirm: 'Are you sure? This cannot be undone.', method: :delete, :class => 'button alert' %>
+			
+		<div class="actions">
+			<% if !disable_ui %>
+				<%= f.submit @booking.new_record? ? 'Create booking' : 'Update booking', :class => 'button success right', :id => "submitBooking" %>
+				<% if !@booking.new_record?  && @booking.sign_out_times.length == 0 %>
+					<%= link_to 'Delete Booking', @booking, confirm: 'Are you sure? This cannot be undone.', method: :delete, :class => 'button alert' %>
+				<% end %>
 			<% end %>
-		<% end %>
-	</div>
-    <div class="row collapse">
-        <% if @booking.creator.nil? %>
-            <% if @booking.new_record? %>
-                <span class="label secondary right">Booked by: <%= session[:cas_user] %></span>
-                <% @booking.creator = session[:cas_user] %>
-            <% else %>
-                <span class="label secondary right">Booked by: unknown</span>
-            <% end %>
-        <% else %>
-            <span class="label secondary right">Booked by: <%= @booking.creator %></span>
-        <% end %>
-        <%= f.hidden_field :creator %>
-    </div>
-
-    <script>
-
-    </script>
+		</div>
+	    <div class="row collapse">
+	        <% if @booking.creator.nil? %>
+	            <% if @booking.new_record? %>
+	                <span class="label secondary right">Booked by: <%= session[:cas_user] %></span>
+	                <% @booking.creator = session[:cas_user] %>
+	            <% else %>
+	                <span class="label secondary right">Booked by: unknown</span>
+	            <% end %>
+	        <% else %>
+	            <span class="label secondary right">Booked by: <%= @booking.creator %></span>
+	        <% end %>
+	        <%= f.hidden_field :creator %>
+	    </div>
+	<% end %>
 </div>
-<% end %>

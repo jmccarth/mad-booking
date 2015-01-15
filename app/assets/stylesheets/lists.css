@@ -1,0 +1,23 @@
+/* LISTS */
+
+.tags-container {
+	padding-right:15px !important;
+}
+
+ul.list {
+	margin:0;
+	padding:0;
+	list-style-type:none;
+}
+
+ul.list li {
+	padding:7px 15px;
+	opacity:0.8;
+	border-bottom:1px solid rgba(0,0,0,0.2);
+	cursor:pointer;
+}
+
+ul.list li:hover {
+	opacity:1;
+	background:rgba(0,0,0,0.05);
+}

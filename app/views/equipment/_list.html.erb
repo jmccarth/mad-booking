@@ -1,0 +1,34 @@
+<% @equipment = Equipment.all %>
+
+<table class="equipment">
+	<thead>
+		<tr>
+			<th width="30"></th>
+			<th width="">Name</th>
+			<th class="show-for-xlarge-up">Tags</th>
+			<th class="status" align="right">Status</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @equipment.each do |equipment| %>
+			<tr>
+				<td class="book">
+					<input type="checkbox" class="booking-select" name="book" id="<%= equipment.id %>"></input>
+				</td>
+				<td class="name">
+					<%= link_to equipment.name, edit_equipment_path(equipment) %>
+				</td>
+				<td class="tags show-for-xlarge-up">
+					<%= equipment.category.name if equipment.category %>
+				</td>
+				<td align="right" class="status">
+					<% if equipment.status == 1 %>
+						<i class="status icon-circle good"></i>
+					<% else %>
+						<i class="status icon-circle bad"></i>
+					<% end %>
+				</td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
