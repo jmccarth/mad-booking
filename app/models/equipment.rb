@@ -19,7 +19,7 @@ class Equipment < ActiveRecord::Base
     self.tags.each do |tag|
       tag_ids.push(tag.id)
     end
-    tag_ids.join(",")
+    tag_ids.join(" ")
   end
 
   # getter for the valid_statuses array

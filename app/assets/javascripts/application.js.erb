@@ -509,16 +509,10 @@ $(function() {
 		//var $filter = $("<li>" + $(this).html().trim() + "<span class='remove'>&times;</span></li>");
 		$(this).toggleClass('active');
 
-		if ($(this).hasClass('active')){
-			$('.equipment-records').hide();
-			var tag_id = $(this).data('tag-id');
-			$('.equipment-records').filter('[data-tag-ids="' + tag_id + '"]').show();
-		}
-		else{
-			$('.equipment-records').show();
-		}
-
 		updateFilters();
+		updateEquipmentList();
+
+
 	});
 
 	$('.filters li').on('click', function() {
@@ -532,6 +526,18 @@ $(function() {
 		else $filtersContainer.show();
 
 		$filters.html($active);
+	};
+
+	var updateEquipmentList = function(){
+		if ($('.filters li').length == 0){
+			$('.equipment-records').show();
+		}
+		else{
+			$('.equipment-records').hide();
+			$('.filters li').each(function(i,v){
+				$('.equipment-records').filter('[data-tag-ids~="' + $(v).data('tag-id') + '"]').show();
+			});
+		}
 	};
 
 	var $bookingSelects = $('.booking-select');
