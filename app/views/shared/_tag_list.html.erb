@@ -1,6 +1,6 @@
 <ul class="list tags">
 	<% Tag.all.sort{|a,b| a.name <=> b.name}.each do |tag| %>
-		<% link_text = '<li><span class="right radius secondary label">' + tag.equipment.count.to_s + '</span><span class="name">' + tag.name + '</span></li>' %>
-		<%= link_to link_text.html_safe, bytag_path(:tag_id => tag.id, format: :js), :remote => true %>
+		<% link_text = '<li data-tag-id=' + tag.id.to_s + '><span class="right radius secondary label">' + tag.equipment.count.to_s + '</span><span class="name">' + tag.name + '</span></li>' %>
+		<%= link_to link_text.html_safe, "#" %>
 	<% end %>
 </ul>

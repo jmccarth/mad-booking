@@ -1,4 +1,3 @@
-<!--<% @equipment = Equipment.joins(:tags).where(tags:{name: "Abney Level"}) %>-->
 <% @equipment = equipment_list %>
 
 
@@ -13,7 +12,7 @@
 	</thead>
 	<tbody>
 		<% @equipment.each do |equipment| %>
-			<tr>
+			<tr class="equipment-records" data-equipment-id = "<%= equipment.id %>" data-tag-ids="<%= equipment.tag_ids_stringlist %>">
 				<td class="book">
 					<input type="checkbox" class="booking-select" name="book" id="<%= equipment.id %>"></input>
 				</td>

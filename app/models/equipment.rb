@@ -14,6 +14,14 @@ class Equipment < ActiveRecord::Base
     end
   end
 
+  def tag_ids_stringlist
+    tag_ids = []
+    self.tags.each do |tag|
+      tag_ids.push(tag.id)
+    end
+    tag_ids.join(",")
+  end
+
   # getter for the valid_statuses array
   def self.valid_statuses
     @@valid_statuses
@@ -29,4 +37,5 @@ class Equipment < ActiveRecord::Base
 
     return "Invalid Status"
   end
+
 end
