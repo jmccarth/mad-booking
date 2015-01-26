@@ -12,9 +12,9 @@ ul.list {
 
 ul.list li {
 	padding:7px 15px;
-	opacity:0.8;
-	border-bottom:1px solid rgba(0,0,0,0.2);
+	border-bottom:1px solid #ddd;
 	cursor:pointer;
+	line-height:1.5 !important;
 }
 
 ul.list li:hover {

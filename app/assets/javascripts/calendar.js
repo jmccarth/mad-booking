@@ -1,10 +1,13 @@
+
 $(document).ready(function (){
-  reloadNewCalendar();
+  reloadCalendar();
 });
 
-function reloadNewCalendar(){
-  var $calendar = $("#newcal");
-  var $calendarLoading = $("#new-calendar-loading");
+/*
+
+function reloadCalendar(){
+  var $calendar = $("#calendar");
+  var $calendarLoading = $("#calendar-loading");
 
   params = {};
 
@@ -37,3 +40,4 @@ function reloadNewCalendar(){
     weekMode: 'liquid'
   });
 }
+*/

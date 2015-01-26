@@ -66,9 +66,6 @@ GEM
     erubis (2.7.0)
     execjs (2.0.2)
     fssm (0.2.10)
-    fullcalendar-rails (2.2.5.1)
-      jquery-rails (>= 3.1.1, < 5.0.0)
-      momentjs-rails (~> 2.8, >= 2.8.4)
     hike (1.2.3)
     i18n (0.6.11)
     ice_cube (0.11.2)
@@ -86,8 +83,6 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.25.1)
     minitest (4.7.5)
-    momentjs-rails (2.9.0)
-      railties (>= 3.1)
     multi_json (1.10.1)
     mysql2 (0.3.15)
     net-scp (1.2.1)
@@ -169,7 +164,6 @@ DEPENDENCIES
   capistrano-rvm (~> 0.1)
   coffee-rails (~> 4.0.0)
   compass-rails
-  fullcalendar-rails
   ice_cube
   jquery-rails
   jquery-timepicker-rails

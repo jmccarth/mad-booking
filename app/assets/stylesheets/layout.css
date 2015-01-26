@@ -103,6 +103,7 @@
 	top:25px;
 	right:26px;
 	z-index:1000;
+	cursor:pointer;
 }
 
 .cell .bar .search input {
