@@ -17,12 +17,16 @@ gem 'coffee-rails', '~> 4.0.0'
 
 gem 'jquery-rails'
 
+gem 'sass', '~> 3.2.19'
+gem 'compass', '~> 0.12.7'
+gem 'compass-rails', '~> 2.0.0'
+
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer'
 
 gem 'uglifier', '>= 1.0.3'
 
-gem 'compass-rails' # you need this or you get an err
+#gem 'compass-rails' # you need this or you get an err
 
 #gem 'zurb-foundation', '~> 4.3.1'
 gem 'zurb-foundation'
