@@ -5,7 +5,8 @@ set :application, 'BookingSystem'
 set :repo_url, 'git@github.com:jmccarth/mad-booking.git'
 
 # Default branch is :master
-# ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
+#ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
+set :branch, 'ecol-deploy-old'
 
 # Default deploy_to directory is /var/www/my_app
 # set :deploy_to, '/home/Sites/mad-booking/'
