@@ -12,7 +12,7 @@ gem 'rails', '4.0.0'
 # Gems used only for assets and not required
 # in production environments by default.
 
-gem 'sass-rails',   '~> 4.0.0'
+gem 'sass-rails',   '~> 4.0.3'
 gem 'coffee-rails', '~> 4.0.0'
 
 gem 'jquery-rails'
